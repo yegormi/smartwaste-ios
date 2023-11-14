@@ -21,7 +21,7 @@ struct LoadingButtonStyle: View {
                     .font(.system(size: 14, weight: .bold, design: .default))
                     .frame(maxWidth: .infinity, minHeight: 45)
                     .foregroundColor(.white)
-                    .background(Color.blue)
+                    .background(Color.green)
                     .cornerRadius(10)
                 if isLoading {
                     ProgressView()

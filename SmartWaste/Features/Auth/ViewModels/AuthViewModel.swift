@@ -48,12 +48,6 @@ final class AuthViewModel: ObservableObject {
     @Published var isWarningsShown: Bool = false
     @Published var showErrorEmail: Bool = false
     
-    
-    let sessionExpiredAlert: AlertInfo = AlertInfo(
-        title: "Session Expired",
-        description: "Please sign in again."
-    )
-    
     init() {
         self.retrieveAuthResponse()
     }

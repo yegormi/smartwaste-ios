@@ -181,13 +181,13 @@ extension AuthView {
     }
     
     private func isValidEmail(with email: String) -> Bool {
-        let regex = "(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"+"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"+"x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-"+"z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5"+"]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-"+"9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"+"-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
+        let regex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let predicate = NSPredicate(format: "SELF MATCHES[c] %@", regex)
         return predicate.evaluate(with: email)
     }
     
     private var headerSection: some View {
-        Text("📘 GuideBook")
+        Text("♻️ SmartWaste")
             .font(.system(size: 21))
             .bold()
     }
@@ -246,7 +246,7 @@ extension AuthView {
             .shadow(radius: 1)
             .overlay(
                 TextField(
-                    "SignIn.EmailField.Title",
+                    "Email",
                     text: $authVM.email
                 )
                 .keyboardType(.emailAddress)
@@ -272,7 +272,7 @@ extension AuthView {
             .shadow(radius: 1)
             .overlay(
                 PasswordField(
-                    placeholder: "SignIn.PasswordField.Title",
+                    placeholder: "Password",
                     text: $authVM.password
                 )
                 .focused($focus, equals: .password)
@@ -381,7 +381,6 @@ extension AuthView {
 struct AuthView_Previews: PreviewProvider {
     static var previews: some View {
         AuthView()
-            .environmentObject(GuideViewModel())
             .environmentObject(AuthViewModel())
     }
 }
