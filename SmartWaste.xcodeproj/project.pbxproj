@@ -33,12 +33,12 @@
 		EE12B3B82B03CB6A00C5403C /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE12B3B42B03CB6A00C5403C /* SplashScreen.swift */; };
 		EE12B3BA2B03CC2700C5403C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE12B3B92B03CC2700C5403C /* ProfileView.swift */; };
 		EE12B3BE2B03D50600C5403C /* AchievementCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE12B3BD2B03D50600C5403C /* AchievementCard.swift */; };
-		EE12B3C12B03D55200C5403C /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE12B3C02B03D55200C5403C /* MapView.swift */; };
 		EE12B3C72B03F08300C5403C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE12B3C62B03F08300C5403C /* LocationManager.swift */; };
 		EE12B3C92B04002C00C5403C /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE12B3C82B04002C00C5403C /* Point.swift */; };
 		EE12B3CD2B040A9E00C5403C /* GetPointsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE12B3CC2B040A9E00C5403C /* GetPointsAction.swift */; };
 		EE12B3D42B0413D100C5403C /* AlertInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE12B3D32B0413D100C5403C /* AlertInfo.swift */; };
-		EE9C35562B04BB400010EC3B /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9C35552B04BB400010EC3B /* Map.swift */; };
+		EE9C35562B04BB400010EC3B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9C35552B04BB400010EC3B /* MapView.swift */; };
+		EEBC73792B04C31700159943 /* MapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBC73782B04C31700159943 /* MapViewRepresentable.swift */; };
 		EEDDC4092B03A47300C4BC0C /* SmartWasteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDDC4082B03A47300C4BC0C /* SmartWasteApp.swift */; };
 		EEDDC40D2B03A47500C4BC0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEDDC40C2B03A47500C4BC0C /* Assets.xcassets */; };
 		EEDDC4102B03A47500C4BC0C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEDDC40F2B03A47500C4BC0C /* Preview Assets.xcassets */; };
@@ -71,13 +71,13 @@
 		EE12B3B42B03CB6A00C5403C /* SplashScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		EE12B3B92B03CC2700C5403C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		EE12B3BD2B03D50600C5403C /* AchievementCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementCard.swift; sourceTree = "<group>"; };
-		EE12B3C02B03D55200C5403C /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		EE12B3C52B03EFF800C5403C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		EE12B3C62B03F08300C5403C /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		EE12B3C82B04002C00C5403C /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		EE12B3CC2B040A9E00C5403C /* GetPointsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPointsAction.swift; sourceTree = "<group>"; };
 		EE12B3D32B0413D100C5403C /* AlertInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertInfo.swift; sourceTree = "<group>"; };
-		EE9C35552B04BB400010EC3B /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		EE9C35552B04BB400010EC3B /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		EEBC73782B04C31700159943 /* MapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRepresentable.swift; sourceTree = "<group>"; };
 		EEDDC4052B03A47300C4BC0C /* SmartWaste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartWaste.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEDDC4082B03A47300C4BC0C /* SmartWasteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWasteApp.swift; sourceTree = "<group>"; };
 		EEDDC40C2B03A47500C4BC0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -244,8 +244,8 @@
 		EE12B3C22B03D55500C5403C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				EE12B3C02B03D55200C5403C /* MapView.swift */,
-				EE9C35552B04BB400010EC3B /* Map.swift */,
+				EE9C35552B04BB400010EC3B /* MapView.swift */,
+				EEBC73782B04C31700159943 /* MapViewRepresentable.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -416,8 +416,9 @@
 				EEDDC4092B03A47300C4BC0C /* SmartWasteApp.swift in Sources */,
 				EE12B3882B03B78E00C5403C /* UserDeleteResponse.swift in Sources */,
 				EE12B3D42B0413D100C5403C /* AlertInfo.swift in Sources */,
+				EEBC73792B04C31700159943 /* MapViewRepresentable.swift in Sources */,
 				EE12B38A2B03B78E00C5403C /* AuthType.swift in Sources */,
-				EE9C35562B04BB400010EC3B /* Map.swift in Sources */,
+				EE9C35562B04BB400010EC3B /* MapView.swift in Sources */,
 				EE12B3C72B03F08300C5403C /* LocationManager.swift in Sources */,
 				EE12B3892B03B78E00C5403C /* UserInfoResponse.swift in Sources */,
 				EE12B3862B03B78E00C5403C /* SignUpRequest.swift in Sources */,
@@ -434,7 +435,6 @@
 				EE12B3A12B03B7E800C5403C /* RequestError.swift in Sources */,
 				EE12B3902B03B78E00C5403C /* SignUpAction.swift in Sources */,
 				EE12B38B2B03B78E00C5403C /* AuthResponse.swift in Sources */,
-				EE12B3C12B03D55200C5403C /* MapView.swift in Sources */,
 				EE12B3B62B03CB6A00C5403C /* TabScreen.swift in Sources */,
 				EE12B3B82B03CB6A00C5403C /* SplashScreen.swift in Sources */,
 				EE12B3AA2B03B7ED00C5403C /* NetworkManager.swift in Sources */,
