@@ -39,6 +39,11 @@
 		EE12B3D42B0413D100C5403C /* AlertInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE12B3D32B0413D100C5403C /* AlertInfo.swift */; };
 		EE9C35562B04BB400010EC3B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9C35552B04BB400010EC3B /* MapView.swift */; };
 		EEBC73792B04C31700159943 /* MapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBC73782B04C31700159943 /* MapViewRepresentable.swift */; };
+		EEC57DC32B05201600682677 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC57DC22B05201600682677 /* CameraView.swift */; };
+		EEC57DC82B05209600682677 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = EEC57DC72B05209600682677 /* Alamofire */; };
+		EEC57DCC2B0525D500682677 /* PhotoSenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC57DCB2B0525D500682677 /* PhotoSenderView.swift */; };
+		EEC57DCE2B053E0500682677 /* ActionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC57DCD2B053E0500682677 /* ActionButtonStyle.swift */; };
+		EEC57DD02B05466700682677 /* UploadResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC57DCF2B05466600682677 /* UploadResponse.swift */; };
 		EEDDC4092B03A47300C4BC0C /* SmartWasteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDDC4082B03A47300C4BC0C /* SmartWasteApp.swift */; };
 		EEDDC40D2B03A47500C4BC0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEDDC40C2B03A47500C4BC0C /* Assets.xcassets */; };
 		EEDDC4102B03A47500C4BC0C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEDDC40F2B03A47500C4BC0C /* Preview Assets.xcassets */; };
@@ -78,6 +83,10 @@
 		EE12B3D32B0413D100C5403C /* AlertInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertInfo.swift; sourceTree = "<group>"; };
 		EE9C35552B04BB400010EC3B /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		EEBC73782B04C31700159943 /* MapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRepresentable.swift; sourceTree = "<group>"; };
+		EEC57DC22B05201600682677 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		EEC57DCB2B0525D500682677 /* PhotoSenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSenderView.swift; sourceTree = "<group>"; };
+		EEC57DCD2B053E0500682677 /* ActionButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonStyle.swift; sourceTree = "<group>"; };
+		EEC57DCF2B05466600682677 /* UploadResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadResponse.swift; sourceTree = "<group>"; };
 		EEDDC4052B03A47300C4BC0C /* SmartWaste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartWaste.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEDDC4082B03A47300C4BC0C /* SmartWasteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWasteApp.swift; sourceTree = "<group>"; };
 		EEDDC40C2B03A47500C4BC0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -89,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEC57DC82B05209600682677 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +170,7 @@
 				EE12B3952B03B7E800C5403C /* Common */,
 				EE12B3C32B03D55900C5403C /* Map */,
 				EE12B3BC2B03CC3000C5403C /* Profile */,
+				EEC57DC52B05201E00682677 /* Camera */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -293,6 +304,25 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		EEC57DC42B05201900682677 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EEC57DCD2B053E0500682677 /* ActionButtonStyle.swift */,
+				EEC57DC22B05201600682677 /* CameraView.swift */,
+				EEC57DCF2B05466600682677 /* UploadResponse.swift */,
+				EEC57DCB2B0525D500682677 /* PhotoSenderView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EEC57DC52B05201E00682677 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				EEC57DC42B05201900682677 /* Views */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
 		EEDDC3FC2B03A47300C4BC0C = {
 			isa = PBXGroup;
 			children = (
@@ -354,6 +384,9 @@
 			dependencies = (
 			);
 			name = SmartWaste;
+			packageProductDependencies = (
+				EEC57DC72B05209600682677 /* Alamofire */,
+			);
 			productName = SmartWaste;
 			productReference = EEDDC4052B03A47300C4BC0C /* SmartWaste.app */;
 			productType = "com.apple.product-type.application";
@@ -383,6 +416,7 @@
 			);
 			mainGroup = EEDDC3FC2B03A47300C4BC0C;
 			packageReferences = (
+				EEC57DC62B05209600682677 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = EEDDC4062B03A47300C4BC0C /* Products */;
 			projectDirPath = "";
@@ -413,6 +447,7 @@
 				EE12B3852B03B78E00C5403C /* AuthViewModel.swift in Sources */,
 				EE12B3BE2B03D50600C5403C /* AchievementCard.swift in Sources */,
 				EE12B3AF2B03B90900C5403C /* Extensions.swift in Sources */,
+				EEC57DCC2B0525D500682677 /* PhotoSenderView.swift in Sources */,
 				EEDDC4092B03A47300C4BC0C /* SmartWasteApp.swift in Sources */,
 				EE12B3882B03B78E00C5403C /* UserDeleteResponse.swift in Sources */,
 				EE12B3D42B0413D100C5403C /* AlertInfo.swift in Sources */,
@@ -425,6 +460,7 @@
 				EE12B3B72B03CB6A00C5403C /* HeaderView.swift in Sources */,
 				EE12B3932B03B78E00C5403C /* AuthView.swift in Sources */,
 				EE12B3B52B03CB6A00C5403C /* ParentView.swift in Sources */,
+				EEC57DD02B05466700682677 /* UploadResponse.swift in Sources */,
 				EE12B39F2B03B7E800C5403C /* ErrorResponse.swift in Sources */,
 				EE12B3A92B03B7ED00C5403C /* GuideError.swift in Sources */,
 				EE12B38E2B03B78E00C5403C /* PasswordField.swift in Sources */,
@@ -439,8 +475,10 @@
 				EE12B3B82B03CB6A00C5403C /* SplashScreen.swift in Sources */,
 				EE12B3AA2B03B7ED00C5403C /* NetworkManager.swift in Sources */,
 				EE12B3CD2B040A9E00C5403C /* GetPointsAction.swift in Sources */,
+				EEC57DC32B05201600682677 /* CameraView.swift in Sources */,
 				EE12B3C92B04002C00C5403C /* Point.swift in Sources */,
 				EE12B3AE2B03B90900C5403C /* Helpers.swift in Sources */,
+				EEC57DCE2B053E0500682677 /* ActionButtonStyle.swift in Sources */,
 				EE12B3872B03B78E00C5403C /* SignInRequest.swift in Sources */,
 				EE12B38C2B03B78E00C5403C /* RequestType.swift in Sources */,
 			);
@@ -580,7 +618,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartWaste/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera is needed for taking pictures.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We want to sell your location history and profit";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Access to Photo Library is needed for saving captured media.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -612,7 +652,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartWaste/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera is needed for taking pictures.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We want to sell your location history and profit";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Access to Photo Library is needed for saving captured media.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -654,6 +696,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EEC57DC62B05209600682677 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.8.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EEC57DC72B05209600682677 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EEC57DC62B05209600682677 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EEDDC3FD2B03A47300C4BC0C /* Project object */;
 }

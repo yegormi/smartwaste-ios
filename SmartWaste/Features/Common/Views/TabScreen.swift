@@ -12,10 +12,12 @@ struct TabScreen: View {
                 HeaderView()
             }
             TabView() {
-                ProfileView()
-                    .tabItem { Label("Profile", systemImage: "person.fill") }
                 MapView()
                     .tabItem { Label("Map", systemImage: "map.fill") }
+                PhotoSenderView()
+                    .tabItem { Label("Camera", systemImage: "camera.fill") }
+                ProfileView()
+                    .tabItem { Label("Profile", systemImage: "person.fill") }
             }
             .onAppear {
                 withAnimation(.interactiveSpring) {

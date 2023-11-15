@@ -27,11 +27,14 @@ struct MapViewRepresentable: UIViewRepresentable {
                     reuseIdentifier: ClusterAnnotationView.ReuseID
                 )
             } else {
-                guard let annotation = annotation as? LandmarkAnnotation else { return nil }
-                return ClusterAnnotationView(
+                guard let annotaion = annotation as? LandmarkAnnotation else { return nil }
+                let annotationView = ClusterAnnotationView(
                     annotation: annotation,
                     reuseIdentifier: ClusterAnnotationView.ReuseID
                 )
+                annotationView.glyphText = "♻️"
+                annotationView.markerTintColor = .white
+                return annotationView
             }
         }
         
@@ -40,29 +43,6 @@ struct MapViewRepresentable: UIViewRepresentable {
             cluster.title = ""
             cluster.subtitle = ""
             return cluster
-        }
-        
-        func resizeImage(image: UIImage?, targetSize: CGSize) -> UIImage {
-            guard let image = image else { return UIImage() }
-            
-            let size = image.size
-            let widthRatio  = targetSize.width  / size.width
-            let heightRatio = targetSize.height / size.height
-            
-            var newSize: CGSize
-            if widthRatio > heightRatio {
-                newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-            } else {
-                newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
-            }
-            
-            let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-            UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-            image.draw(in: rect)
-            let newImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            
-            return newImage ?? UIImage()
         }
     }
     
