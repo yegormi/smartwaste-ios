@@ -13,7 +13,7 @@ enum RequestError: String, Equatable {
     case invalidPassword = "invalid-password"      // signin password
     case usernameNotUnique = "username-not-unique" // signup username
     case tokenExpired = "jwt-expired"
-    case tokenInvalid = "jwt-indalid"
+    case tokenInvalid = "jwt-invalid"
     case guideNotFound = "guide-not-found"
 }
 

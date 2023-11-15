@@ -12,7 +12,7 @@ struct SignUpAction {
     
     func call(completion: @escaping (Result<AuthResponse, ErrorResponse>) -> Void) {
         NetworkManager.performRequest(
-            baseURL: "https://guidebook-api.azurewebsites.net",
+            baseURL: "https://smartwaste-api.azurewebsites.net",
             endpoint: "/auth/signup",
             requestType: .post,
             token: nil,

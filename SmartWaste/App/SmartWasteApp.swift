@@ -11,7 +11,7 @@ import SwiftUI
 struct SmartWasteApp: App {
     var body: some Scene {
         WindowGroup {
-            AuthView()
+            ParentView()
                 .environmentObject(AuthViewModel())
         }
     }

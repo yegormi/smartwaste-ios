@@ -34,10 +34,10 @@ final class AuthViewModel: ObservableObject {
         }
     }
    
-    
     @Published var response:      AuthResponse?
     @Published var userInfo:      UserInfoResponse?
     @Published var errorResponse: ErrorResponse?
+    @Published var points: [Point] = []
     
     @Published var isSignIn: Bool = true
     @Published var didLoginButtonClicked: Bool = false
@@ -47,6 +47,11 @@ final class AuthViewModel: ObservableObject {
     @Published var isSessionExpiredAlertPresented: Bool = false
     @Published var isWarningsShown: Bool = false
     @Published var showErrorEmail: Bool = false
+    
+    let sessionExpiredAlert: AlertInfo = AlertInfo(
+        title: "Session Expired",
+        description: "Please sign in again."
+    )
     
     init() {
         self.retrieveAuthResponse()
@@ -135,12 +140,12 @@ final class AuthViewModel: ObservableObject {
     
     // MARK: - Network Requests
     
-    func getUser() {
-        UserInfoAction(token: response?.accessToken ?? "")
-            .call() { result in
-                self.handleResponse(result)
-        }
-    }
+//    func getUser() {
+//        UserInfoAction(token: response?.accessToken ?? "")
+//            .call() { result in
+//                self.handleResponse(result)
+//        }
+//    }
     
     func signIn(authRequest: SignInRequest) {
         SignInAction(parameters: authRequest)
@@ -156,13 +161,38 @@ final class AuthViewModel: ObservableObject {
             }
     }
     
-    func deleteAccount() {
-        if let token = response?.accessToken {
-            UserDeleteAction(token: token)
-                .call() { result in
-                    self.handleResponse(result)
+//    func deleteAccount() {
+//        if let token = response?.accessToken {
+//            UserDeleteAction(token: token)
+//                .call() { result in
+//                    self.handleResponse(result)
+//                }
+//        }
+//    }
+    
+    
+    func getPoints(token: String) {
+        GetPointsAction(token: token)
+            .call() { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let response):
+                        if let data = try? JSONEncoder().encode(response),
+                           let jsonString = String(data: data, encoding: .utf8) {
+                            print("Received response: \(jsonString)")
+                        } else {
+                            print("Received empty or invalid data")
+                        }
+                        self.points = response
+                    case .failure(let error):
+                        print("Code: \(error.code)\nMessage: \(error.message)")
+                        if error.code == RequestError.tokenExpired.rawValue || error.code == RequestError.tokenInvalid.rawValue {
+                            self.errorResponse = error
+                            self.triggerSessionExpired()
+                        }
+                    }
                 }
-        }
+            }
     }
     
     // MARK: - Session Management

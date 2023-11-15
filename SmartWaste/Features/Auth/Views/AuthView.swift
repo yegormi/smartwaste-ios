@@ -221,7 +221,7 @@ extension AuthView {
             .shadow(radius: 1)
             .overlay(
                 TextField(
-                    "SignIn.UsernameField.Title",
+                    "Username",
                     text: $authVM.username
                 )
                 .autocapitalization(.none)
@@ -297,7 +297,7 @@ extension AuthView {
             .shadow(radius: 1)
             .overlay(
                 PasswordField(
-                    placeholder: "SignIn.ConfirmPasswordField.Title",
+                    placeholder: "Confirm Password",
                     text: $authVM.confirmPassword
                 )
                 .focused($focus, equals: .password)
@@ -324,7 +324,7 @@ extension AuthView {
     
     
     private var loginButton: some View {
-        LoadingButtonStyle(isSignIn: authVM.isSignIn, isLoading: authVM.isRequestInProgress) {
+        LoadingButton(isSignIn: authVM.isSignIn, isLoading: authVM.isRequestInProgress) {
             authVM.didLoginButtonClicked = true
             authVM.errorResponse = nil
             
@@ -352,7 +352,6 @@ extension AuthView {
                     password: authVM.password)
                 )
             }
-            
             authVM.isWarningsShown = true
             authVM.isRequestInProgress = false
         }
@@ -369,11 +368,12 @@ extension AuthView {
                 .foregroundStyle(.blue)
                 .padding([.bottom, .top, .trailing], 20)
                 .onTapGesture {
-                    withAnimation(.snappy) {
+                    withAnimation(.bouncy) {
                         authVM.isSignIn.toggle()
                     }
                 }
         }
+        .transition(.scale)
         .padding(.bottom, 30)
     }
 }

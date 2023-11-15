@@ -1,5 +1,5 @@
 //
-//  LoadingButtonStyle.swift
+//  LoadingButton.swift
 //  GuideBook
 //
 //  Created by Yegor Myropoltsev on 28.10.2023.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct LoadingButtonStyle: View {
+struct LoadingButton: View {
     var isSignIn: Bool
-    var isLoading: Bool
+    @State var isLoading: Bool
     var action: () -> Void
     
     var body: some View {
@@ -37,12 +37,12 @@ struct LoadingButtonStyle: View {
 }
 
 
-struct LoadingButtonStyle_Previews: PreviewProvider {
+struct LoadingButton_Previews: PreviewProvider {
     static var isSignIn: Bool = true
     static var isLoading: Bool = false
     
     static var previews: some View {
-        LoadingButtonStyle(
+        LoadingButton(
             isSignIn: isSignIn,
             isLoading: isLoading
         ) {}
