@@ -8,6 +8,56 @@
 import SwiftUI
 import MapKit
 
+class Callout: UIView {
+    private let titleLabel = UILabel(frame: .zero)
+    private let addressLabel = UILabel(frame: .zero)
+    private let annotation: LandmarkAnnotation
+    
+    init(annotation: LandmarkAnnotation) {
+        self.annotation = annotation
+        super.init(frame: .zero)
+        setupView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    private func setupView() {
+        translatesAutoresizingMaskIntoConstraints = false
+        setupTitle()
+        setupAddress()
+    }
+    
+    private func setupTitle() {
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        titleLabel.text = annotation.name
+        addSubview(titleLabel)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Center the title vertically
+        titleLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+    }
+    
+    private func setupAddress() {
+        addressLabel.font = UIFont.systemFont(ofSize: 14)
+        addressLabel.textColor = .gray
+        addressLabel.text = annotation.address
+        addSubview(addressLabel)
+        addressLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Stack the address label below the title label with 8 points of spacing
+        addressLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true
+        addressLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        addressLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        addressLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+    }
+}
+
+
+
+
 struct MapViewRepresentable: UIViewRepresentable {
     @EnvironmentObject var authVM: AuthViewModel
     @StateObject var manager = LocationManager()
@@ -27,7 +77,7 @@ struct MapViewRepresentable: UIViewRepresentable {
                     reuseIdentifier: ClusterAnnotationView.ReuseID
                 )
             } else {
-                guard let annotaion = annotation as? LandmarkAnnotation else { return nil }
+                guard annotation is LandmarkAnnotation else { return nil }
                 let annotationView = ClusterAnnotationView(
                     annotation: annotation,
                     reuseIdentifier: ClusterAnnotationView.ReuseID
@@ -43,6 +93,14 @@ struct MapViewRepresentable: UIViewRepresentable {
             cluster.title = ""
             cluster.subtitle = ""
             return cluster
+        }
+        
+        func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+            if let annotation = view.annotation as? LandmarkAnnotation {
+                print("Marker tapped! Name: \(annotation.name), Address: \(annotation.address)")
+                view.detailCalloutAccessoryView = Callout(annotation: annotation)
+                
+            }
         }
     }
     
@@ -65,7 +123,7 @@ struct MapViewRepresentable: UIViewRepresentable {
         uiView.removeAnnotations(uiView.annotations)
         
         for point in authVM.points {
-            let annotation = LandmarkAnnotation(coordinate: point.coordinate)
+            let annotation = LandmarkAnnotation(coordinate: point.coordinate, name: point.name, address: point.address)
             uiView.addAnnotation(annotation)
         }
     }
@@ -74,12 +132,16 @@ struct MapViewRepresentable: UIViewRepresentable {
 
 class LandmarkAnnotation: NSObject, MKAnnotation {
     let coordinate: CLLocationCoordinate2D
-    init(coordinate: CLLocationCoordinate2D) {
+    let name: String
+    let address: String
+    
+    init(coordinate: CLLocationCoordinate2D, name: String, address: String) {
         self.coordinate = coordinate
+        self.name = name
+        self.address = address
         super.init()
     }
 }
-
 let clusterID = "clustering"
 
 class ClusterAnnotationView: MKMarkerAnnotationView {

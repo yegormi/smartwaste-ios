@@ -17,15 +17,6 @@ struct MapView: View {
             .onAppear {
                 authVM.getPoints(token: authVM.response?.accessToken ?? "")
             }
-            .popover(item: $selectedPoint) { point in
-                VStack {
-                    Text(point.name)
-                        .font(.headline)
-                    Text(point.address)
-                        .foregroundColor(.secondary)
-                }
-                .padding()
-            }
     }
 }
 
