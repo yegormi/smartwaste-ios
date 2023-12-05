@@ -14,14 +14,7 @@ struct MapPoint: Codable, Identifiable, Equatable{
     let lng: Double
     let name: String
     let address: String
-    let categories: [RecycleType]
-    
-    struct RecycleType: Codable, Equatable {
-        let id: Int
-        let name: String
-        let slug: String
-        let emoji: String
-    }
+    let categories: [Category]
     
     var coordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: lat, longitude: lng)

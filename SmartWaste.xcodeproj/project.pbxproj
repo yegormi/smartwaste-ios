@@ -67,6 +67,14 @@
 		EEF96E362B1E3013008A66E6 /* BucketMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E2E2B1E3013008A66E6 /* BucketMain.swift */; };
 		EEF96E392B1E32ED008A66E6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E382B1E32ED008A66E6 /* User.swift */; };
 		EEF96E3D2B1E448D008A66E6 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E3C2B1E448D008A66E6 /* HeaderView.swift */; };
+		EEF96E3F2B1E5226008A66E6 /* ProfileCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E3E2B1E5226008A66E6 /* ProfileCard.swift */; };
+		EEF96E442B1E849E008A66E6 /* QuestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E432B1E849E008A66E6 /* QuestView.swift */; };
+		EEF96E462B1E8798008A66E6 /* Quest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E452B1E8798008A66E6 /* Quest.swift */; };
+		EEF96E482B1E88AC008A66E6 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E472B1E88AC008A66E6 /* Category.swift */; };
+		EEF96E4A2B1E9667008A66E6 /* BucketItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E492B1E9667008A66E6 /* BucketItem.swift */; };
+		EEF96E4C2B1F1CEC008A66E6 /* StatBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E4B2B1F1CEC008A66E6 /* StatBox.swift */; };
+		EEF96E4F2B1F27D7008A66E6 /* BucketItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E4E2B1F27D7008A66E6 /* BucketItemView.swift */; };
+		EEF96E532B1F452F008A66E6 /* PartialSheet in Frameworks */ = {isa = PBXBuildFile; productRef = EEF96E522B1F452F008A66E6 /* PartialSheet */; };
 		EEFFBA082AF99F3F00238FA0 /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFFBA072AF99F3F00238FA0 /* RequestError.swift */; };
 		EEFFBA0A2AF9A34600238FA0 /* ErrorText.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFFBA092AF9A34600238FA0 /* ErrorText.swift */; };
 		EEFFBA0C2AF9A7F100238FA0 /* ErrorField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFFBA0B2AF9A7F100238FA0 /* ErrorField.swift */; };
@@ -126,6 +134,13 @@
 		EEF96E2E2B1E3013008A66E6 /* BucketMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BucketMain.swift; sourceTree = "<group>"; };
 		EEF96E382B1E32ED008A66E6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EEF96E3C2B1E448D008A66E6 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		EEF96E3E2B1E5226008A66E6 /* ProfileCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCard.swift; sourceTree = "<group>"; };
+		EEF96E432B1E849E008A66E6 /* QuestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestView.swift; sourceTree = "<group>"; };
+		EEF96E452B1E8798008A66E6 /* Quest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quest.swift; sourceTree = "<group>"; };
+		EEF96E472B1E88AC008A66E6 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		EEF96E492B1E9667008A66E6 /* BucketItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketItem.swift; sourceTree = "<group>"; };
+		EEF96E4B2B1F1CEC008A66E6 /* StatBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatBox.swift; sourceTree = "<group>"; };
+		EEF96E4E2B1F27D7008A66E6 /* BucketItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketItemView.swift; sourceTree = "<group>"; };
 		EEFFBA072AF99F3F00238FA0 /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
 		EEFFBA092AF9A34600238FA0 /* ErrorText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorText.swift; sourceTree = "<group>"; };
 		EEFFBA0B2AF9A7F100238FA0 /* ErrorField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorField.swift; sourceTree = "<group>"; };
@@ -136,6 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEF96E532B1F452F008A66E6 /* PartialSheet in Frameworks */,
 				EEEB8D2C2AF920B6007DEBAE /* Alamofire in Frameworks */,
 				EE56776A2B110A6B00DDE4A0 /* Reachability in Frameworks */,
 				EE40B6832B0FDD0A000C07BD /* SkeletonUI in Frameworks */,
@@ -224,11 +240,14 @@
 		EE3AB5F82B16B2D0008132CE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				EEF96E382B1E32ED008A66E6 /* User.swift */,
 				EE5AE1A62AF9407E00381B33 /* ErrorResponse.swift */,
 				EEFFBA072AF99F3F00238FA0 /* RequestError.swift */,
 				EEEB8D212AF8E5AD007DEBAE /* FailResponse.swift */,
 				EEE812122B1AAA72006681DA /* ResponseMessage.swift */,
+				EEF96E472B1E88AC008A66E6 /* Category.swift */,
+				EEF96E382B1E32ED008A66E6 /* User.swift */,
+				EEF96E452B1E8798008A66E6 /* Quest.swift */,
+				EEF96E1D2B1E2963008A66E6 /* Point.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -299,8 +318,8 @@
 		EE9888CE2B155557009445BC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EEF96E542B1F469C008A66E6 /* Components */,
 				EE297A482B14D66C006FC0C4 /* TabsView.swift */,
-				EEF96E3C2B1E448D008A66E6 /* HeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -317,6 +336,7 @@
 		EEA012BD2AFABC69004311F3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EEF96E402B1E5229008A66E6 /* Components */,
 				EE297A302B14A905006FC0C4 /* ProfileMain.swift */,
 				EE140B172AFA5221001A4461 /* ProfileCoordinatorView.swift */,
 			);
@@ -448,7 +468,6 @@
 			isa = PBXGroup;
 			children = (
 				EEF96E132B1E2768008A66E6 /* Features */,
-				EEF96E1F2B1E296A008A66E6 /* Models */,
 				EEF96E222B1E29C3008A66E6 /* CoreLocation */,
 				EEF96E162B1E27EF008A66E6 /* Views */,
 			);
@@ -463,14 +482,6 @@
 				EEF96E172B1E27EF008A66E6 /* MapCoordinatorView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		EEF96E1F2B1E296A008A66E6 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				EEF96E1D2B1E2963008A66E6 /* Point.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		EEF96E222B1E29C3008A66E6 /* CoreLocation */ = {
@@ -493,6 +504,7 @@
 			isa = PBXGroup;
 			children = (
 				EEF96E252B1E3013008A66E6 /* Features */,
+				EEF96E4D2B1F27A1008A66E6 /* Models */,
 				EEF96E2C2B1E3013008A66E6 /* Views */,
 			);
 			name = Bucket;
@@ -511,10 +523,45 @@
 		EEF96E2C2B1E3013008A66E6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				EEF96E2D2B1E3013008A66E6 /* BucketCoordinatorView.swift */,
+				EEF96E502B1F3B24008A66E6 /* Components */,
 				EEF96E2E2B1E3013008A66E6 /* BucketMain.swift */,
+				EEF96E2D2B1E3013008A66E6 /* BucketCoordinatorView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		EEF96E402B1E5229008A66E6 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				EEF96E3E2B1E5226008A66E6 /* ProfileCard.swift */,
+				EEF96E432B1E849E008A66E6 /* QuestView.swift */,
+				EEF96E4B2B1F1CEC008A66E6 /* StatBox.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		EEF96E4D2B1F27A1008A66E6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EEF96E492B1E9667008A66E6 /* BucketItem.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		EEF96E502B1F3B24008A66E6 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				EEF96E4E2B1F27D7008A66E6 /* BucketItemView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		EEF96E542B1F469C008A66E6 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				EEF96E3C2B1E448D008A66E6 /* HeaderView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -542,6 +589,7 @@
 				EE5677662B11090A00DDE4A0 /* AlertToast */,
 				EE5677692B110A6B00DDE4A0 /* Reachability */,
 				EE3767F52B112AAA007DFA25 /* TCACoordinators */,
+				EEF96E522B1F452F008A66E6 /* PartialSheet */,
 			);
 			productName = GuideBook;
 			productReference = EE0C21842AE861D700668357 /* SmartWaste.app */;
@@ -580,6 +628,7 @@
 				EE5677652B11090A00DDE4A0 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				EE5677682B110A6B00DDE4A0 /* XCRemoteSwiftPackageReference "Reachability" */,
 				EE3767F42B112AAA007DFA25 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
+				EEF96E512B1F452F008A66E6 /* XCRemoteSwiftPackageReference "PartialSheet" */,
 			);
 			productRefGroup = EE0C21852AE861D700668357 /* Products */;
 			projectDirPath = "";
@@ -624,13 +673,17 @@
 				EEF2F1992AF82415009F4677 /* PasswordField.swift in Sources */,
 				EE28095A2AF856A600093049 /* AuthToggleButton.swift in Sources */,
 				EEF96E1E2B1E2963008A66E6 /* Point.swift in Sources */,
+				EEF96E4C2B1F1CEC008A66E6 /* StatBox.swift in Sources */,
+				EEF96E4A2B1E9667008A66E6 /* BucketItem.swift in Sources */,
 				EEF96E192B1E27EF008A66E6 /* MapCoordinatorView.swift in Sources */,
 				EE297A492B14D66C006FC0C4 /* TabsView.swift in Sources */,
 				EEFFBA0A2AF9A34600238FA0 /* ErrorText.swift in Sources */,
 				EEF96E362B1E3013008A66E6 /* BucketMain.swift in Sources */,
 				EE3767FA2B112D48007DFA25 /* SplashFeature.swift in Sources */,
 				EEF96E352B1E3013008A66E6 /* BucketCoordinatorView.swift in Sources */,
+				EEF96E3F2B1E5226008A66E6 /* ProfileCard.swift in Sources */,
 				EE5677602B10AEDD00DDE4A0 /* Validation.swift in Sources */,
+				EEF96E482B1E88AC008A66E6 /* Category.swift in Sources */,
 				EEA012DA2AFB7C69004311F3 /* Constants.swift in Sources */,
 				EE140B1A2AFA5221001A4461 /* ProfileScreen.swift in Sources */,
 				EEF2F19B2AF82710009F4677 /* Extensions.swift in Sources */,
@@ -646,6 +699,7 @@
 				EE3767F92B112D48007DFA25 /* SplashView.swift in Sources */,
 				EE2809562AF852E600093049 /* AuthType.swift in Sources */,
 				EE7F96E52B15E40B0071A99F /* KeychainClient.swift in Sources */,
+				EEF96E462B1E8798008A66E6 /* Quest.swift in Sources */,
 				EEF96E322B1E3013008A66E6 /* BucketCoordinator.swift in Sources */,
 				EEEB8D272AF8EAEA007DEBAE /* SignIn.swift in Sources */,
 				EE0C21882AE861D700668357 /* SmartWasteApp.swift in Sources */,
@@ -660,6 +714,8 @@
 				EEEB8D1E2AF8D895007DEBAE /* AuthResponse.swift in Sources */,
 				EEF96E1A2B1E27EF008A66E6 /* MapMain.swift in Sources */,
 				EE297A472B14D662006FC0C4 /* TabsFeature.swift in Sources */,
+				EEF96E442B1E849E008A66E6 /* QuestView.swift in Sources */,
+				EEF96E4F2B1F27D7008A66E6 /* BucketItemView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -937,6 +993,14 @@
 				minimumVersion = 1.3.0;
 			};
 		};
+		EEF96E512B1F452F008A66E6 /* XCRemoteSwiftPackageReference "PartialSheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AndreaMiotto/PartialSheet";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -979,6 +1043,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EEF2F1802AF7CE61009F4677 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		EEF96E522B1F452F008A66E6 /* PartialSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EEF96E512B1F452F008A66E6 /* XCRemoteSwiftPackageReference "PartialSheet" */;
+			productName = PartialSheet;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
