@@ -61,6 +61,8 @@ struct AuthFeature: Reducer {
         case toastPresented
     }
     
+    private enum CancelID { case auth }
+    
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
@@ -81,11 +83,16 @@ struct AuthFeature: Reducer {
                 return .none
             case .toggleButtonTapped:
                 state.authType = state.authType == .signIn ? .signUp : .signIn
+                
                 state.failResponse = nil
                 state.emailError = nil
                 state.usernameError = nil
                 state.passwordError = nil
-                return .none
+                
+                state.isLoading = false
+            
+                return .cancel(id: CancelID.auth)
+                
             case .authButtonTapped:
                 let username = state.username
                 let email = state.email
@@ -119,6 +126,8 @@ struct AuthFeature: Reducer {
                             print(error)
                         }
                     }
+                    .cancellable(id: CancelID.auth, cancelInFlight: true)
+                    
                 case .signUp:
                     return .run { send in
                         do {
@@ -134,6 +143,7 @@ struct AuthFeature: Reducer {
                             print(error)
                         }
                     }
+                    .cancellable(id: CancelID.auth, cancelInFlight: true)
                 }
             case let .authSuccessful(response):
                 state.response = response
