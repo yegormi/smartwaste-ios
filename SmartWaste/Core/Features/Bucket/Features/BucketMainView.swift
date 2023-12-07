@@ -7,7 +7,6 @@
 
 import SwiftUI
 import ComposableArchitecture
-import PartialSheet
 
 struct BucketMainView: View {
     let store: StoreOf<BucketMain>
@@ -15,20 +14,11 @@ struct BucketMainView: View {
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack(alignment: .leading) {
-                Text("Bucket")
-                    .font(.system(size: 32, weight: .semibold))
+                
                 Spacer()
-                Picker("Select", selection: viewStore.binding(
-                    get: \.itemSelected,
-                    send: BucketMain.Action.selectionChanged
-                )) {
-                    ForEach(viewStore.types, id: \.self) { option in
-                        Text(option)
-                    }
-                }
                 VStack(spacing: 15) {
                     Button {
-                        viewStore.send(.sheetToggled)
+                        viewStore.send(.addItemTapped(viewStore.bucketOptions))
                     } label: {
                         RoundedRectangle(cornerRadius: 12)
                             .stroke(.green, lineWidth: 2)
@@ -43,7 +33,7 @@ struct BucketMainView: View {
                     .scaleButton()
                     
                     Button {
-                        
+                        viewStore.send(.showRecyclePointsTapped)
                     } label: {
                         RoundedRectangle(cornerRadius: 12)
                             .fill(Color.green)
@@ -57,29 +47,12 @@ struct BucketMainView: View {
                     .scaleButton()
                 }
             }
-            .padding(30)
+            .padding([.horizontal, .bottom], 30)
+            .navigationTitle("Bucket")
             .onAppear {
                 if !viewStore.viewDidAppear {
                     viewStore.send(.viewDidAppear)
                 }
-            }
-            .partialSheet(isPresented: viewStore.binding(
-                get: \.isSheetPresented,
-                send: BucketMain.Action.sheetToggled
-            )) {
-                AddItemView(
-                    optionSelected: viewStore.binding(
-                        get: \.itemSelected,
-                        send: BucketMain.Action.selectionChanged
-                    ),
-                    items: viewStore.types,
-                    onScanButtonTapped: { viewStore.send(.onScanButtonTapped) },
-                    onDecrement: {},
-                    onIncrement: {},
-                    onAddButtonTapped: {},
-                    onCancelButtonTapped: { viewStore.send(.sheetToggled) }
-                )
-                .padding(.horizontal, 30)
             }
         }
     }

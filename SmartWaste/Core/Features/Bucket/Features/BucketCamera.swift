@@ -15,11 +15,11 @@ struct BucketCameraView: View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             CameraView(capturedImage: viewStore.binding(
                 get: \.capturedImage,
-                send: BucketCamera.Action.imageCaptured
-            ), isCameraShown: viewStore.binding(
-                get: \.isCameraShown,
-                send: BucketCamera.Action.cameraStateChanged
+                send: { .imageCaptured($0 ?? UIImage.checkmark) }
             ))
+            .onDisappear {
+                viewStore.send(.usePhotoButtonTapped(viewStore.capturedImage ?? UIImage.checkmark))
+            }
         }
         
     }
@@ -30,20 +30,20 @@ struct BucketCamera: Reducer {
     
     struct State: Equatable {
         var capturedImage: UIImage?
-        var isCameraShown: Bool = false
     }
     
     enum Action: Equatable {
-        case imageCaptured
-        case cameraStateChanged
+        case imageCaptured(UIImage)
+        case usePhotoButtonTapped(UIImage)
     }
     
     var body: some Reducer<State, Action> {
         Reduce<State, Action> { state, action in
             switch action {
-            case .imageCaptured:
+            case .imageCaptured(let image):
+                state.capturedImage = image
                 return .none
-            case .cameraStateChanged:
+            case .usePhotoButtonTapped:
                 return .none
             }
         }

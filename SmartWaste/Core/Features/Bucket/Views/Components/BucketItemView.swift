@@ -1,5 +1,5 @@
 //
-//  BucketItemView.swift
+//  BucketItemOptionView.swift
 //  SmartWaste
 //
 //  Created by Yegor Myropoltsev on 05.12.2023.
@@ -7,66 +7,65 @@
 
 import SwiftUI
 
-struct BucketItemView: View {
-    let item: BucketItem
-    let onDecrease: ()
-    let onIncrease: ()
-
+struct BucketItemOptionView: View {
+    let item: BucketItemOption
+    let onDecrement: () -> Void
+    let onIncrement: () -> Void
+    
     
     var body: some View {
         RoundedRectangle(cornerRadius: 10)
-            .fill(Color("BucketItemColor"))
+            .fill(Color.gray.opacity(0.15))
             .frame(height: 60)
             .overlay(
                 HStack {
                     Text(item.name)
-                        .foregroundStyle(Color.white)
-
+                        .foregroundStyle(Color.primary)
                     Spacer()
-                    
-                    Button {
-                        onDecrease
-                    } label: {
-                        RoundedRectangle(cornerRadius: 6)
-                            .foregroundStyle(Color.red)
-                            .overlay (
+                    Button(action: onDecrement) {
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(.gray, lineWidth: 1)
+                            .foregroundStyle(Color.clear)
+                            .overlay(
                                 Text("-")
-                                    .foregroundStyle(Color.white)
+                                    .foregroundStyle(Color.primary)
                                     .font(.system(size: 28))
                             )
                     }
                     .frame(width: 40, height: 40)
+                    .scaleButton()
                     
                     Text("\(0)")
                         .font(.system(size: 28))
-                        .foregroundStyle(Color.white)
+                        .foregroundStyle(Color.primary)
                         .padding(.horizontal, 10)
-
-                    Button {
-                        onIncrease
-                    } label: {
-                        RoundedRectangle(cornerRadius: 6)
-                            .foregroundStyle(Color.green)
-                            .overlay (
+                    
+                    Button(action: onIncrement) {
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(.gray, lineWidth: 1)
+                            .foregroundStyle(Color.clear)
+                            .overlay(
                                 Text("+")
-                                    .foregroundStyle(Color.white)
+                                    .foregroundStyle(Color.primary)
                                     .font(.system(size: 28))
                             )
                     }
                     .frame(width: 40, height: 40)
-                }.padding(20)
+                    .scaleButton()
+                }
+                    .padding(20)
             )
     }
 }
 
-struct BucketItemView_Previews: PreviewProvider {
-    static var testItem: BucketItem = BucketItem(id: 1, name: "Plastic bottle", categories: [])
+struct BucketItemOptionView_Previews: PreviewProvider {
+    static var testItem: BucketItemOption = BucketItemOption(id: 1, name: "Plastic bottle", categories: [])
     
     static var previews: some View {
-        BucketItemView(
+        BucketItemOptionView(
             item: testItem,
-            onDecrease: (),
-            onIncrease: ()
+            onDecrement: {},
+            onIncrement: {}
         )
         .previewLayout(.sizeThatFits)
     }

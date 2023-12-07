@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct CounterView: View {
-    let value: Int
+    var value: Int
+    let limit: Int
     let onDecrement: () -> Void
     let onIncrement: () -> Void
     
     var body: some View {
         HStack(spacing: 0) {
             Button(action: onDecrement) {
-                RoundedRectangle(cornerRadius: 6)
+                RoundedRectangle(cornerRadius: 10)
                     .stroke(.gray, lineWidth: 1)
                     .foregroundStyle(Color.clear)
                     .overlay(
@@ -25,14 +26,15 @@ struct CounterView: View {
                     )
             }
             .frame(width: 40, height: 40)
+            .disabled(value <= 0)
             .scaleButton()
             
             Text("\(value)")
                 .font(.system(size: 32))
-                .padding(.horizontal, 20)
+                .frame(width: 60, height: 40)
             
             Button(action: onIncrement) {
-                RoundedRectangle(cornerRadius: 6)
+                RoundedRectangle(cornerRadius: 10)
                     .stroke(.gray, lineWidth: 1)
                     .foregroundStyle(Color.clear)
                     .overlay(
@@ -41,6 +43,7 @@ struct CounterView: View {
                             .font(.system(size: 28))
                     )
             }
+            .disabled(value >= limit)
             .frame(width: 40, height: 40)
             .scaleButton()
         }
@@ -48,8 +51,14 @@ struct CounterView: View {
 }
 
 struct CounterView_Previews: PreviewProvider {
+    static var value: Int = 0
     static var previews: some View {
-        @State var value: Int = 0
-        CounterView(value: value, onDecrement: { value -= 1 }, onIncrement: { value += 1 })
+        CounterView(
+            value: value,
+            limit: 10,
+            onDecrement: { value -= 1 },
+            onIncrement: { value += 1 }
+        )
+        .previewLayout(.sizeThatFits)
     }
 }

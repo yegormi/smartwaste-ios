@@ -5,45 +5,43 @@
 //  Created by Yegor Myropoltsev on 05.12.2023.
 //
 
-import Foundation
+import UIKit
 import ComposableArchitecture
 
 @Reducer
 struct BucketMain: Reducer {
-    @Dependency(\.authClient) var authClient
     @Dependency(\.keychainClient) var keychainClient
     @Dependency(\.bucketClient) var bucketClient
     
     struct State: Equatable {
-        var isSheetPresented = false
         var viewDidAppear = false
-        var items: [BucketItem] = []
-        var types: [String] = []
-        var itemSelected: String = ""
+        
+        var bucket: [BucketItem] = []
+        
+        var bucketOptions: [BucketItemOption] = []
+        var optionSelected: BucketItemOption? = nil
+        
+        var capturedImage: UIImage?
     }
     
     enum Action: Equatable {
         case viewDidAppear
         
         case getItems
-        case onGetItemsSuccess([BucketItem])
+        case onGetItemsSuccess([BucketItemOption])
+        case setInitialItem
+
+        case selectionChanged(BucketItemOption)
         
-        case filterTypes
-        case setInitialItem([String])
+        case addItemTapped([BucketItemOption])
+        case showRecyclePointsTapped
         
         case onScanButtonTapped
-        
-        case selectionChanged(String)
-        
-        case sheetToggled
     }
     
     var body: some Reducer<State, Action> {
         Reduce<State, Action> { state, action in
             switch action {
-            case .sheetToggled:
-                state.isSheetPresented.toggle()
-                return .none
             case .viewDidAppear:
                 state.viewDidAppear = true
                 return .send(.getItems)
@@ -58,20 +56,21 @@ struct BucketMain: Reducer {
                     }
                 }
             case .onGetItemsSuccess(let items):
-                state.items = items
-                return .send(.filterTypes)
-            case .filterTypes:
-                state.types = state.items.map { $0.name }
-                return .send(.setInitialItem(state.types))
-            case .setInitialItem(let array):
-                state.itemSelected = array.first ?? "Selection is nil"
+                state.bucketOptions = items
+                return .send(.setInitialItem)
+            case .setInitialItem:
+                state.optionSelected = state.bucketOptions.first
                 return .none
                 
-            case .onScanButtonTapped:
+            case .addItemTapped:
+                return .none
+            case .showRecyclePointsTapped:
                 return .none
                 
             case .selectionChanged(let option):
-                state.itemSelected = option
+                state.optionSelected = option
+                return .none
+            case .onScanButtonTapped:
                 return .none
             }
         }

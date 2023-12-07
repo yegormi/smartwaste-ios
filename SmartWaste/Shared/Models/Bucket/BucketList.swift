@@ -8,5 +8,5 @@
 import Foundation
 
 struct BucketList: Codable, Equatable {
-    let items: [BucketItem]
+    let items: [BucketItemOption]
 }

@@ -92,6 +92,8 @@ struct TabsFeature: Reducer {
                 return .none
                 
             case .onAppear:
+                return .send(.getSelf)
+            case .getSelf:
                 state.token = retrieveToken()
                 return .run { [token = state.token] send in
                     do {
@@ -122,10 +124,16 @@ struct TabsFeature: Reducer {
                 }
                 state.selectedTab = tab
                 return .none
-            default:
-                break
+                
+            case .map:
+                return .none
+            case .profile:
+                return .none
+            case .bucket:
+                return .none
+            case .goBackToPrevious:
+                return .none
             }
-            return .none
         }
         .ifLet(\.$alert, action: \.alert)
     }
