@@ -10,5 +10,11 @@ import Foundation
 struct BucketItem: Codable, Equatable, Identifiable {
     let id: Int
     let name: String
-    let count: Int
+    var count: Int
+    
+    static let limit: Int = 10
+    
+    mutating func updateCount(_ newCount: Int) {
+        self.count = newCount
+    }
 }

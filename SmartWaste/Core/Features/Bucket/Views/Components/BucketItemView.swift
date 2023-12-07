@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct BucketItemOptionView: View {
-    let item: BucketItemOption
+struct BucketItemView: View {
+    var item: BucketItem
     let onDecrement: () -> Void
     let onIncrement: () -> Void
     
@@ -22,47 +22,23 @@ struct BucketItemOptionView: View {
                     Text(item.name)
                         .foregroundStyle(Color.primary)
                     Spacer()
-                    Button(action: onDecrement) {
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(.gray, lineWidth: 1)
-                            .foregroundStyle(Color.clear)
-                            .overlay(
-                                Text("-")
-                                    .foregroundStyle(Color.primary)
-                                    .font(.system(size: 28))
-                            )
-                    }
-                    .frame(width: 40, height: 40)
-                    .scaleButton()
-                    
-                    Text("\(0)")
-                        .font(.system(size: 28))
-                        .foregroundStyle(Color.primary)
-                        .padding(.horizontal, 10)
-                    
-                    Button(action: onIncrement) {
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(.gray, lineWidth: 1)
-                            .foregroundStyle(Color.clear)
-                            .overlay(
-                                Text("+")
-                                    .foregroundStyle(Color.primary)
-                                    .font(.system(size: 28))
-                            )
-                    }
-                    .frame(width: 40, height: 40)
-                    .scaleButton()
+                    CounterView(
+                        value: item.count,
+                        limit: BucketItem.limit,
+                        onDecrement: onDecrement,
+                        onIncrement: onIncrement
+                    )
                 }
                     .padding(20)
             )
     }
 }
 
-struct BucketItemOptionView_Previews: PreviewProvider {
-    static var testItem: BucketItemOption = BucketItemOption(id: 1, name: "Plastic bottle", categories: [])
+struct BucketItemView_Previews: PreviewProvider {
+    static var testItem: BucketItem = BucketItem(id: 1, name: "Plastic bottle", count: 0)
     
     static var previews: some View {
-        BucketItemOptionView(
+        BucketItemView(
             item: testItem,
             onDecrement: {},
             onIncrement: {}

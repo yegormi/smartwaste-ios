@@ -14,7 +14,7 @@ struct BucketCoordinator: Reducer {
     struct State: Equatable, IndexedRouterState {
         var routes: [Route<BucketScreen.State>]
         static let initialState = State(
-            routes: [.root(.main(.init()), embedInNavigationView: true)]
+            routes: [.root(.main(.init()))]
         )
     }
     
@@ -26,10 +26,6 @@ struct BucketCoordinator: Reducer {
     var body: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
-            case .routeAction(_, action: .main(.addItemTapped(let options))):
-                state.routes.presentSheet(.addItem(.init(options: options)))
-            case .routeAction(_, action: .addItem(.cancelButtonTapped)):
-                state.routes.goBack()
             default:
                 break
             }

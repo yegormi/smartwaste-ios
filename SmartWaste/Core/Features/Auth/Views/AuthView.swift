@@ -95,9 +95,11 @@ struct AuthView: View {
                         }
                     }
                     .scaleButton()
-                    .padding(.top, 20)
+                    .frame(height: 45)
                     .disabled(!viewStore.isLoginAllowed)
                     .opacity(!viewStore.isLoginAllowed ? 0.5 : 1)
+                    .padding(.top, 20)
+
                     
                     AuthToggleButton(authType: viewStore.authType) {
                         viewStore.send(.toggleButtonTapped, animation: .easeInOut)

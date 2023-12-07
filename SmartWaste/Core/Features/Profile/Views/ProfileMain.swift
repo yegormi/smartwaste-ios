@@ -39,7 +39,7 @@ struct ProfileMainView: View {
                     ProgressView(value: Double(viewStore.user?.completedScore ?? 0), total: 500)
                         .scaleEffect(x: 1, y: 3, anchor: .center)
                 }
-                .padding(20)
+                .padding([.horizontal, .bottom], 20)
                 
                 ZStack {
                     RoundedRectangle(cornerRadius: 40)

@@ -9,7 +9,6 @@
 import SwiftUI
 import ComposableArchitecture
 import TCACoordinators
-import PartialSheet
 
 struct RootCoordinatorView: View {
     let store: StoreOf<RootCoordinator>
@@ -39,6 +38,5 @@ struct RootCoordinatorView: View {
                 }
             }
         }
-        .attachPartialSheetToRoot()
     }
 }

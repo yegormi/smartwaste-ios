@@ -55,7 +55,7 @@ struct AddItemView: View {
                 }
                 CounterView(
                     value: viewStore.count,
-                    limit: 10,
+                    limit: BucketItem.limit,
                     onDecrement: { viewStore.send(.onDecrement) },
                     onIncrement: { viewStore.send(.onIncrement) }
                 )
@@ -90,7 +90,6 @@ struct AddItemView: View {
             }
             .padding(.bottom, hasNotch ? 0 : 20)
             .padding(.horizontal, 30)
-            .presentationDetents([.medium])
             .onAppear {
                 viewStore.send(.viewDidAppear)
             }

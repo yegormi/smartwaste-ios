@@ -22,21 +22,30 @@ struct BucketMain: Reducer {
         var optionSelected: BucketItemOption? = nil
         
         var capturedImage: UIImage?
+        
+        var isSheetPresented = false
+        var isToastPresented = false
     }
     
     enum Action: Equatable {
         case viewDidAppear
+        case toastPresented
         
         case getItems
         case onGetItemsSuccess([BucketItemOption])
         case setInitialItem
-
+        
         case selectionChanged(BucketItemOption)
         
-        case addItemTapped([BucketItemOption])
+        case sheetToggled(Bool)
         case showRecyclePointsTapped
         
         case onScanButtonTapped
+        
+        case setBucket(with: BucketItem)
+        case updateItemCount(itemID: Int, newCount: Int)
+        case deleteItem(itemID: Int)
+        
     }
     
     var body: some Reducer<State, Action> {
@@ -45,6 +54,9 @@ struct BucketMain: Reducer {
             case .viewDidAppear:
                 state.viewDidAppear = true
                 return .send(.getItems)
+            case .toastPresented:
+                state.isToastPresented.toggle()
+                return .none
             case .getItems:
                 return .run { send in
                     do {
@@ -62,15 +74,35 @@ struct BucketMain: Reducer {
                 state.optionSelected = state.bucketOptions.first
                 return .none
                 
-            case .addItemTapped:
+            case .sheetToggled(let toggle):
+                state.isSheetPresented = toggle
                 return .none
             case .showRecyclePointsTapped:
-                return .none
+                return .send(.toastPresented)
                 
             case .selectionChanged(let option):
                 state.optionSelected = option
                 return .none
             case .onScanButtonTapped:
+                return .none
+                
+            case .setBucket(with: let item):
+                if let _ = state.bucket.firstIndex(where: { $0.id == item.id }) {
+                    return .none
+                } else {
+                    state.bucket.append(item)
+                }
+                return .none
+            case .updateItemCount(let itemID, let newCount):
+                if let index = state.bucket.firstIndex(where: { $0.id == itemID }) {
+                    state.bucket[index].updateCount(newCount)
+                }
+                if newCount == 0 {
+                    return .send(.deleteItem(itemID: itemID))
+                }
+                return .none
+            case .deleteItem(let itemID):
+                state.bucket.removeAll { $0.id == itemID }
                 return .none
             }
         }
