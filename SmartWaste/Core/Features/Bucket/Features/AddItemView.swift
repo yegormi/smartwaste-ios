@@ -17,6 +17,9 @@ struct AddItemView: View {
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack(alignment: .leading, spacing: 0) {
+                Text("Add item")
+                    .font(.system(size: 30))
+                    .padding(.bottom, 15)
                 
                 HStack(spacing: 15) {
                     Menu {

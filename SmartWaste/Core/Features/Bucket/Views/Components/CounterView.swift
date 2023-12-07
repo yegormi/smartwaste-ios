@@ -17,7 +17,7 @@ struct CounterView: View {
         HStack(spacing: 0) {
             Button(action: onDecrement) {
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(.gray, lineWidth: 1)
+                    .stroke(.black, lineWidth: 1)
                     .foregroundStyle(Color.clear)
                     .overlay(
                         Text("-")
@@ -27,6 +27,7 @@ struct CounterView: View {
             }
             .frame(width: 40, height: 40)
             .disabled(value <= 0)
+            .opacity(value <= 0 ? 0.3 : 1)
             .scaleButton()
             
             Text("\(value)")
@@ -35,7 +36,7 @@ struct CounterView: View {
             
             Button(action: onIncrement) {
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(.gray, lineWidth: 1)
+                    .stroke(.black, lineWidth: 1)
                     .foregroundStyle(Color.clear)
                     .overlay(
                         Text("+")
@@ -44,6 +45,7 @@ struct CounterView: View {
                     )
             }
             .disabled(value >= limit)
+            .opacity(value >= limit ? 0.3 : 1)
             .frame(width: 40, height: 40)
             .scaleButton()
         }
