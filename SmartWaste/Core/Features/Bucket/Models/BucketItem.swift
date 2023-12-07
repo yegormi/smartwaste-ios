@@ -7,11 +7,8 @@
 
 import Foundation
 
-struct BucketItem: Codable, Equatable {
-    let id: String
+struct BucketItem: Codable, Equatable, Identifiable, Hashable {
+    let id: Int
     let name: String
-    var count: Int = 0
-    let categories: [Category]
-    
-    static let limit: Int = 10
+    let categories: [BucketCategory]
 }

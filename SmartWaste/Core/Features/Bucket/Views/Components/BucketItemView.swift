@@ -37,7 +37,7 @@ struct BucketItemView: View {
                     }
                     .frame(width: 40, height: 40)
                     
-                    Text("\(item.count)")
+                    Text("\(0)")
                         .font(.system(size: 28))
                         .foregroundStyle(Color.white)
                         .padding(.horizontal, 10)
@@ -60,17 +60,13 @@ struct BucketItemView: View {
 }
 
 struct BucketItemView_Previews: PreviewProvider {
-    static var testItem: BucketItem = BucketItem(id: "1", name: "Plastic bottle", categories: [])
+    static var testItem: BucketItem = BucketItem(id: 1, name: "Plastic bottle", categories: [])
     
     static var previews: some View {
         BucketItemView(
             item: testItem,
-            onDecrease: (
-                testItem.count -= 1
-            ),
-            onIncrease: (
-                testItem.count += 1
-            )
+            onDecrease: (),
+            onIncrease: ()
         )
         .previewLayout(.sizeThatFits)
     }

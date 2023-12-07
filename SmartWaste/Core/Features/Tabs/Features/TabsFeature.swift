@@ -35,7 +35,7 @@ struct TabsFeature: Reducer {
             map: .initialState,
             profile: .initialState,
             bucket: .initialState,
-            selectedTab: .profile
+            selectedTab: .map
         )
     }
     

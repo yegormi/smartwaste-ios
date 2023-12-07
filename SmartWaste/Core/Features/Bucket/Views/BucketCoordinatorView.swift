@@ -22,6 +22,12 @@ struct BucketCoordinatorView: View {
                          action: BucketScreen.Action.main,
                          then: BucketMainView.init
                     )
+                case .camera:
+                    CaseLet(
+                        /BucketScreen.State.camera,
+                         action: BucketScreen.Action.camera,
+                         then: BucketCameraView.init
+                    )
                 }
             }
         }

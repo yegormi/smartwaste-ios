@@ -1,8 +1,8 @@
 //
-//  AuthClient.swift
+//  BucketClient.swift
 //  SmartWaste
 //
-//  Created by Yegor Myropoltsev on 28.11.2023.
+//  Created by Yegor Myropoltsev on 05.12.2023.
 //
 
 import Foundation
@@ -15,69 +15,75 @@ import Alamofire
 // This allows the feature to compile faster since it only depends on the interface.
 
 @DependencyClient
-struct AuthClient {
-    var performSignIn:  @Sendable (String, String) async throws -> AuthResponse
-    var performSignUp:  @Sendable (String, String, String) async throws -> AuthResponse
-    var performGetSelf: @Sendable (String) async throws -> User
+struct BucketClient {
+    var getCategories: @Sendable (_ token: String) async throws -> [BucketCategory]
+    var getItems: @Sendable (_ token: String) async throws -> BucketList
+    var scanPhoto: @Sendable (_ token: String, _ photo: Data) async throws -> BucketList
 }
 
 extension DependencyValues {
-    var authClient: AuthClient {
-        get { self[AuthClient.self] }
-        set { self[AuthClient.self] = newValue }
+    var bucketClient: BucketClient {
+        get { self[BucketClient.self] }
+        set { self[BucketClient.self] = newValue }
     }
 }
 
 // MARK: - Live API implementation
 
-extension AuthClient: DependencyKey, TestDependencyKey {
-    static let liveValue = AuthClient(
-        performSignIn: { email, password in
-            let signInRequest = SignIn(email: email, password: password)
-            let endpoint = "/auth/signin"
-            
-            return try await withCheckedThrowingContinuation { continuation in
-                AF.request(Self.baseUrl + endpoint,
-                           method: .post,
-                           parameters: signInRequest,
-                           encoder: JSONParameterEncoder.default
-                )
-                .validate()
-                .responseDecodable(of: AuthResponse.self) { response in
-                    handleResponse(response, continuation)
-                }
-            }
-        },
-        performSignUp: { username, email, password in
-            let signUpRequest = SignUp(username: username, email: email, password: password)
-            let endpoint = "/auth/signup"
-            
-            return try await withCheckedThrowingContinuation { continuation in
-                AF.request(Self.baseUrl + endpoint,
-                           method: .post,
-                           parameters: signUpRequest,
-                           encoder: JSONParameterEncoder.default
-                )
-                .validate()
-                .responseDecodable(of: AuthResponse.self) { response in
-                    handleResponse(response, continuation)
-                }
-            }
-        },
-        performGetSelf: { token in
-            let endpoint = "/self"
+extension BucketClient: DependencyKey, TestDependencyKey {
+    static let liveValue = BucketClient(
+        getCategories: { token in
+            let endpoint = "/categories"
             
             let headers: HTTPHeaders = [
                 "Authorization": "\(token)"
             ]
             
             return try await withCheckedThrowingContinuation { continuation in
-                AF.request(Self.baseUrl + endpoint,
+                AF.request(baseUrl + endpoint,
                            method: .get,
                            headers: headers
                 )
                 .validate()
-                .responseDecodable(of: User.self) { response in
+                .responseDecodable(of: [BucketCategory].self) { response in
+                    handleResponse(response, continuation)
+                }
+            }
+        }, getItems: { token in
+            let endpoint = "/items"
+            
+            let headers: HTTPHeaders = [
+                "Authorization": "\(token)"
+            ]
+            
+            return try await withCheckedThrowingContinuation { continuation in
+                AF.request(baseUrl + endpoint,
+                           method: .get,
+                           headers: headers
+                )
+                .validate()
+                .responseDecodable(of: BucketList.self) { response in
+                    handleResponse(response, continuation)
+                }
+            }
+        }, scanPhoto: { token, photo in
+            let endpoint = "/scan"
+            
+            let headers: HTTPHeaders = [
+                "Authorization": "\(token)"
+            ]
+            
+            return try await withCheckedThrowingContinuation { continuation in
+                AF.upload(
+                    multipartFormData: { multipartFormData in
+                        multipartFormData.append(photo, withName: "photo", fileName: "photo.jpg", mimeType: "image/jpeg")
+                    },
+                    to: baseUrl + endpoint,
+                    method: .post,
+                    headers: headers
+                )
+                .validate()
+                .responseDecodable(of: BucketList.self) { response in
                     handleResponse(response, continuation)
                 }
             }
@@ -87,15 +93,16 @@ extension AuthClient: DependencyKey, TestDependencyKey {
 
 // MARK: - Test Implementation
 
-extension AuthClient {
+extension BucketClient {
     static let testValue = Self()
 }
 
 // MARK: - Constants
 
-extension AuthClient {
+extension BucketClient {
     static let baseUrl = Constants.baseUrl
 }
+
 
 private func handleResponse<T>(_ response: AFDataResponse<T>, _ continuation: CheckedContinuation<T, Error>) {
     switch response.result {
@@ -110,4 +117,3 @@ private func handleResponse<T>(_ response: AFDataResponse<T>, _ continuation: Ch
         }
     }
 }
-

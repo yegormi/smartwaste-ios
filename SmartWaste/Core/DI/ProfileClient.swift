@@ -1,8 +1,8 @@
 //
-//  MapClient.swift
+//  ProfileClient.swift
 //  SmartWaste
 //
-//  Created by Yegor Myropoltsev on 28.11.2023.
+//  Created by Yegor Myropoltsev on 06.12.2023.
 //
 
 import Foundation
@@ -15,23 +15,23 @@ import Alamofire
 // This allows the feature to compile faster since it only depends on the interface.
 
 @DependencyClient
-struct MapClient {
-    var getPoints: @Sendable (_ token: String) async throws -> [MapPoint]
+struct ProfileClient {
+    var getQuests: @Sendable (_ token: String) async throws -> QuestList
 }
 
 extension DependencyValues {
-    var mapClient: MapClient {
-        get { self[MapClient.self] }
-        set { self[MapClient.self] = newValue }
+    var profileClient: ProfileClient {
+        get { self[ProfileClient.self] }
+        set { self[ProfileClient.self] = newValue }
     }
 }
 
 // MARK: - Live API implementation
 
-extension MapClient: DependencyKey, TestDependencyKey {
-    static let liveValue = MapClient(
-        getPoints: { token in
-            let endpoint = "/points"
+extension ProfileClient: DependencyKey, TestDependencyKey {
+    static let liveValue = ProfileClient(
+        getQuests: { token in
+            let endpoint = "/self/quests"
             
             let headers: HTTPHeaders = [
                 "Authorization": "\(token)"
@@ -43,7 +43,7 @@ extension MapClient: DependencyKey, TestDependencyKey {
                            headers: headers
                 )
                 .validate()
-                .responseDecodable(of: [MapPoint].self) { response in
+                .responseDecodable(of: QuestList.self) { response in
                     handleResponse(response, continuation)
                 }
             }
@@ -53,13 +53,13 @@ extension MapClient: DependencyKey, TestDependencyKey {
 
 // MARK: - Test Implementation
 
-extension MapClient {
+extension ProfileClient {
     static let testValue = Self()
 }
 
 // MARK: - Constants
 
-extension MapClient {
+extension ProfileClient {
     static let baseUrl = Constants.baseUrl
 }
 

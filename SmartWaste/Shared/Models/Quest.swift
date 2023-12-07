@@ -13,6 +13,6 @@ struct Quest: Codable, Identifiable, Equatable {
     let score: Int
     let total: Int
     let completed: Int
-    let category: Category
+    let category: BucketCategory
 
 }

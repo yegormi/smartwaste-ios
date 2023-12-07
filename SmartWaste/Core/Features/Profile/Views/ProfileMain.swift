@@ -14,11 +14,12 @@ struct ProfileMainView: View {
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack {
-                
                 VStack {
                     HStack {
                         ProfileCard(user: viewStore.user)
+                        
                         Spacer()
+                        
                         Button {
                             viewStore.send(.signOutButtonTapped)
                         } label: {
@@ -31,9 +32,8 @@ struct ProfileMainView: View {
                     HStack {
                         Text("Level up")
                         Spacer()
-                        if let completedScore = viewStore.user?.completedScore {
-                            Text("\(completedScore)/500")
-                        }
+                        Text("\(viewStore.user?.completedScore ?? 0)/500")
+
                     }
                     
                     ProgressView(value: Double(viewStore.user?.completedScore ?? 0), total: 500)
@@ -62,12 +62,13 @@ struct ProfileMainView: View {
                                 Text("Quests")
                                     .font(.system(size: 18, weight: .semibold))
                                     .padding(10)
-                                ScrollView{
+                                ScrollView(showsIndicators: false) {
                                     VStack(spacing: 10) {
-                                        ForEach(viewStore.quests) { quest in
+                                        ForEach(viewStore.quests ?? []) { quest in
                                             QuestView(quest.name, value: quest.completed, total: quest.total)
                                         }
                                     }
+                                    .padding(.bottom, 160)
                                 }
                                 .padding(.horizontal, 20)
                             }
@@ -103,26 +104,12 @@ struct ProfileMainView_Previews: PreviewProvider {
 struct ProfileMain: Reducer {
     @Dependency(\.keychainClient) var keychainClient
     @Dependency(\.authClient) var authClient
+    @Dependency(\.profileClient) var profileClient
     
     struct State: Equatable {
         var viewDidAppear = false
         var user: User?
-        var quests: [Quest] = [
-            Quest(
-                id: 6,
-                name: "Collect organic waste",
-                score: 300,
-                total: 3,
-                completed: 3, category: Category(id: 6, name: "Organic", slug: "organic", emoji: "🍌")
-            ),
-            Quest(
-                id: 5,
-                name: "Collect batteries",
-                score: 1000,
-                total: 2,
-                completed: 1, category: Category(id: 3, name: "Battery", slug: "battery", emoji: "🔋")
-            )
-        ]
+        var quests: [Quest]?
     }
     
     enum Action: Equatable {
@@ -130,6 +117,9 @@ struct ProfileMain: Reducer {
         
         case getSelf
         case onGetSelfSuccess(User)
+        
+        case getQuests
+        case onGetQuestsSuccess([Quest])
         
         case signOutButtonTapped
         case onSignOutSuccess
@@ -152,6 +142,20 @@ struct ProfileMain: Reducer {
                 }
             case .onGetSelfSuccess(let user):
                 state.user = user
+                return .send(.getQuests)
+                
+            case .getQuests:
+                return .run { send in
+                    do {
+                        let list = try await getQuests()
+                        let quests = list.quests
+                        await send(.onGetQuestsSuccess(quests))
+                    } catch {
+                        print(error)
+                    }
+                }
+            case .onGetQuestsSuccess(let quests):
+                state.quests = quests
                 return .none
             case .signOutButtonTapped:
                 deleteToken()
@@ -165,6 +169,11 @@ struct ProfileMain: Reducer {
     private func getSelf() async throws -> User {
         let token = keychainClient.retrieveToken()?.accessToken ?? ""
         return try await authClient.performGetSelf(token)
+    }
+    
+    private func getQuests() async throws -> QuestList {
+        let token = keychainClient.retrieveToken()?.accessToken ?? ""
+        return try await profileClient.getQuests(token: token)
     }
     
     private func deleteToken() {

@@ -14,7 +14,7 @@ struct BucketCoordinator: Reducer {
     struct State: Equatable, IndexedRouterState {
         var routes: [Route<BucketScreen.State>]
         static let initialState = State(
-            routes: [.root(.main(.init()))]
+            routes: [.root(.main(.init(items: [])), embedInNavigationView: true)]
         )
     }
     
@@ -26,6 +26,8 @@ struct BucketCoordinator: Reducer {
     var body: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
+            case .routeAction(_, action: .main(.onScanButtonTapped)):
+                state.routes.presentCover(.camera(.init()))
             default:
                 break
             }
