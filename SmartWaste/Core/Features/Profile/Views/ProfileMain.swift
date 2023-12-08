@@ -27,7 +27,7 @@ struct ProfileMainView: View {
                                 .padding(10)
                         }
                     }
-                    .padding(.bottom, 10)
+                    .padding(.vertical, 10)
                     
                     HStack {
                         Text("Level up")
