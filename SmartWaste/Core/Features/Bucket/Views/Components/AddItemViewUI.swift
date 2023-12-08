@@ -124,7 +124,12 @@ struct AddItemViewUI: View {
             fatalError("Selection should not be nil.")
         }
         
-        return BucketItem(id: selectedOption.id, name: selectedOption.name, count: count)
+        return BucketItem(
+            id: selectedOption.id,
+            name: selectedOption.name,
+            count: count, 
+            categories: selectedOption.categories
+        )
     }
 }
 

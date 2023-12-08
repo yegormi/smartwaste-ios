@@ -14,8 +14,13 @@ struct MapCoordinator: Reducer {
     struct State: Equatable, IndexedRouterState {
         var routes: [Route<MapScreen.State>]
         static let initialState = State(
-            routes: [.root(.main(.init(points: [])))]
+            routes: [.root(.main(.init(points: [], categories: [])))]
         )
+        static func initState(with categories: [String]) -> Self {
+            State(
+                routes: [.root(.main(.init(points: [], categories: categories)))]
+            )
+        }
     }
     
     enum Action: Equatable, IndexedRouterAction {

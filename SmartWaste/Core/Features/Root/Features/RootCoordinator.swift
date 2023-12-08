@@ -46,9 +46,9 @@ struct RootCoordinator: Reducer {
                 state.routes.removeAll()
                 state.routes.push(.auth(.init()))
                 
-            case .routeAction(_, action: .tabs(.bucket(.routeAction(_, action: .main(.showRecyclePointsTapped))))):
+            case .routeAction(_, action: .tabs(.bucket(.routeAction(_, action: .main(.wentToMap(let categories)))))):
                 state.routes.removeAll()
-                state.routes.push(.tabs(.initState(from: .map)))
+                state.routes.push(.tabs(.initState(from: .map, with: categories)))
 
             default:
                 break

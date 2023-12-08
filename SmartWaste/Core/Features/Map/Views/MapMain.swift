@@ -33,12 +33,15 @@ struct MapMain: Reducer {
     
     struct State: Equatable {
         var points: [MapPoint]
+        var categories: [String]
         var viewDidAppear = false
     }
     
     enum Action: Equatable {
         case viewDidAppear
+        
         case getPoints
+        case searchPoints([String])
         case onGetPointsSuccess([MapPoint])
     }
     
@@ -47,11 +50,23 @@ struct MapMain: Reducer {
             switch action {
             case .viewDidAppear:
                 state.viewDidAppear = true
-                return .send(.getPoints)
+                if state.categories.isEmpty {
+                    return .send(.getPoints)
+                }
+                return .send(.searchPoints(state.categories))
             case .getPoints:
                 return .run { send in
                     do {
                         let points = try await getPoints()
+                        await send(.onGetPointsSuccess(points), animation: .default)
+                    } catch {
+                        print(error)
+                    }
+                }
+            case .searchPoints(let categories):
+                return .run { send in
+                    do {
+                        let points = try await searchPoints(with: categories)
                         await send(.onGetPointsSuccess(points), animation: .default)
                     } catch {
                         print(error)
@@ -67,5 +82,10 @@ struct MapMain: Reducer {
     private func getPoints() async throws -> [MapPoint] {
         let token = keychainClient.retrieveToken()?.accessToken ?? ""
         return try await mapClient.getPoints(token: token)
+    }
+    
+    private func searchPoints(with categories: [String]) async throws -> [MapPoint] {
+        let token = keychainClient.retrieveToken()?.accessToken ?? ""
+        return try await mapClient.searchPoints(token: token, categories: categories)
     }
 }

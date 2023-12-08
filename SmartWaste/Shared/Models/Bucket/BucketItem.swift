@@ -11,6 +11,7 @@ struct BucketItem: Codable, Equatable, Identifiable {
     let id: Int
     let name: String
     var count: Int
+    let categories: [BucketCategory]?
     
     static let limit: Int = 10
     

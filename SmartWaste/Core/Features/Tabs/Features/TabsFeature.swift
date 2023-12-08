@@ -39,6 +39,14 @@ struct TabsFeature: Reducer {
                 selectedTab: tab
             )
         }
+        static func initState(from tab: Tab, with categories: [String]) -> Self {
+            State(
+                map: .initState(with: categories),
+                profile: .initialState,
+                bucket: .initialState,
+                selectedTab: tab
+            )
+        }
     }
     
     enum Action: Equatable {
