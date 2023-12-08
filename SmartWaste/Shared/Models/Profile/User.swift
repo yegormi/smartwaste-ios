@@ -15,7 +15,7 @@ struct User: Codable, Equatable {
     let buckets: Int
     let createdAt: String
     
-    var days: Int { return daysGone(from: dateFromISOString(createdAt)) }
+    var days: Int { return daysGone(from: dateFromISOString(createdAt)) + 1 }
     var level: Int { return (self.score / 500) + 1 }
     var completedScore: Int { return self.score % 500 }
     
