@@ -15,15 +15,16 @@ struct ProfileCard: View {
         HStack(spacing: 15) {
             Image(systemName: "person.circle.fill")
                 .foregroundStyle(Color.gray)
-                .font(.system(size: 100))
-                .frame(width: 100, height: 100)
+                .font(.system(size: 80))
+                .frame(width: 80, height: 80)
                 .skeleton(with: user == nil,
-                          size: CGSize(width: 100, height: 100),
+                          size: CGSize(width: 80, height: 80),
                           shape: .circle)
             
-            VStack(alignment: .leading, spacing: 7) {
+            VStack(alignment: .leading, spacing: 2) {
                 Text(user?.username)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.5)
                     .font(.system(size: 20))
                     .foregroundColor(.primary)
                     .skeleton(with: user == nil,
@@ -31,6 +32,7 @@ struct ProfileCard: View {
                 
                 Text(user?.email)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.5)
                     .font(.system(size: 16))
                     .foregroundColor(.secondary)
                     .skeleton(with: user == nil,
