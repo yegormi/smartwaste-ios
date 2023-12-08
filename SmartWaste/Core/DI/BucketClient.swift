@@ -17,9 +17,9 @@ import Alamofire
 @DependencyClient
 struct BucketClient {
     var getCategories: @Sendable (_ token: String) async throws -> [BucketCategory]
-    var getItems: @Sendable (_ token: String) async throws -> BucketList
-    var scanPhoto: @Sendable (_ token: String, _ image: UIImage) async throws -> BucketList
-    var dumpItems: @Sendable (_ token: String, _ bucket: [DumpEntity]) async throws -> ProgressResponse
+    var getItems:      @Sendable (_ token: String) async throws -> BucketList
+    var scanPhoto:     @Sendable (_ token: String, _ image: UIImage) async throws -> BucketList
+    var dumpItems:     @Sendable (_ token: String, _ bucket: [DumpEntity]) async throws -> ProgressResponse
 }
 
 extension DependencyValues {
