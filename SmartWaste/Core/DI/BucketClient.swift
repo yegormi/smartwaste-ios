@@ -67,7 +67,7 @@ extension BucketClient: DependencyKey, TestDependencyKey {
                     handleResponse(response, continuation)
                 }
             }
-        }, scanPhoto: { token, photo in
+        }, scanPhoto: { token, imageData in
             let endpoint = "/scan"
             
             let headers: HTTPHeaders = [
@@ -77,13 +77,16 @@ extension BucketClient: DependencyKey, TestDependencyKey {
             return try await withCheckedThrowingContinuation { continuation in
                 AF.upload(
                     multipartFormData: { multipartFormData in
-                        multipartFormData.append(photo, withName: "photo", fileName: "photo.jpg", mimeType: "image/jpeg")
+                        multipartFormData.append(imageData, withName: "photo", fileName: "ios_scanned_image.jpeg", mimeType: "image/jpeg")
                     },
                     to: baseUrl + endpoint,
                     method: .post,
                     headers: headers
                 )
                 .validate()
+                .uploadProgress(queue: .main, closure: { progress in
+                    print("Upload Progress: \(progress.fractionCompleted)")
+                })
                 .responseDecodable(of: BucketList.self) { response in
                     handleResponse(response, continuation)
                 }
@@ -94,12 +97,12 @@ extension BucketClient: DependencyKey, TestDependencyKey {
             let headers: HTTPHeaders = [
                 "Authorization": "\(token)"
             ]
-
+            
             return try await withCheckedThrowingContinuation { continuation in
                 AF.request(Self.baseUrl + endpoint,
                            method: .post,
-                           parameters: bucket, 
-                           encoder: JSONParameterEncoder.default, 
+                           parameters: bucket,
+                           encoder: JSONParameterEncoder.default,
                            headers: headers
                 )
                 .validate()

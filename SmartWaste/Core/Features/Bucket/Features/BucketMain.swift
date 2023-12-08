@@ -61,7 +61,7 @@ struct BucketMain: Reducer {
         
         case scanPhoto
         case onScanPhotoSuccess(BucketList)
-
+        
         
     }
     
@@ -145,7 +145,7 @@ struct BucketMain: Reducer {
             case .usePhotoTapped:
                 return .send(.scanPhoto)
             case .scanPhoto:
-                return .run { [image = state.capturedImage]send in
+                return .run { [image = state.capturedImage] send in
                     do {
                         let item = try await scanPhoto(image!)
                         await send(.onScanPhotoSuccess(item))
@@ -161,12 +161,12 @@ struct BucketMain: Reducer {
                 guard let firstItem = result.items.first else {
                     return .none
                 }
-
+                
                 // Update the selection based on the matching item ID
                 if let matchingOption = state.bucketOptions.first(where: { $0.id == firstItem.id }) {
                     state.optionSelected = matchingOption
                 }
-
+                
                 return .none
                 
             case .imageCaptured(let image):
@@ -182,13 +182,13 @@ struct BucketMain: Reducer {
     }
     
     private func scanPhoto(_ image: UIImage) async throws -> BucketList {
-            let token = keychainClient.retrieveToken()?.accessToken ?? ""
-            guard let imageDataJPEG = image.jpegData(compressionQuality: 0.8) else {
-                throw ErrorHandle.imageConversionError
-            }
-
-            return try await bucketClient.scanPhoto(token: token, imageData: imageDataJPEG)
+        let token = keychainClient.retrieveToken()?.accessToken ?? ""
+        guard let imageDataJPEG = image.jpegData(compressionQuality: 0.5) else {
+            throw ErrorHandle.imageConversionError
         }
+        
+        return try await bucketClient.scanPhoto(token: token, imageData: imageDataJPEG)
+    }
     
     private func dumpItems(bucket: [DumpEntity]) async throws -> ProgressResponse {
         let token = keychainClient.retrieveToken()?.accessToken ?? ""
