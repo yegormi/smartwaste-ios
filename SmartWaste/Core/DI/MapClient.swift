@@ -16,7 +16,8 @@ import Alamofire
 
 @DependencyClient
 struct MapClient {
-    var getPoints: @Sendable (_ token: String) async throws -> [MapPoint]
+    var getPoints:    @Sendable (_ token: String) async throws -> [MapPoint]
+    var searchPoints: @Sendable (_ token: String, _ categories: [String]) async throws -> [MapPoint]
 }
 
 extension DependencyValues {
@@ -34,12 +35,34 @@ extension MapClient: DependencyKey, TestDependencyKey {
             let endpoint = "/points"
             
             let headers: HTTPHeaders = [
-                "Authorization": "\(token)"
+                "Authorization": token
             ]
             
             return try await withCheckedThrowingContinuation { continuation in
                 AF.request(baseUrl + endpoint,
                            method: .get,
+                           headers: headers
+                )
+                .validate()
+                .responseDecodable(of: [MapPoint].self) { response in
+                    handleResponse(response, continuation)
+                }
+            }
+        }, searchPoints: { token, categories in
+            let endpoint = "/points"
+            
+            let parameters: Parameters = [
+                "categories": categories
+            ]
+            
+            let headers: HTTPHeaders = [
+                "Authorization": token
+            ]
+            
+            return try await withCheckedThrowingContinuation { continuation in
+                AF.request(baseUrl + endpoint,
+                           method: .get,
+                           parameters: parameters,
                            headers: headers
                 )
                 .validate()

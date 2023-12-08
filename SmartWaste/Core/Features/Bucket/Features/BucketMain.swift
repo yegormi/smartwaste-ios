@@ -127,7 +127,7 @@ struct BucketMain: Reducer {
                 state.isSheetPresented = toggle
                 return .none
             case .showRecyclePointsTapped:
-                return .send(.dumpItems)
+                return .none
             case .dumpItems:
                 let bucketDump = BucketDump(bucketItems: state.bucket)
                 return .run { send in

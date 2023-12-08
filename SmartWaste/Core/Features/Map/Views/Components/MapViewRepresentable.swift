@@ -34,7 +34,6 @@ class Callout: UIView {
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        // Center the title vertically
         titleLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
@@ -47,7 +46,6 @@ class Callout: UIView {
         addSubview(addressLabel)
         addressLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        // Stack the address label below the title label with 8 points of spacing
         addressLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true
         addressLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         addressLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true

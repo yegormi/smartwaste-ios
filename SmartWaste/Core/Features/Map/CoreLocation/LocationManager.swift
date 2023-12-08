@@ -12,7 +12,7 @@ final class LocationManager: NSObject, ObservableObject {
     
     @Published var region = MKCoordinateRegion(
         center: .init(latitude: 48.4647, longitude: 35.0462),
-        span: .init(latitudeDelta: 10, longitudeDelta: 10)
+        span: .init(latitudeDelta: 1, longitudeDelta: 1)
     )
     
     override init() {

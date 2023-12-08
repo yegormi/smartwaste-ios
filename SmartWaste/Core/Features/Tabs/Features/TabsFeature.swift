@@ -31,12 +31,14 @@ struct TabsFeature: Reducer {
         var bucket: BucketCoordinator.State
         var selectedTab: Tab
         
-        static let initialState = State(
-            map: .initialState,
-            profile: .initialState,
-            bucket: .initialState,
-            selectedTab: .map
-        )
+        static func initState(from tab: Tab) -> Self {
+            State(
+                map: .initialState,
+                profile: .initialState,
+                bucket: .initialState,
+                selectedTab: tab
+            )
+        }
     }
     
     enum Action: Equatable {

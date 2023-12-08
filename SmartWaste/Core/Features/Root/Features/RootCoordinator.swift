@@ -36,15 +36,19 @@ struct RootCoordinator: Reducer {
                 
             case .routeAction(_, action: .auth(.authSuccessful)):
                 state.routes.removeAll()
-                state.routes.push(.tabs(.initialState))
+                state.routes.push(.tabs(.initState(from: .map)))
                 
             case .routeAction(_, action: .splash(.tabs)):
                 state.routes.removeAll()
-                state.routes.push(.tabs(.initialState))
+                state.routes.push(.tabs(.initState(from: .map)))
                 
             case .routeAction(_, action: .tabs(.profile(.routeAction(_, action: .main(.onSignOutSuccess))))):
                 state.routes.removeAll()
                 state.routes.push(.auth(.init()))
+                
+            case .routeAction(_, action: .tabs(.bucket(.routeAction(_, action: .main(.showRecyclePointsTapped))))):
+                state.routes.removeAll()
+                state.routes.push(.tabs(.initState(from: .map)))
 
             default:
                 break
