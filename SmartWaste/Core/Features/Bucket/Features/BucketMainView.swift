@@ -128,6 +128,8 @@ struct BucketMainView: View {
                             viewStore.send(.usePhotoTapped)
                         }
                     )
+                    .ignoresSafeArea(.all)
+                    
                 }
             }
         }
