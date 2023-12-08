@@ -27,7 +27,6 @@
 		EE3097A62B20888C00B6CBFB /* BucketCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3097A52B20888C00B6CBFB /* BucketCategory.swift */; };
 		EE3097A82B20897700B6CBFB /* BucketList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3097A72B20897700B6CBFB /* BucketList.swift */; };
 		EE3097AA2B2113D000B6CBFB /* ProfileClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3097A92B2113D000B6CBFB /* ProfileClient.swift */; };
-		EE3097AC2B2115D100B6CBFB /* QuestList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3097AB2B2115D000B6CBFB /* QuestList.swift */; };
 		EE3767F32B112A65007DFA25 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3767F22B112A65007DFA25 /* RootCoordinator.swift */; };
 		EE3767F62B112AAA007DFA25 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = EE3767F52B112AAA007DFA25 /* TCACoordinators */; };
 		EE3767F92B112D48007DFA25 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3767F72B112D48007DFA25 /* SplashView.swift */; };
@@ -116,7 +115,6 @@
 		EE3097A52B20888C00B6CBFB /* BucketCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketCategory.swift; sourceTree = "<group>"; };
 		EE3097A72B20897700B6CBFB /* BucketList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketList.swift; sourceTree = "<group>"; };
 		EE3097A92B2113D000B6CBFB /* ProfileClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileClient.swift; sourceTree = "<group>"; };
-		EE3097AB2B2115D000B6CBFB /* QuestList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestList.swift; sourceTree = "<group>"; };
 		EE3767F22B112A65007DFA25 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
 		EE3767F72B112D48007DFA25 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		EE3767F82B112D48007DFA25 /* SplashFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashFeature.swift; sourceTree = "<group>"; };
@@ -514,7 +512,6 @@
 			children = (
 				EEF96E382B1E32ED008A66E6 /* User.swift */,
 				EEF96E452B1E8798008A66E6 /* Quest.swift */,
-				EE3097AB2B2115D000B6CBFB /* QuestList.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -611,9 +608,9 @@
 			children = (
 				EE3097A52B20888C00B6CBFB /* BucketCategory.swift */,
 				EEF6FD492B2218CF0052CB40 /* BucketItem.swift */,
+				EE3097A72B20897700B6CBFB /* BucketList.swift */,
 				EEF96E492B1E9667008A66E6 /* BucketItemOption.swift */,
 				EEF6FD4E2B2219ED0052CB40 /* BucketDump.swift */,
-				EE3097A72B20897700B6CBFB /* BucketList.swift */,
 				EE495A6B2B228EAF00E96082 /* ProgressResponse.swift */,
 			);
 			path = Bucket;
@@ -762,7 +759,6 @@
 				EEF96E352B1E3013008A66E6 /* BucketCoordinatorView.swift in Sources */,
 				EEF96E3F2B1E5226008A66E6 /* ProfileCard.swift in Sources */,
 				EE3097AA2B2113D000B6CBFB /* ProfileClient.swift in Sources */,
-				EE3097AC2B2115D100B6CBFB /* QuestList.swift in Sources */,
 				EE5677602B10AEDD00DDE4A0 /* Validation.swift in Sources */,
 				EEA012DA2AFB7C69004311F3 /* Constants.swift in Sources */,
 				EEF6FD4A2B2218CF0052CB40 /* BucketItem.swift in Sources */,

@@ -14,7 +14,6 @@ enum RequestError: String, Equatable {
     case emailNotUnique     // signup email
     case tokenExpired       // token expired
     case tokenInvalid       // token invalid
-    case guideNotFound      // guide not found
     
     var code: String {
         switch self {
@@ -30,8 +29,6 @@ enum RequestError: String, Equatable {
             return "jwt-expired"
         case .tokenInvalid:
             return "jwt-invalid"
-        case .guideNotFound:
-            return "guide-not-found"
         }
     }
     
@@ -49,8 +46,6 @@ enum RequestError: String, Equatable {
             return "Token expired"
         case .tokenInvalid:
             return "Token invalid"
-        case .guideNotFound:
-            return "Guide is not found"
         }
     }
 }

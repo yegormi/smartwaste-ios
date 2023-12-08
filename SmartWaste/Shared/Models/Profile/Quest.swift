@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct QuestList: Codable {
+    let quests: [Quest]
+}
+
 struct Quest: Codable, Identifiable, Equatable {
     let id: Int
     let name: String
@@ -15,5 +19,4 @@ struct Quest: Codable, Identifiable, Equatable {
     let completed: Int
     let categoryId: Int
     let category: BucketCategory
-
 }
