@@ -39,6 +39,7 @@
 		EE5677672B11090A00DDE4A0 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = EE5677662B11090A00DDE4A0 /* AlertToast */; };
 		EE56776A2B110A6B00DDE4A0 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = EE5677692B110A6B00DDE4A0 /* Reachability */; };
 		EE5AE1A72AF9407E00381B33 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5AE1A62AF9407E00381B33 /* ErrorResponse.swift */; };
+		EE70CBC92B23D7F8009A2F94 /* AnnotationDetailsVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE70CBC82B23D7F8009A2F94 /* AnnotationDetailsVIew.swift */; };
 		EE7A34432AF530A700685408 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = EE7A34422AF530A700685408 /* CachedAsyncImage */; };
 		EE7F96E22B1571B50071A99F /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F96E12B1571B50071A99F /* AuthClient.swift */; };
 		EE7F96E52B15E40B0071A99F /* KeychainClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F96E42B15E40B0071A99F /* KeychainClient.swift */; };
@@ -71,7 +72,7 @@
 		EEF96E192B1E27EF008A66E6 /* MapCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E172B1E27EF008A66E6 /* MapCoordinatorView.swift */; };
 		EEF96E1A2B1E27EF008A66E6 /* MapMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E182B1E27EF008A66E6 /* MapMain.swift */; };
 		EEF96E1C2B1E2919008A66E6 /* MapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E1B2B1E2919008A66E6 /* MapViewRepresentable.swift */; };
-		EEF96E1E2B1E2963008A66E6 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E1D2B1E2963008A66E6 /* Point.swift */; };
+		EEF96E1E2B1E2963008A66E6 /* MapPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E1D2B1E2963008A66E6 /* MapPoint.swift */; };
 		EEF96E212B1E29B1008A66E6 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E202B1E29B1008A66E6 /* LocationManager.swift */; };
 		EEF96E312B1E3013008A66E6 /* BucketScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E262B1E3013008A66E6 /* BucketScreen.swift */; };
 		EEF96E322B1E3013008A66E6 /* BucketCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E272B1E3013008A66E6 /* BucketCoordinator.swift */; };
@@ -119,6 +120,7 @@
 		EE495A6D2B22A4CD00E96082 /* ErrorHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandle.swift; sourceTree = "<group>"; };
 		EE56775F2B10AEDD00DDE4A0 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		EE5AE1A62AF9407E00381B33 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
+		EE70CBC82B23D7F8009A2F94 /* AnnotationDetailsVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDetailsVIew.swift; sourceTree = "<group>"; };
 		EE7F96E12B1571B50071A99F /* AuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthClient.swift; sourceTree = "<group>"; };
 		EE7F96E42B15E40B0071A99F /* KeychainClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainClient.swift; sourceTree = "<group>"; };
 		EE7F96E62B15ECC30071A99F /* MapClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapClient.swift; sourceTree = "<group>"; };
@@ -148,7 +150,7 @@
 		EEF96E172B1E27EF008A66E6 /* MapCoordinatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCoordinatorView.swift; sourceTree = "<group>"; };
 		EEF96E182B1E27EF008A66E6 /* MapMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapMain.swift; sourceTree = "<group>"; };
 		EEF96E1B2B1E2919008A66E6 /* MapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRepresentable.swift; sourceTree = "<group>"; };
-		EEF96E1D2B1E2963008A66E6 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		EEF96E1D2B1E2963008A66E6 /* MapPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPoint.swift; sourceTree = "<group>"; };
 		EEF96E202B1E29B1008A66E6 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		EEF96E262B1E3013008A66E6 /* BucketScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BucketScreen.swift; sourceTree = "<group>"; };
 		EEF96E272B1E3013008A66E6 /* BucketCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BucketCoordinator.swift; sourceTree = "<group>"; };
@@ -487,7 +489,7 @@
 		EEF6FD4C2B22190E0052CB40 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				EEF96E1D2B1E2963008A66E6 /* Point.swift */,
+				EEF96E1D2B1E2963008A66E6 /* MapPoint.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -542,6 +544,7 @@
 			isa = PBXGroup;
 			children = (
 				EEF96E1B2B1E2919008A66E6 /* MapViewRepresentable.swift */,
+				EE70CBC82B23D7F8009A2F94 /* AnnotationDetailsVIew.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -728,7 +731,7 @@
 				EE2809542AF84F3400093049 /* TitleView.swift in Sources */,
 				EEF2F1992AF82415009F4677 /* PasswordField.swift in Sources */,
 				EE28095A2AF856A600093049 /* AuthToggleButton.swift in Sources */,
-				EEF96E1E2B1E2963008A66E6 /* Point.swift in Sources */,
+				EEF96E1E2B1E2963008A66E6 /* MapPoint.swift in Sources */,
 				EEF96E4C2B1F1CEC008A66E6 /* StatBox.swift in Sources */,
 				EEF96E4A2B1E9667008A66E6 /* BucketItemOption.swift in Sources */,
 				EEF96E192B1E27EF008A66E6 /* MapCoordinatorView.swift in Sources */,
@@ -767,6 +770,7 @@
 				EEA012BB2AFA8180004311F3 /* RootScreen.swift in Sources */,
 				EEF2F1972AF8240E009F4677 /* InputField.swift in Sources */,
 				EEF96E1C2B1E2919008A66E6 /* MapViewRepresentable.swift in Sources */,
+				EE70CBC92B23D7F8009A2F94 /* AnnotationDetailsVIew.swift in Sources */,
 				EEFFBA082AF99F3F00238FA0 /* RequestError.swift in Sources */,
 				EEF2F1A42AF82EC9009F4677 /* InputFieldStyle.swift in Sources */,
 				EEEB8D222AF8E5AD007DEBAE /* FailResponse.swift in Sources */,

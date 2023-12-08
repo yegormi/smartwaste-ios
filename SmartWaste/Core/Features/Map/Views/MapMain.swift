@@ -7,19 +7,32 @@
 
 import SwiftUI
 import ComposableArchitecture
+import MapKit
 
 struct MapMainView: View {
     let store: StoreOf<MapMain>
     
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-            Group {
-                MapViewRepresentable(points: viewStore.points)
+            MapViewRepresentable(points: viewStore.points) { annotation in
+                viewStore.send(.onAnnotationTapped(annotation))
             }
             .onAppear {
                 if !viewStore.viewDidAppear {
                     viewStore.send(.viewDidAppear)
                 }
+            }
+            .sheet(isPresented: viewStore.binding(
+                get: \.isSheetPresented,
+                send: MapMain.Action.sheetToggled
+            )) {
+                AnnotationDetailsVIew(
+                    annotation: viewStore.annotation ?? viewStore.emptyAnnotation,
+                    onGoButtonTapped: { viewStore.send(.goButtonTapped) },
+                    onDumpBucketTapped: { viewStore.send(.dumpBucketTapped) }
+                )
+                .padding(30)
+                .presentationDetents([.medium])
             }
         }
         
@@ -35,6 +48,14 @@ struct MapMain: Reducer {
         var points: [MapPoint]
         var categories: [String]
         var viewDidAppear = false
+        var annotation: AnnotationMark? = nil
+        var emptyAnnotation = AnnotationMark(
+            coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0),
+            name: "",
+            address: "",
+            emoji: []
+        )
+        var isSheetPresented = false
     }
     
     enum Action: Equatable {
@@ -43,6 +64,12 @@ struct MapMain: Reducer {
         case getPoints
         case searchPoints([String])
         case onGetPointsSuccess([MapPoint])
+        
+        case onAnnotationTapped(AnnotationMark)
+        case sheetToggled
+        
+        case goButtonTapped
+        case dumpBucketTapped
     }
     
     var body: some Reducer<State, Action> {
@@ -74,6 +101,17 @@ struct MapMain: Reducer {
                 }
             case .onGetPointsSuccess(let points):
                 state.points = points
+                return .none
+            case .onAnnotationTapped(let annotation):
+                state.annotation = annotation
+                return .send(.sheetToggled)
+            case .sheetToggled:
+                state.isSheetPresented.toggle()
+                return .none
+                
+            case .goButtonTapped:
+                return .none
+            case .dumpBucketTapped:
                 return .none
             }
         }
