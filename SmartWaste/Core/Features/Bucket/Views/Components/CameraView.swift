@@ -11,6 +11,7 @@ import SwiftUI
 
 struct CameraView: UIViewControllerRepresentable {
     @Binding var capturedImage: UIImage?
+    var onImageSelected: () -> Void
     
     typealias UIViewControllerType = UIImagePickerController
     
@@ -52,6 +53,7 @@ extension CameraView {
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
             if let image = info[.originalImage] as? UIImage {
                 parent.capturedImage = image
+                parent.onImageSelected()
             }
             picker.dismiss(animated: true)
         }

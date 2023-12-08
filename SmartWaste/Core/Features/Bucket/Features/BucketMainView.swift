@@ -119,13 +119,15 @@ struct BucketMainView: View {
                     get: \.isCameraPresented,
                     send: BucketMain.Action.cameraPresented
                 )) {
-                    CameraView(capturedImage: viewStore.binding(
-                        get: \.capturedImage,
-                        send: { .imageCaptured($0 ?? UIImage.checkmark) }
-                    ))
-                    .onDisappear {
-                        viewStore.send(.usePhotoTapped)
-                    }
+                    CameraView(
+                        capturedImage: viewStore.binding(
+                            get: \.capturedImage,
+                            send: { .imageCaptured($0 ?? UIImage.strokedCheckmark) }
+                        ),
+                        onImageSelected: {
+                            viewStore.send(.usePhotoTapped)
+                        }
+                    )
                 }
             }
         }
