@@ -79,9 +79,10 @@ struct ProfileMainView: View {
                 Spacer()
             }
             .onAppear {
-                if !viewStore.viewDidAppear {
-                    viewStore.send(.viewDidAppear)
-                }
+//                if !viewStore.viewDidAppear {
+//                }
+                viewStore.send(.viewDidAppear)
+
             }
         }
     }

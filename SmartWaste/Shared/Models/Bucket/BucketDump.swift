@@ -10,8 +10,16 @@ import Foundation
 struct BucketDump: Codable, Equatable {
     let items: [DumpEntity]
     
-    struct DumpEntity: Codable, Equatable, Identifiable {
-        let id: Int
-        let count: Int
+    init(items: [DumpEntity]) {
+        self.items = items
     }
+    
+    init(bucketItems: [BucketItem]) {
+        self.items = bucketItems.map { DumpEntity(id: $0.id, count: $0.count) }
+    }
+}
+
+struct DumpEntity: Codable, Equatable, Identifiable {
+    let id: Int
+    let count: Int
 }

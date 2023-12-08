@@ -19,6 +19,7 @@ struct BucketClient {
     var getCategories: @Sendable (_ token: String) async throws -> [BucketCategory]
     var getItems: @Sendable (_ token: String) async throws -> BucketList
     var scanPhoto: @Sendable (_ token: String, _ photo: Data) async throws -> BucketList
+    var dumpItems: @Sendable (_ token: String, _ bucket: [DumpEntity]) async throws -> ProgressResponse
 }
 
 extension DependencyValues {
@@ -84,6 +85,25 @@ extension BucketClient: DependencyKey, TestDependencyKey {
                 )
                 .validate()
                 .responseDecodable(of: BucketList.self) { response in
+                    handleResponse(response, continuation)
+                }
+            }
+        }, dumpItems: { token, bucket in
+            let endpoint = "/dump"
+            
+            let headers: HTTPHeaders = [
+                "Authorization": "\(token)"
+            ]
+
+            return try await withCheckedThrowingContinuation { continuation in
+                AF.request(Self.baseUrl + endpoint,
+                           method: .post,
+                           parameters: bucket, 
+                           encoder: JSONParameterEncoder.default, 
+                           headers: headers
+                )
+                .validate()
+                .responseDecodable(of: ProgressResponse.self) { response in
                     handleResponse(response, continuation)
                 }
             }

@@ -21,6 +21,8 @@ struct BucketMain: Reducer {
         var bucketOptions: [BucketItemOption] = []
         var optionSelected: BucketItemOption? = nil
         
+        var progress: ProgressResponse? = nil
+        
         var capturedImage: UIImage?
         
         var isSheetPresented = false
@@ -38,7 +40,10 @@ struct BucketMain: Reducer {
         case selectionChanged(BucketItemOption)
         
         case sheetToggled(Bool)
+        
         case showRecyclePointsTapped
+        case dumpItems
+        case onDumpItemsSuccess(ProgressResponse)
         
         case onScanButtonTapped
         
@@ -77,9 +82,22 @@ struct BucketMain: Reducer {
             case .sheetToggled(let toggle):
                 state.isSheetPresented = toggle
                 return .none
-            case .showRecyclePointsTapped:
-                return .send(.toastPresented)
                 
+            case .showRecyclePointsTapped:
+                return .send(.dumpItems)
+            case .dumpItems:
+                let bucketDump = BucketDump(bucketItems: state.bucket)
+                return .run { send in
+                    do {
+                        let progress = try await dumpItems(bucket: bucketDump.items)
+                        await send(.onDumpItemsSuccess(progress))
+                    } catch {
+                        print(error)
+                    }
+                }
+            case .onDumpItemsSuccess(let progress):
+                state.progress = progress
+                return .none
             case .selectionChanged(let option):
                 state.optionSelected = option
                 return .none
@@ -116,5 +134,10 @@ struct BucketMain: Reducer {
     private func scanPhoto() async throws -> BucketList {
         let token = keychainClient.retrieveToken()?.accessToken ?? ""
         return try await bucketClient.getItems(token: token)
+    }
+    
+    private func dumpItems(bucket: [DumpEntity]) async throws -> ProgressResponse {
+        let token = keychainClient.retrieveToken()?.accessToken ?? ""
+        return try await bucketClient.dumpItems(token: token, bucket: bucket)
     }
 }
