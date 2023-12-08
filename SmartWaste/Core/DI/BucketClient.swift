@@ -5,7 +5,7 @@
 //  Created by Yegor Myropoltsev on 05.12.2023.
 //
 
-import Foundation
+import UIKit
 import ComposableArchitecture
 import Alamofire
 
@@ -18,7 +18,7 @@ import Alamofire
 struct BucketClient {
     var getCategories: @Sendable (_ token: String) async throws -> [BucketCategory]
     var getItems: @Sendable (_ token: String) async throws -> BucketList
-    var scanPhoto: @Sendable (_ token: String, _ imageData: Data) async throws -> BucketList
+    var scanPhoto: @Sendable (_ token: String, _ image: UIImage) async throws -> BucketList
     var dumpItems: @Sendable (_ token: String, _ bucket: [DumpEntity]) async throws -> ProgressResponse
 }
 
@@ -67,17 +67,22 @@ extension BucketClient: DependencyKey, TestDependencyKey {
                     handleResponse(response, continuation)
                 }
             }
-        }, scanPhoto: { token, imageData in
+        }, scanPhoto: { token, image in
             let endpoint = "/scan"
             
             let headers: HTTPHeaders = [
-                "Authorization": "\(token)"
+                "Authorization": "\(token)",
             ]
+            guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+                throw ErrorHandle.imageConversionError
+            }
             
             return try await withCheckedThrowingContinuation { continuation in
                 AF.upload(
                     multipartFormData: { multipartFormData in
-                        multipartFormData.append(imageData, withName: "photo", fileName: "ios_scanned_image.jpeg", mimeType: "image/jpeg")
+                        multipartFormData.append(
+                            imageData, withName: "Photo", fileName: "Photo.jpeg", mimeType: "image/jpeg"
+                        )
                     },
                     to: baseUrl + endpoint,
                     method: .post,

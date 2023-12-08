@@ -183,11 +183,7 @@ struct BucketMain: Reducer {
     
     private func scanPhoto(_ image: UIImage) async throws -> BucketList {
         let token = keychainClient.retrieveToken()?.accessToken ?? ""
-        guard let imageDataJPEG = image.jpegData(compressionQuality: 0.5) else {
-            throw ErrorHandle.imageConversionError
-        }
-        
-        return try await bucketClient.scanPhoto(token: token, imageData: imageDataJPEG)
+        return try await bucketClient.scanPhoto(token: token, image: image)
     }
     
     private func dumpItems(bucket: [DumpEntity]) async throws -> ProgressResponse {

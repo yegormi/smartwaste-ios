@@ -18,7 +18,7 @@ struct CounterView: View {
             Button(action: onDecrement) {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(.gray, lineWidth: 1)
-                    .foregroundStyle(Color.clear)
+                    .foregroundStyle(Color.white.opacity(0.1))
                     .overlay(
                         Text("-")
                             .foregroundStyle(Color.primary)
@@ -37,7 +37,7 @@ struct CounterView: View {
             Button(action: onIncrement) {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(.gray, lineWidth: 1)
-                    .foregroundStyle(Color.clear)
+                    .foregroundStyle(Color.white.opacity(0.1))
                     .overlay(
                         Text("+")
                             .foregroundStyle(Color.primary)
@@ -53,8 +53,8 @@ struct CounterView: View {
 }
 
 struct CounterView_Previews: PreviewProvider {
-    static var value: Int = 0
     static var previews: some View {
+        @State var value: Int = 0
         CounterView(
             value: value,
             limit: 10,

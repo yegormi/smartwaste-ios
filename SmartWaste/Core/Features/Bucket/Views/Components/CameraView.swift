@@ -17,7 +17,12 @@ struct CameraView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewControllerType {
         let viewController = UIViewControllerType()
         viewController.delegate = context.coordinator
-        viewController.sourceType = .camera
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            viewController.sourceType = .camera
+        }
+        else {
+            viewController.sourceType = .savedPhotosAlbum // or .photoLibrary
+        }
         return viewController
     }
     
