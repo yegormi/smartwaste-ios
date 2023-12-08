@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 extension View {
     func invalidBorder(isActive: Bool) -> some View {
@@ -48,5 +49,14 @@ extension Binding where Value: Equatable {
                 self.transaction(transaction).wrappedValue = newValue
             }
         )
+    }
+}
+
+extension AlertToast: Equatable {
+    public static func == (lhs: AlertToast, rhs: AlertToast) -> Bool {
+        // Implement your equality comparison logic here
+        // You may need to compare the properties of AlertToast
+        // Return true if they are equal, false otherwise
+        return lhs.type == rhs.type
     }
 }

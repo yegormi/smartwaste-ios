@@ -76,13 +76,17 @@ struct BucketMainView: View {
                     viewStore.send(.viewDidAppear)
                 }
             }
-            .partialSheet(isPresented: viewStore.binding(
+            .sheet(isPresented: viewStore.binding(
                 get: \.isSheetPresented,
                 send: BucketMain.Action.sheetToggled
             )) {
                 AddItemViewUI(
                     title: "Add item",
                     options: viewStore.bucketOptions,
+                    selection: viewStore.binding(
+                        get: \.optionSelected,
+                        send: { .selectionChanged($0 ?? BucketItemOption(id: 1, name: "Material", categories: [])) }
+                    ),
                     onScanButtonTapped: { viewStore.send(.onScanButtonTapped) },
                     onAddButtonTapped: { item in
                         if item.count <= 0 {
@@ -94,18 +98,34 @@ struct BucketMainView: View {
                     },
                     onCancelButtonTapped: { viewStore.send(.sheetToggled(false)) }
                 )
-                .padding(.horizontal, 20)
-            }
-            .fullScreenCover(isPresented: viewStore.binding(
-                get: \.isCameraPresented,
-                send: BucketMain.Action.cameraPresented
-            )) {
-                CameraView(capturedImage: viewStore.binding(
-                    get: \.capturedImage,
-                    send: { .imageCaptured($0 ?? UIImage.checkmark) }
-                ))
-                .onDisappear {
-                    viewStore.send(.usePhotoTapped)
+                .padding(30)
+                .presentationDetents([.medium])
+                .presentationDragIndicator(.visible)
+                
+                .toast(isPresenting: viewStore.binding(
+                    get: \.isErrorToastPresented,
+                    send: BucketMain.Action.errorToastToggled
+                )) {
+                    AlertToast(displayMode: .alert, type: .error(.red), title: "No suitable item was detected")
+                }
+                .toast(isPresenting: viewStore.binding(
+                    get: \.isLoadingToastPresented,
+                    send: BucketMain.Action.loadingToastToggled
+                )) {
+                    AlertToast(type: .loading, title: "Scanning image")
+                }
+                
+                .fullScreenCover(isPresented: viewStore.binding(
+                    get: \.isCameraPresented,
+                    send: BucketMain.Action.cameraPresented
+                )) {
+                    CameraView(capturedImage: viewStore.binding(
+                        get: \.capturedImage,
+                        send: { .imageCaptured($0 ?? UIImage.checkmark) }
+                    ))
+                    .onDisappear {
+                        viewStore.send(.usePhotoTapped)
+                    }
                 }
             }
         }

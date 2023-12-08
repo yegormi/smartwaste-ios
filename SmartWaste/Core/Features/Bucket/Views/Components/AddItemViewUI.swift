@@ -10,6 +10,7 @@ import SwiftUI
 struct AddItemViewUI: View {
     var title: String
     var options: [BucketItemOption]
+    @Binding var selection: BucketItemOption?
     var onScanButtonTapped: () -> Void
     
     var onAddButtonTapped: (BucketItem) -> Void
@@ -17,7 +18,6 @@ struct AddItemViewUI: View {
     
     let hasNotch = UIDevice.current.hasNotch
     
-    @State private var selection: BucketItemOption?
     @State private var count = 0 {
         didSet {
             self.countError = nil
@@ -74,7 +74,7 @@ struct AddItemViewUI: View {
             if let countError = self.countError {
                 Text(countError)
                     .foregroundColor(.red)
-                    .font(.system(size: 14))
+                    .font(.system(size: 16))
                     .frame(height: 10)
                     .padding(.bottom, 45)
             }
@@ -135,10 +135,12 @@ struct AddItemViewUI_Previews: PreviewProvider {
             BucketItemOption(id: 2, name: "Option 2", categories: []),
             BucketItemOption(id: 3, name: "Option 3", categories: [])
         ]
-        
+        @State var selection: BucketItemOption? = (options.first ?? BucketItemOption(id: 1, name: "Material", categories: []))
+
         AddItemViewUI(
             title: "Add item",
             options: options,
+            selection: $selection,
             onScanButtonTapped: {},
             onAddButtonTapped: { _ in },
             onCancelButtonTapped: {}

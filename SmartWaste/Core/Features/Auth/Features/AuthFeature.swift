@@ -58,7 +58,7 @@ struct AuthFeature: Reducer {
         case authSuccessful(AuthResponse)
         case authFail(FailResponse)
         
-        case toastPresented
+        case toastToggled
     }
     
     private enum CancelID { case auth }
@@ -175,7 +175,7 @@ struct AuthFeature: Reducer {
                 
                 return .none
                 
-            case .toastPresented:
+            case .toastToggled:
                 state.isToastPresented.toggle()
                 return .none
             }

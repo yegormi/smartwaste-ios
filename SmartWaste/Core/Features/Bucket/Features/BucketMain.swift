@@ -7,6 +7,7 @@
 
 import UIKit
 import ComposableArchitecture
+import AlertToast
 
 @Reducer
 struct BucketMain: Reducer {
@@ -26,54 +27,66 @@ struct BucketMain: Reducer {
         var capturedImage: UIImage?
         
         var isSheetPresented = false
-        var isToastPresented = false
+        var isErrorToastPresented = false
+        var isLoadingToastPresented = false
         var isCameraPresented = false
-        
+                
         var photoResponse: BucketList? = nil
     }
     
     enum Action: Equatable {
         case viewDidAppear
-        case toastPresented
         
+        /// Item Actions
         case getItems
         case onGetItemsSuccess([BucketItemOption])
         case setInitialItem
         
         case selectionChanged(BucketItemOption)
         
-        case sheetToggled(Bool)
-        
-        case showRecyclePointsTapped
-        case dumpItems
-        case onDumpItemsSuccess(ProgressResponse)
-        case clearBucket
-        
-        case onScanButtonTapped
-        
         case setBucket(with: BucketItem)
         case updateItemCount(itemID: Int, newCount: Int)
         case deleteItem(itemID: Int)
         
+        /// UI Actions
+        case errorToastToggled
+        case loadingToastToggled
+        
+        case sheetToggled(Bool)
+        case showRecyclePointsTapped
+        
+        /// Dump Actions
+        case dumpItems
+        case onDumpItemsSuccess(ProgressResponse)
+        case clearBucket
+        
+        /// Camera Actions
+        case onScanButtonTapped
         case cameraPresented
         case usePhotoTapped
         case imageCaptured(UIImage)
         
         case scanPhoto
         case onScanPhotoSuccess(BucketList)
-        
-        
     }
     
     var body: some Reducer<State, Action> {
         Reduce<State, Action> { state, action in
             switch action {
+                // MARK: - View Lifecycle
             case .viewDidAppear:
                 state.viewDidAppear = true
                 return .send(.getItems)
-            case .toastPresented:
-                state.isToastPresented.toggle()
+                
+                // MARK: - Toast and Loading
+            case .errorToastToggled:
+                state.isErrorToastPresented.toggle()
                 return .none
+            case .loadingToastToggled:
+                state.isLoadingToastPresented.toggle()
+                return .none
+                
+                // MARK: - Item Actions
             case .getItems:
                 return .run { send in
                     do {
@@ -90,11 +103,30 @@ struct BucketMain: Reducer {
             case .setInitialItem:
                 state.optionSelected = state.bucketOptions.first
                 return .none
+            case .selectionChanged(let option):
+                state.optionSelected = option
+                return .none
+            case .setBucket(with: let item):
+                if state.bucket.firstIndex(where: { $0.id == item.id }) == nil {
+                    state.bucket.append(item)
+                }
+                return .none
+            case .updateItemCount(let itemID, let newCount):
+                if let index = state.bucket.firstIndex(where: { $0.id == itemID }) {
+                    state.bucket[index].updateCount(newCount)
+                }
+                if newCount == 0 {
+                    return .send(.deleteItem(itemID: itemID))
+                }
+                return .none
+            case .deleteItem(let itemID):
+                state.bucket.removeAll { $0.id == itemID }
+                return .none
                 
+                // MARK: - Sheet and UI Actions
             case .sheetToggled(let toggle):
                 state.isSheetPresented = toggle
                 return .none
-                
             case .showRecyclePointsTapped:
                 return .send(.dumpItems)
             case .dumpItems:
@@ -114,43 +146,22 @@ struct BucketMain: Reducer {
                 state.bucket = []
                 return .none
                 
-            case .selectionChanged(let option):
-                state.optionSelected = option
-                return .none
+                // MARK: - Camera Actions
             case .onScanButtonTapped:
                 return .send(.cameraPresented)
-                
-            case .setBucket(with: let item):
-                if let _ = state.bucket.firstIndex(where: { $0.id == item.id }) {
-                    return .none
-                } else {
-                    state.bucket.append(item)
-                }
-                return .none
-            case .updateItemCount(let itemID, let newCount):
-                if let index = state.bucket.firstIndex(where: { $0.id == itemID }) {
-                    state.bucket[index].updateCount(newCount)
-                }
-                if newCount == 0 {
-                    return .send(.deleteItem(itemID: itemID))
-                }
-                return .none
-            case .deleteItem(let itemID):
-                state.bucket.removeAll { $0.id == itemID }
-                return .none
-                
             case .cameraPresented:
                 state.isCameraPresented.toggle()
                 return .none
             case .usePhotoTapped:
+                state.isLoadingToastPresented.toggle()
                 return .send(.scanPhoto)
             case .scanPhoto:
                 return .run { [image = state.capturedImage] send in
                     do {
-                        let item = try await scanPhoto(image!)
+                        let item = try await scanPhoto(image ?? UIImage.checkmark)
                         await send(.onScanPhotoSuccess(item))
                     } catch ErrorHandle.imageConversionError {
-                        print("Image could not be converted propely")
+                        print("Image could not be converted properly")
                     } catch {
                         print(error)
                     }
@@ -159,14 +170,16 @@ struct BucketMain: Reducer {
                 state.photoResponse = result
                 
                 guard let firstItem = result.items.first else {
-                    return .none
+                    state.isLoadingToastPresented.toggle()
+                    return .send(.errorToastToggled)
                 }
                 
                 // Update the selection based on the matching item ID
                 if let matchingOption = state.bucketOptions.first(where: { $0.id == firstItem.id }) {
                     state.optionSelected = matchingOption
+                    return .send(.loadingToastToggled)
                 }
-                
+    
                 return .none
                 
             case .imageCaptured(let image):

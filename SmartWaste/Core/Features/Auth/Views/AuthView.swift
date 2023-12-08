@@ -91,7 +91,7 @@ struct AuthView: View {
                         if reachability.currentPath.isReachable {
                             viewStore.send(.authButtonTapped)
                         } else {
-                            viewStore.send(.toastPresented)
+                            viewStore.send(.toastToggled)
                         }
                     }
                     .scaleButton()
@@ -114,7 +114,7 @@ struct AuthView: View {
             }
             .toast(isPresenting: viewStore.binding(
                 get: \.isToastPresented,
-                send: AuthFeature.Action.toastPresented
+                send: AuthFeature.Action.toastToggled
             )) {
                 AlertToast(displayMode: .hud, type: .error(Color.red), title: "No internet connection")
             }

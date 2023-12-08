@@ -8,7 +8,6 @@
 import SwiftUI
 import ComposableArchitecture
 import TCACoordinators
-import PartialSheet
 
 @main
 struct SmartWasteApp: App {         
@@ -20,7 +19,6 @@ struct SmartWasteApp: App {
                         ._printChanges()
                 }
             )
-            .attachPartialSheetToRoot()
         }
     }
 }

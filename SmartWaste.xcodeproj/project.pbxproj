@@ -85,7 +85,6 @@
 		EEF96E4A2B1E9667008A66E6 /* BucketItemOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E492B1E9667008A66E6 /* BucketItemOption.swift */; };
 		EEF96E4C2B1F1CEC008A66E6 /* StatBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E4B2B1F1CEC008A66E6 /* StatBox.swift */; };
 		EEF96E4F2B1F27D7008A66E6 /* BucketItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E4E2B1F27D7008A66E6 /* BucketItemView.swift */; };
-		EEF96E532B1F452F008A66E6 /* PartialSheet in Frameworks */ = {isa = PBXBuildFile; productRef = EEF96E522B1F452F008A66E6 /* PartialSheet */; };
 		EEFFBA082AF99F3F00238FA0 /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFFBA072AF99F3F00238FA0 /* RequestError.swift */; };
 		EEFFBA0A2AF9A34600238FA0 /* ErrorText.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFFBA092AF9A34600238FA0 /* ErrorText.swift */; };
 		EEFFBA0C2AF9A7F100238FA0 /* ErrorField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFFBA0B2AF9A7F100238FA0 /* ErrorField.swift */; };
@@ -173,7 +172,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEF96E532B1F452F008A66E6 /* PartialSheet in Frameworks */,
 				EEEB8D2C2AF920B6007DEBAE /* Alamofire in Frameworks */,
 				EE56776A2B110A6B00DDE4A0 /* Reachability in Frameworks */,
 				EE40B6832B0FDD0A000C07BD /* SkeletonUI in Frameworks */,
@@ -646,7 +644,6 @@
 				EE5677662B11090A00DDE4A0 /* AlertToast */,
 				EE5677692B110A6B00DDE4A0 /* Reachability */,
 				EE3767F52B112AAA007DFA25 /* TCACoordinators */,
-				EEF96E522B1F452F008A66E6 /* PartialSheet */,
 			);
 			productName = GuideBook;
 			productReference = EE0C21842AE861D700668357 /* SmartWaste.app */;
@@ -685,7 +682,6 @@
 				EE5677652B11090A00DDE4A0 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				EE5677682B110A6B00DDE4A0 /* XCRemoteSwiftPackageReference "Reachability" */,
 				EE3767F42B112AAA007DFA25 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
-				EEF96E512B1F452F008A66E6 /* XCRemoteSwiftPackageReference "PartialSheet" */,
 			);
 			productRefGroup = EE0C21852AE861D700668357 /* Products */;
 			projectDirPath = "";
@@ -927,7 +923,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -960,7 +956,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1063,14 +1059,6 @@
 				minimumVersion = 1.3.0;
 			};
 		};
-		EEF96E512B1F452F008A66E6 /* XCRemoteSwiftPackageReference "PartialSheet" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AndreaMiotto/PartialSheet";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.1.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1113,11 +1101,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EEF2F1802AF7CE61009F4677 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
-		};
-		EEF96E522B1F452F008A66E6 /* PartialSheet */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EEF96E512B1F452F008A66E6 /* XCRemoteSwiftPackageReference "PartialSheet" */;
-			productName = PartialSheet;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
