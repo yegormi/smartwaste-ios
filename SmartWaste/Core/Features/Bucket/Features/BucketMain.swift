@@ -44,6 +44,7 @@ struct BucketMain: Reducer {
         case showRecyclePointsTapped
         case dumpItems
         case onDumpItemsSuccess(ProgressResponse)
+        case clearBucket
         
         case onScanButtonTapped
         
@@ -97,7 +98,11 @@ struct BucketMain: Reducer {
                 }
             case .onDumpItemsSuccess(let progress):
                 state.progress = progress
+                return .send(.clearBucket)
+            case .clearBucket:
+                state.bucket = []
                 return .none
+                
             case .selectionChanged(let option):
                 state.optionSelected = option
                 return .none
