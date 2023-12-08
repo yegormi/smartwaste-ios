@@ -12,25 +12,15 @@ import ComposableArchitecture
 struct BucketScreen: Reducer {
     enum State: Equatable {
         case main(BucketMain.State)
-        case addItem(AddItemFeature.State)
-        case camera(BucketCamera.State)
     }
     
     enum Action: Equatable {
         case main(BucketMain.Action)
-        case addItem(AddItemFeature.Action)
-        case camera(BucketCamera.Action)
     }
     
     var body: some Reducer<State, Action> {
         Scope(state: /State.main, action: /Action.main) {
             BucketMain()
-        }
-        Scope(state: /State.camera, action: /Action.camera) {
-            BucketCamera()
-        }
-        Scope(state: /State.addItem, action: /Action.addItem) {
-            AddItemFeature()
         }
     }
 }

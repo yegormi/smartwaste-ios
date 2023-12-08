@@ -27,6 +27,9 @@ struct BucketMain: Reducer {
         
         var isSheetPresented = false
         var isToastPresented = false
+        var isCameraPresented = false
+        
+        var photoResponse: BucketList? = nil
     }
     
     enum Action: Equatable {
@@ -51,6 +54,14 @@ struct BucketMain: Reducer {
         case setBucket(with: BucketItem)
         case updateItemCount(itemID: Int, newCount: Int)
         case deleteItem(itemID: Int)
+        
+        case cameraPresented
+        case usePhotoTapped
+        case imageCaptured(UIImage)
+        
+        case scanPhoto
+        case onScanPhotoSuccess(BucketList)
+
         
     }
     
@@ -107,7 +118,7 @@ struct BucketMain: Reducer {
                 state.optionSelected = option
                 return .none
             case .onScanButtonTapped:
-                return .none
+                return .send(.cameraPresented)
                 
             case .setBucket(with: let item):
                 if let _ = state.bucket.firstIndex(where: { $0.id == item.id }) {
@@ -127,6 +138,40 @@ struct BucketMain: Reducer {
             case .deleteItem(let itemID):
                 state.bucket.removeAll { $0.id == itemID }
                 return .none
+                
+            case .cameraPresented:
+                state.isCameraPresented.toggle()
+                return .none
+            case .usePhotoTapped:
+                return .send(.scanPhoto)
+            case .scanPhoto:
+                return .run { [image = state.capturedImage]send in
+                    do {
+                        let item = try await scanPhoto(image!)
+                        await send(.onScanPhotoSuccess(item))
+                    } catch ErrorHandle.imageConversionError {
+                        print("Image could not be converted propely")
+                    } catch {
+                        print(error)
+                    }
+                }
+            case .onScanPhotoSuccess(let result):
+                state.photoResponse = result
+                
+                guard let firstItem = result.items.first else {
+                    return .none
+                }
+
+                // Update the selection based on the matching item ID
+                if let matchingOption = state.bucketOptions.first(where: { $0.id == firstItem.id }) {
+                    state.optionSelected = matchingOption
+                }
+
+                return .none
+                
+            case .imageCaptured(let image):
+                state.capturedImage = image
+                return .none
             }
         }
     }
@@ -136,10 +181,14 @@ struct BucketMain: Reducer {
         return try await bucketClient.getItems(token: token)
     }
     
-    private func scanPhoto() async throws -> BucketList {
-        let token = keychainClient.retrieveToken()?.accessToken ?? ""
-        return try await bucketClient.getItems(token: token)
-    }
+    private func scanPhoto(_ image: UIImage) async throws -> BucketList {
+            let token = keychainClient.retrieveToken()?.accessToken ?? ""
+            guard let imageDataJPEG = image.jpegData(compressionQuality: 0.8) else {
+                throw ErrorHandle.imageConversionError
+            }
+
+            return try await bucketClient.scanPhoto(token: token, imageData: imageDataJPEG)
+        }
     
     private func dumpItems(bucket: [DumpEntity]) async throws -> ProgressResponse {
         let token = keychainClient.retrieveToken()?.accessToken ?? ""

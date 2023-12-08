@@ -18,7 +18,7 @@ import Alamofire
 struct BucketClient {
     var getCategories: @Sendable (_ token: String) async throws -> [BucketCategory]
     var getItems: @Sendable (_ token: String) async throws -> BucketList
-    var scanPhoto: @Sendable (_ token: String, _ photo: Data) async throws -> BucketList
+    var scanPhoto: @Sendable (_ token: String, _ imageData: Data) async throws -> BucketList
     var dumpItems: @Sendable (_ token: String, _ bucket: [DumpEntity]) async throws -> ProgressResponse
 }
 

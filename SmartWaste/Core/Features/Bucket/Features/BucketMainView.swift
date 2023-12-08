@@ -83,7 +83,7 @@ struct BucketMainView: View {
                 AddItemViewUI(
                     title: "Add item",
                     options: viewStore.bucketOptions,
-                    onScanButtonTapped: {},
+                    onScanButtonTapped: { viewStore.send(.onScanButtonTapped) },
                     onAddButtonTapped: { item in
                         if item.count <= 0 {
                             return
@@ -95,6 +95,18 @@ struct BucketMainView: View {
                     onCancelButtonTapped: { viewStore.send(.sheetToggled(false)) }
                 )
                 .padding(.horizontal, 20)
+            }
+            .fullScreenCover(isPresented: viewStore.binding(
+                get: \.isCameraPresented,
+                send: BucketMain.Action.cameraPresented
+            )) {
+                CameraView(capturedImage: viewStore.binding(
+                    get: \.capturedImage,
+                    send: { .imageCaptured($0 ?? UIImage.checkmark) }
+                ))
+                .onDisappear {
+                    viewStore.send(.usePhotoTapped)
+                }
             }
         }
     }
