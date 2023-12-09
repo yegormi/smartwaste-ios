@@ -69,14 +69,14 @@ struct AddItemViewUI: View {
                 onIncrement: { self.count += 1  }
             )
             .padding(.top, 20)
-            .padding(.bottom, (countError != nil) ? 5 : 60)
+            .padding(.bottom, (countError != nil) ? 20 : 60)
             
             if let countError = self.countError {
                 Text(countError)
                     .foregroundColor(.red)
                     .font(.system(size: 16))
                     .frame(height: 10)
-                    .padding(.bottom, 45)
+                    .padding(.bottom, 30)
             }
             
             Button(action: {
@@ -124,7 +124,12 @@ struct AddItemViewUI: View {
             fatalError("Selection should not be nil.")
         }
         
-        return BucketItem(id: selectedOption.id, name: selectedOption.name, count: count)
+        return BucketItem(
+            id: selectedOption.id,
+            name: selectedOption.name,
+            count: count, 
+            categories: selectedOption.categories
+        )
     }
 }
 

@@ -99,8 +99,8 @@ struct BucketMainView: View {
                     onCancelButtonTapped: { viewStore.send(.sheetToggled(false)) }
                 )
                 .padding(30)
-                .presentationDetents([.medium])
-                .presentationDragIndicator(.visible)
+//                .presentationDetents([.medium])
+//                .presentationDragIndicator(.visible)
                 
                 .toast(isPresenting: viewStore.binding(
                     get: \.isErrorToastPresented,
@@ -128,6 +128,8 @@ struct BucketMainView: View {
                             viewStore.send(.usePhotoTapped)
                         }
                     )
+                    .ignoresSafeArea(.all)
+                    
                 }
             }
         }

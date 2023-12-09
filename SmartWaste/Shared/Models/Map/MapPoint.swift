@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-struct MapPoint: Codable, Identifiable, Equatable{
+struct MapPoint: Codable, Identifiable, Equatable {
     let id: Int
     let lat: Double
     let lng: Double

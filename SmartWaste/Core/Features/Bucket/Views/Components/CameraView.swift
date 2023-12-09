@@ -18,14 +18,17 @@ struct CameraView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewControllerType {
         let viewController = UIViewControllerType()
         viewController.delegate = context.coordinator
+                
 //        if UIImagePickerController.isSourceTypeAvailable(.camera) {
 //            viewController.sourceType = .camera
 //        }
 //        else {
 //            viewController.sourceType = .savedPhotosAlbum
 //        }
+        
         viewController.sourceType = .savedPhotosAlbum
 
+        
         return viewController
     }
     
@@ -51,10 +54,14 @@ extension CameraView {
         }
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-            if let image = info[.originalImage] as? UIImage {
-                parent.capturedImage = image
-                parent.onImageSelected()
+            
+            guard let image = info[.originalImage] as? UIImage else {
+                return
             }
+            
+            parent.capturedImage = image
+            parent.onImageSelected()
+            
             picker.dismiss(animated: true)
         }
     }

@@ -67,7 +67,7 @@ struct TabsView: View {
 struct TabsView_Previews: PreviewProvider {
     static var previews: some View {
         TabsView(
-            store: Store(initialState: .initialState) {
+            store: Store(initialState: .initState(from: .map)) {
                 TabsFeature()
                     ._printChanges()
             }

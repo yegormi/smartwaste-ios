@@ -17,6 +17,7 @@ struct BucketMain: Reducer {
         var viewDidAppear = false
         
         var bucket: [BucketItem] = []
+        var categories: [String] = []
         
         var bucketOptions: [BucketItemOption] = []
         var optionSelected: BucketItemOption? = nil
@@ -58,6 +59,8 @@ struct BucketMain: Reducer {
         case dumpItems
         case onDumpItemsSuccess(ProgressResponse)
         case clearBucket
+        case setCategoriesFromBucket
+        case wentToMap(with: [String])
         
         /// Camera Actions
         case onScanButtonTapped
@@ -127,7 +130,14 @@ struct BucketMain: Reducer {
                 state.isSheetPresented = toggle
                 return .none
             case .showRecyclePointsTapped:
-                return .send(.dumpItems)
+                return .send(.setCategoriesFromBucket)
+            case .setCategoriesFromBucket:
+                state.categories = Array(Set(state.bucket.flatMap { $0.categories?.map { $0.slug } ?? [] }))
+                return .send(.wentToMap(with: state.categories))
+            case .wentToMap:
+                return .none
+            
+                // MARK: Dump Action
             case .dumpItems:
                 let bucketDump = BucketDump(bucketItems: state.bucket)
                 return .run { send in

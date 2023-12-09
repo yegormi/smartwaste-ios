@@ -35,7 +35,7 @@ struct BucketItemView: View {
 }
 
 struct BucketItemView_Previews: PreviewProvider {
-    static var testItem: BucketItem = BucketItem(id: 1, name: "Plastic bottle", count: 0)
+    static var testItem: BucketItem = BucketItem(id: 1, name: "Plastic bottle", count: 0, categories: [])
     
     static var previews: some View {
         BucketItemView(

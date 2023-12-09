@@ -39,6 +39,8 @@
 		EE5677672B11090A00DDE4A0 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = EE5677662B11090A00DDE4A0 /* AlertToast */; };
 		EE56776A2B110A6B00DDE4A0 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = EE5677692B110A6B00DDE4A0 /* Reachability */; };
 		EE5AE1A72AF9407E00381B33 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5AE1A62AF9407E00381B33 /* ErrorResponse.swift */; };
+		EE70CBC92B23D7F8009A2F94 /* AnnotationDetailsVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE70CBC82B23D7F8009A2F94 /* AnnotationDetailsVIew.swift */; };
+		EE70CBCB2B247677009A2F94 /* MapLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE70CBCA2B247677009A2F94 /* MapLink.swift */; };
 		EE7A34432AF530A700685408 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = EE7A34422AF530A700685408 /* CachedAsyncImage */; };
 		EE7F96E22B1571B50071A99F /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F96E12B1571B50071A99F /* AuthClient.swift */; };
 		EE7F96E52B15E40B0071A99F /* KeychainClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F96E42B15E40B0071A99F /* KeychainClient.swift */; };
@@ -71,7 +73,7 @@
 		EEF96E192B1E27EF008A66E6 /* MapCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E172B1E27EF008A66E6 /* MapCoordinatorView.swift */; };
 		EEF96E1A2B1E27EF008A66E6 /* MapMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E182B1E27EF008A66E6 /* MapMain.swift */; };
 		EEF96E1C2B1E2919008A66E6 /* MapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E1B2B1E2919008A66E6 /* MapViewRepresentable.swift */; };
-		EEF96E1E2B1E2963008A66E6 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E1D2B1E2963008A66E6 /* Point.swift */; };
+		EEF96E1E2B1E2963008A66E6 /* MapPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E1D2B1E2963008A66E6 /* MapPoint.swift */; };
 		EEF96E212B1E29B1008A66E6 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E202B1E29B1008A66E6 /* LocationManager.swift */; };
 		EEF96E312B1E3013008A66E6 /* BucketScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E262B1E3013008A66E6 /* BucketScreen.swift */; };
 		EEF96E322B1E3013008A66E6 /* BucketCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF96E272B1E3013008A66E6 /* BucketCoordinator.swift */; };
@@ -119,6 +121,9 @@
 		EE495A6D2B22A4CD00E96082 /* ErrorHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandle.swift; sourceTree = "<group>"; };
 		EE56775F2B10AEDD00DDE4A0 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		EE5AE1A62AF9407E00381B33 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
+		EE70CBC82B23D7F8009A2F94 /* AnnotationDetailsVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDetailsVIew.swift; sourceTree = "<group>"; };
+		EE70CBCA2B247677009A2F94 /* MapLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLink.swift; sourceTree = "<group>"; };
+		EE70CBCD2B2483D6009A2F94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		EE7F96E12B1571B50071A99F /* AuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthClient.swift; sourceTree = "<group>"; };
 		EE7F96E42B15E40B0071A99F /* KeychainClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainClient.swift; sourceTree = "<group>"; };
 		EE7F96E62B15ECC30071A99F /* MapClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapClient.swift; sourceTree = "<group>"; };
@@ -148,7 +153,7 @@
 		EEF96E172B1E27EF008A66E6 /* MapCoordinatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCoordinatorView.swift; sourceTree = "<group>"; };
 		EEF96E182B1E27EF008A66E6 /* MapMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapMain.swift; sourceTree = "<group>"; };
 		EEF96E1B2B1E2919008A66E6 /* MapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRepresentable.swift; sourceTree = "<group>"; };
-		EEF96E1D2B1E2963008A66E6 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		EEF96E1D2B1E2963008A66E6 /* MapPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPoint.swift; sourceTree = "<group>"; };
 		EEF96E202B1E29B1008A66E6 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		EEF96E262B1E3013008A66E6 /* BucketScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BucketScreen.swift; sourceTree = "<group>"; };
 		EEF96E272B1E3013008A66E6 /* BucketCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BucketCoordinator.swift; sourceTree = "<group>"; };
@@ -205,6 +210,7 @@
 		EE0C21862AE861D700668357 /* SmartWaste */ = {
 			isa = PBXGroup;
 			children = (
+				EE70CBCD2B2483D6009A2F94 /* Info.plist */,
 				EEF2F1A02AF82BBA009F4677 /* Assets.xcassets */,
 				EE32F9BC2B14065900EBE360 /* Core */,
 				EE56775E2B10AB8F00DDE4A0 /* Shared */,
@@ -278,6 +284,14 @@
 				EE56775F2B10AEDD00DDE4A0 /* Validation.swift */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		EE70CBCC2B2476A7009A2F94 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EE70CBCA2B247677009A2F94 /* MapLink.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		EE7F96E32B1571BA0071A99F /* DI */ = {
@@ -487,7 +501,7 @@
 		EEF6FD4C2B22190E0052CB40 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				EEF96E1D2B1E2963008A66E6 /* Point.swift */,
+				EEF96E1D2B1E2963008A66E6 /* MapPoint.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -513,8 +527,9 @@
 		EEF96E152B1E27C4008A66E6 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				EEF96E132B1E2768008A66E6 /* Features */,
 				EEF96E222B1E29C3008A66E6 /* CoreLocation */,
+				EEF96E132B1E2768008A66E6 /* Features */,
+				EE70CBCC2B2476A7009A2F94 /* Models */,
 				EEF96E162B1E27EF008A66E6 /* Views */,
 			);
 			path = Map;
@@ -542,6 +557,7 @@
 			isa = PBXGroup;
 			children = (
 				EEF96E1B2B1E2919008A66E6 /* MapViewRepresentable.swift */,
+				EE70CBC82B23D7F8009A2F94 /* AnnotationDetailsVIew.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -728,7 +744,7 @@
 				EE2809542AF84F3400093049 /* TitleView.swift in Sources */,
 				EEF2F1992AF82415009F4677 /* PasswordField.swift in Sources */,
 				EE28095A2AF856A600093049 /* AuthToggleButton.swift in Sources */,
-				EEF96E1E2B1E2963008A66E6 /* Point.swift in Sources */,
+				EEF96E1E2B1E2963008A66E6 /* MapPoint.swift in Sources */,
 				EEF96E4C2B1F1CEC008A66E6 /* StatBox.swift in Sources */,
 				EEF96E4A2B1E9667008A66E6 /* BucketItemOption.swift in Sources */,
 				EEF96E192B1E27EF008A66E6 /* MapCoordinatorView.swift in Sources */,
@@ -767,6 +783,7 @@
 				EEA012BB2AFA8180004311F3 /* RootScreen.swift in Sources */,
 				EEF2F1972AF8240E009F4677 /* InputField.swift in Sources */,
 				EEF96E1C2B1E2919008A66E6 /* MapViewRepresentable.swift in Sources */,
+				EE70CBC92B23D7F8009A2F94 /* AnnotationDetailsVIew.swift in Sources */,
 				EEFFBA082AF99F3F00238FA0 /* RequestError.swift in Sources */,
 				EEF2F1A42AF82EC9009F4677 /* InputFieldStyle.swift in Sources */,
 				EEEB8D222AF8E5AD007DEBAE /* FailResponse.swift in Sources */,
@@ -774,6 +791,7 @@
 				EEEB8D292AF8EAFC007DEBAE /* SignUp.swift in Sources */,
 				EEEB8D1E2AF8D895007DEBAE /* AuthResponse.swift in Sources */,
 				EEF96E1A2B1E27EF008A66E6 /* MapMain.swift in Sources */,
+				EE70CBCB2B247677009A2F94 /* MapLink.swift in Sources */,
 				EE297A472B14D662006FC0C4 /* TabsFeature.swift in Sources */,
 				EE0FF9CF2B21411F00D13CB6 /* CameraView.swift in Sources */,
 				EE3097782B1F703A00B6CBFB /* CounterView.swift in Sources */,
@@ -917,13 +935,15 @@
 				DEVELOPMENT_TEAM = RX5QFP6Q25;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SmartWaste/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to capture photos";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your location to validate your ability to dump your bucket";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -950,13 +970,15 @@
 				DEVELOPMENT_TEAM = RX5QFP6Q25;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SmartWaste/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to capture photos";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your location to validate your ability to dump your bucket";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
