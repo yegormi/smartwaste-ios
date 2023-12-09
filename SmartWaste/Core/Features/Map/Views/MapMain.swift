@@ -52,7 +52,7 @@ struct MapMainView: View {
                     }
                 }
                 .padding(30)
-                .presentationDetents([.medium])
+//                .presentationDetents([.medium])
             }
         }
         
@@ -154,7 +154,7 @@ struct MapMain: Reducer {
                 return .send(.checkDistance)
             case .checkDistance:
                 if let userLocation = getUserLocation(), let pointLocation = state.annotation?.coordinate {
-                    let isWithinRadius = isWithin(radius: 500, userLocation: userLocation, pointLocation: pointLocation)
+                    let isWithinRadius = isWithin(radius: 1000, userLocation: userLocation, pointLocation: pointLocation)
                     return .send(.onCheckSuccess(isWithinRadius))
                 }
                 return .none
@@ -205,39 +205,25 @@ struct MapMain: Reducer {
         let token = keychainClient.retrieveToken()?.accessToken ?? ""
         return try await bucketClient.dumpItems(token: token, bucket: bucket)
     }
-}
-
-extension MapMain {
     
     private func getUserLocation() -> CLLocationCoordinate2D? {
-        // You need to implement this based on your app's requirements
-        // Here is a basic example using Core Location framework
-        
-        var userLocation: CLLocationCoordinate2D?
-        
-        // Create a location manager
         let locationManager = CLLocationManager()
-        
-        // Request location permission
         locationManager.requestWhenInUseAuthorization()
         
-        // Get the current location
         if let location = locationManager.location?.coordinate {
-            userLocation = location
+            return location
         }
         
-        return userLocation
+        return nil
     }
     
     private func isWithin(radius: Double, userLocation: CLLocationCoordinate2D, pointLocation: CLLocationCoordinate2D) -> Bool {
-        // Calculate the distance between two coordinates
         let userLocationCLLocation = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
         let pointLocationCLLocation = CLLocation(latitude: pointLocation.latitude, longitude: pointLocation.longitude)
         
         // Distance in meters
         let distance = userLocationCLLocation.distance(from: pointLocationCLLocation)
         
-        // Check if the distance is within 500 meters
         return distance <= radius
     }
 }

@@ -17,7 +17,7 @@ enum MapLink: Equatable {
         case .appleMaps:
             return URL(string: "maps://")
         case .googleMaps:
-            return URL(string: "comgooglemaps://")
+            return URL(string: "https://www.google.com/maps/")
         }
     }
 
