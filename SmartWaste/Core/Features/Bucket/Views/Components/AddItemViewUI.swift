@@ -69,14 +69,14 @@ struct AddItemViewUI: View {
                 onIncrement: { self.count += 1  }
             )
             .padding(.top, 20)
-            .padding(.bottom, (countError != nil) ? 20 : 60)
+            .padding(.bottom, (countError != nil) ? 15 : 40)
             
             if let countError = self.countError {
                 Text(countError)
                     .foregroundColor(.red)
                     .font(.system(size: 16))
                     .frame(height: 10)
-                    .padding(.bottom, 30)
+                    .padding(.bottom, 15)
             }
             
             Button(action: {
@@ -88,7 +88,8 @@ struct AddItemViewUI: View {
             }) {
                 Text("Add")
                     .font(.system(size: 20))
-                    .frame(maxWidth: .infinity, maxHeight: 50)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 50)
                     .foregroundColor(Color.white)
                     .background(Color.green)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -101,15 +102,14 @@ struct AddItemViewUI: View {
             }) {
                 Text("Cancel")
                     .font(.system(size: 20))
-                    .frame(maxWidth: .infinity, maxHeight: 50)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 50)
                     .foregroundColor(Color.white)
                     .background(Color.red)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             .buttonStyle(.plain)
-            .padding(.bottom, 10)
         }
-        .padding(.bottom, hasNotch ? 0 : 20)
         .onAppear {
             self.setInitialOption()
         }

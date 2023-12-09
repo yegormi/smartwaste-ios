@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "bottomsheet",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mtzaquia/BottomSheet",
+      "state" : {
+        "revision" : "6686324c00339f538e969809823f1ea12931abe9",
+        "version" : "1.0.0"
+      }
+    },
+    {
       "identity" : "combine-schedulers",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/combine-schedulers",
@@ -178,6 +187,15 @@
       "state" : {
         "revision" : "c0060666c67e431268bd6b9897da2787f563a21b",
         "version" : "0.8.0"
+      }
+    },
+    {
+      "identity" : "uikitpresentationmodifier",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mtzaquia/UIKitPresentationModifier.git",
+      "state" : {
+        "revision" : "8aa474fe01e2ff9c716f272e395c36fa2af23683",
+        "version" : "1.0.0"
       }
     },
     {

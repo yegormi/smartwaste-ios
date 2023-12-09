@@ -19,14 +19,14 @@ struct CameraView: UIViewControllerRepresentable {
         let viewController = UIViewControllerType()
         viewController.delegate = context.coordinator
                 
-//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-//            viewController.sourceType = .camera
-//        }
-//        else {
-//            viewController.sourceType = .savedPhotosAlbum
-//        }
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            viewController.sourceType = .camera
+        }
+        else {
+            viewController.sourceType = .savedPhotosAlbum
+        }
         
-        viewController.sourceType = .savedPhotosAlbum
+//        viewController.sourceType = .savedPhotosAlbum
 
         
         return viewController

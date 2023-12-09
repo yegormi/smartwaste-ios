@@ -41,6 +41,7 @@
 		EE5AE1A72AF9407E00381B33 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5AE1A62AF9407E00381B33 /* ErrorResponse.swift */; };
 		EE70CBC92B23D7F8009A2F94 /* AnnotationDetailsVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE70CBC82B23D7F8009A2F94 /* AnnotationDetailsVIew.swift */; };
 		EE70CBCB2B247677009A2F94 /* MapLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE70CBCA2B247677009A2F94 /* MapLink.swift */; };
+		EE70CBE62B249EE5009A2F94 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = EE70CBE52B249EE5009A2F94 /* BottomSheet */; };
 		EE7A34432AF530A700685408 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = EE7A34422AF530A700685408 /* CachedAsyncImage */; };
 		EE7F96E22B1571B50071A99F /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F96E12B1571B50071A99F /* AuthClient.swift */; };
 		EE7F96E52B15E40B0071A99F /* KeychainClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F96E42B15E40B0071A99F /* KeychainClient.swift */; };
@@ -178,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EEEB8D2C2AF920B6007DEBAE /* Alamofire in Frameworks */,
+				EE70CBE62B249EE5009A2F94 /* BottomSheet in Frameworks */,
 				EE56776A2B110A6B00DDE4A0 /* Reachability in Frameworks */,
 				EE40B6832B0FDD0A000C07BD /* SkeletonUI in Frameworks */,
 				EE5677642B10BDBF00DDE4A0 /* KeychainSwift in Frameworks */,
@@ -660,6 +662,7 @@
 				EE5677662B11090A00DDE4A0 /* AlertToast */,
 				EE5677692B110A6B00DDE4A0 /* Reachability */,
 				EE3767F52B112AAA007DFA25 /* TCACoordinators */,
+				EE70CBE52B249EE5009A2F94 /* BottomSheet */,
 			);
 			productName = GuideBook;
 			productReference = EE0C21842AE861D700668357 /* SmartWaste.app */;
@@ -698,6 +701,7 @@
 				EE5677652B11090A00DDE4A0 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				EE5677682B110A6B00DDE4A0 /* XCRemoteSwiftPackageReference "Reachability" */,
 				EE3767F42B112AAA007DFA25 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
+				EE70CBE42B249EE5009A2F94 /* XCRemoteSwiftPackageReference "BottomSheet" */,
 			);
 			productRefGroup = EE0C21852AE861D700668357 /* Products */;
 			projectDirPath = "";
@@ -1057,6 +1061,14 @@
 				minimumVersion = 1.2.1;
 			};
 		};
+		EE70CBE42B249EE5009A2F94 /* XCRemoteSwiftPackageReference "BottomSheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mtzaquia/BottomSheet";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		EE7A34412AF530A700685408 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
@@ -1108,6 +1120,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EE5677682B110A6B00DDE4A0 /* XCRemoteSwiftPackageReference "Reachability" */;
 			productName = Reachability;
+		};
+		EE70CBE52B249EE5009A2F94 /* BottomSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE70CBE42B249EE5009A2F94 /* XCRemoteSwiftPackageReference "BottomSheet" */;
+			productName = BottomSheet;
 		};
 		EE7A34422AF530A700685408 /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;
