@@ -136,7 +136,8 @@ struct BucketMain: Reducer {
                 return .send(.wentToMap(with: state.categories))
             case .wentToMap:
                 return .none
-                
+            
+                // MARK: Dump Action
             case .dumpItems:
                 let bucketDump = BucketDump(bucketItems: state.bucket)
                 return .run { send in

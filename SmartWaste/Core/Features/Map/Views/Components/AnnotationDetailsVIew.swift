@@ -11,6 +11,7 @@ struct AnnotationDetailsVIew: View {
     let annotation: AnnotationMark
     var onGoButtonTapped: () -> Void
     var onDumpBucketTapped: () -> Void
+    let isAllowedToDump: Bool
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -58,6 +59,8 @@ struct AnnotationDetailsVIew: View {
                             .font(.system(size: 20))
                     )
             }
+            .disabled(!isAllowedToDump)
+            .opacity(isAllowedToDump ? 1.0 : 0.5)
             .scaleButton()
         }
     }

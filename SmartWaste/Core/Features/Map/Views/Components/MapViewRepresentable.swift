@@ -9,12 +9,12 @@ import SwiftUI
 import MapKit
 
 struct MapViewRepresentable: UIViewRepresentable {
-    @StateObject var manager = LocationManager()
-    let points: [MapPoint]
+    @StateObject var locationManager = LocationManager()
+    let mapPoints: [MapPoint]
     let onAnnotationTapped: (AnnotationMark) -> Void
     
-    init(points: [MapPoint], onAnnotationTapped: @escaping (AnnotationMark) -> Void) {
-        self.points = points
+    init(mapPoints: [MapPoint], onAnnotationTapped: @escaping (AnnotationMark) -> Void) {
+        self.mapPoints = mapPoints
         self.onAnnotationTapped = onAnnotationTapped
     }
     
@@ -25,30 +25,11 @@ struct MapViewRepresentable: UIViewRepresentable {
             self.parent = parent
         }
         
-        /// showing annotation on the map
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            if let cluster = annotation as? MKClusterAnnotation {
-                return ClusterAnnotationView(
-                    annotation: cluster,
-                    reuseIdentifier: ClusterAnnotationView.ReuseID
-                )
-            } else {
-                guard annotation is AnnotationMark else { return nil }
-                let annotationView = ClusterAnnotationView(
-                    annotation: annotation,
-                    reuseIdentifier: ClusterAnnotationView.ReuseID
-                )
-                annotationView.glyphText = "♻️"
-                annotationView.markerTintColor = .white
-                return annotationView
+            guard let cluster = annotation as? MKClusterAnnotation else {
+                return createAnnotationView(for: annotation)
             }
-        }
-        
-        func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
-            let cluster = MKClusterAnnotation(memberAnnotations: memberAnnotations)
-            cluster.title = ""
-            cluster.subtitle = ""
-            return cluster
+            return createClusterAnnotationView(for: cluster)
         }
         
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -57,35 +38,65 @@ struct MapViewRepresentable: UIViewRepresentable {
                 parent.onAnnotationTapped(annotation)
             }
         }
+        
+        func mapView(
+            _ mapView: MKMapView,
+            clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]
+        ) -> MKClusterAnnotation {
+            let cluster = MKClusterAnnotation(memberAnnotations: memberAnnotations)
+            cluster.title = ""
+            cluster.subtitle = ""
+            return cluster
+        }
+        
+        
+        func createAnnotationView(for annotation: MKAnnotation) -> MKAnnotationView? {
+            guard annotation is AnnotationMark else { return nil }
+            
+            let annotationView = ClusterAnnotationView(
+                annotation: annotation,
+                reuseIdentifier: ClusterAnnotationView.ReuseID
+            )
+            annotationView.glyphText = "♻️"
+            annotationView.markerTintColor = .white
+            return annotationView
+        }
+        
+        func createClusterAnnotationView(for cluster: MKClusterAnnotation) -> MKAnnotationView {
+            return ClusterAnnotationView(
+                annotation: cluster,
+                reuseIdentifier: ClusterAnnotationView.ReuseID
+            )
+        }
     }
     
     func makeCoordinator() -> Coordinator {
-        MapViewRepresentable.Coordinator(self)
+        Coordinator(self)
     }
     
     func makeUIView(context: Context) -> MKMapView {
-        let view = MKMapView()
-        view.delegate = context.coordinator
-        view.setRegion(manager.region, animated: false)
-        view.mapType = .standard
-        view.showsUserLocation = true
-        view.showsScale = true
-        
-        return view
+        let mapView = MKMapView()
+        mapView.delegate = context.coordinator
+        mapView.setRegion(locationManager.region, animated: false)
+        mapView.mapType = .standard
+        mapView.showsUserLocation = true
+        mapView.showsScale = true
+        return mapView
     }
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
         uiView.removeAnnotations(uiView.annotations)
-        
-        for point in points {
-            let annotation = AnnotationMark(
-                coordinate: point.coordinate,
-                name: point.name,
-                address: point.address,
-                emoji: point.categories.map { $0.emoji }
-            )
-            uiView.addAnnotation(annotation)
-        }
+        let annotations = mapPoints.map { createAnnotation(from: $0) }
+        uiView.addAnnotations(annotations)
+    }
+    
+    private func createAnnotation(from point: MapPoint) -> AnnotationMark {
+        return AnnotationMark(
+            coordinate: point.coordinate,
+            name: point.name,
+            address: point.address,
+            emoji: point.categories.map { $0.emoji }
+        )
     }
 }
 
@@ -94,7 +105,7 @@ class AnnotationMark: NSObject, MKAnnotation {
     let name: String
     let address: String
     let emoji: [String]
-
+    
     init(coordinate: CLLocationCoordinate2D, name: String, address: String, emoji: [String]) {
         self.coordinate = coordinate
         self.name = name
@@ -118,11 +129,6 @@ class ClusterAnnotationView: MKMarkerAnnotationView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func prepareForDisplay() {
-        super.prepareForDisplay()
-        canShowCallout = true
     }
 }
 

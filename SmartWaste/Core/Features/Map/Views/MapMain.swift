@@ -8,14 +8,15 @@
 import SwiftUI
 import ComposableArchitecture
 import MapKit
+import CoreLocation
 
 struct MapMainView: View {
     let store: StoreOf<MapMain>
     
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-            MapViewRepresentable(points: viewStore.points) { annotation in
-                viewStore.send(.onAnnotationTapped(annotation))
+            MapViewRepresentable(mapPoints: viewStore.points) { annotation in
+                viewStore.send(.onAnnotationTapped(annotation), animation: .default)
             }
             .onAppear {
                 if !viewStore.viewDidAppear {
@@ -29,8 +30,27 @@ struct MapMainView: View {
                 AnnotationDetailsVIew(
                     annotation: viewStore.annotation ?? viewStore.emptyAnnotation,
                     onGoButtonTapped: { viewStore.send(.goButtonTapped) },
-                    onDumpBucketTapped: { viewStore.send(.dumpBucketTapped) }
+                    onDumpBucketTapped: { },
+                    isAllowedToDump: viewStore.isDumpAllowed
                 )
+                .onAppear {
+                    viewStore.send(.sheetDidAppear)
+                }
+                .confirmationDialog("", isPresented: viewStore.binding(
+                    get: \.isActionPresented,
+                    send: MapMain.Action.actionPresented
+                )) {
+                    Button("Apple Maps") {
+                        if let annotation = viewStore.annotation {
+                            viewStore.send(.openRoute(with: annotation, in: .appleMaps))
+                        }
+                    }
+                    Button("Google Maps") {
+                        if let annotation = viewStore.annotation {
+                            viewStore.send(.openRoute(with: annotation, in: .googleMaps))
+                        }
+                    }
+                }
                 .padding(30)
                 .presentationDetents([.medium])
             }
@@ -41,8 +61,10 @@ struct MapMainView: View {
 
 @Reducer
 struct MapMain: Reducer {
-    @Dependency(\.mapClient) var mapClient
+    @Dependency(\.mapClient)      var mapClient
     @Dependency(\.keychainClient) var keychainClient
+    @Dependency(\.bucketClient)   var bucketClient
+
     
     struct State: Equatable {
         var points: [MapPoint]
@@ -56,6 +78,8 @@ struct MapMain: Reducer {
             emoji: []
         )
         var isSheetPresented = false
+        var isActionPresented = false
+        var isDumpAllowed = false
     }
     
     enum Action: Equatable {
@@ -69,7 +93,16 @@ struct MapMain: Reducer {
         case sheetToggled
         
         case goButtonTapped
-        case dumpBucketTapped
+        case actionPresented
+        case openRoute(with: AnnotationMark, in: MapLink)
+        
+        case sheetDidAppear
+        case checkDistance
+        case onCheckSuccess(Bool)
+        
+//        case dumpItems
+//        case onDumpItemsSuccess(ProgressResponse)
+//        case clearBucket
     }
     
     var body: some Reducer<State, Action> {
@@ -110,9 +143,46 @@ struct MapMain: Reducer {
                 return .none
                 
             case .goButtonTapped:
+                return .send(.actionPresented)
+            case .actionPresented:
+                state.isActionPresented.toggle()
                 return .none
-            case .dumpBucketTapped:
+            case .openRoute(let annotation, let app):
+                openRoute(with: annotation, in: app)
                 return .none
+            case .sheetDidAppear:
+                return .send(.checkDistance)
+            case .checkDistance:
+                if let userLocation = getUserLocation(), let pointLocation = state.annotation?.coordinate {
+                    let isWithinRadius = isWithin(radius: 500, userLocation: userLocation, pointLocation: pointLocation)
+                    return .send(.onCheckSuccess(isWithinRadius))
+                }
+                return .none
+            case .onCheckSuccess(let isWithinRadius):
+                if isWithinRadius {
+                    state.isDumpAllowed = true
+                } else {
+                    state.isDumpAllowed = false
+                }
+                return .none
+                
+//                // MARK: Dump Action
+//            case .dumpItems:
+//                let bucketDump = BucketDump(bucketItems: state.bucket)
+//                return .run { send in
+//                    do {
+//                        let progress = try await dumpItems(bucket: bucketDump.items)
+//                        await send(.onDumpItemsSuccess(progress))
+//                    } catch {
+//                        print(error)
+//                    }
+//                }
+//            case .onDumpItemsSuccess(let progress):
+//                state.progress = progress
+//                return .send(.clearBucket)
+//            case .clearBucket:
+//                state.bucket = []
+//                return .none
             }
         }
     }
@@ -125,5 +195,49 @@ struct MapMain: Reducer {
     private func searchPoints(with categories: [String]) async throws -> [MapPoint] {
         let token = keychainClient.retrieveToken()?.accessToken ?? ""
         return try await mapClient.searchPoints(token: token, categories: categories)
+    }
+    
+    private func openRoute(with anotation: AnnotationMark, in application: MapLink) {
+        application.open(with: anotation.coordinate)
+    }
+    
+    private func dumpItems(bucket: [DumpEntity]) async throws -> ProgressResponse {
+        let token = keychainClient.retrieveToken()?.accessToken ?? ""
+        return try await bucketClient.dumpItems(token: token, bucket: bucket)
+    }
+}
+
+extension MapMain {
+    
+    private func getUserLocation() -> CLLocationCoordinate2D? {
+        // You need to implement this based on your app's requirements
+        // Here is a basic example using Core Location framework
+        
+        var userLocation: CLLocationCoordinate2D?
+        
+        // Create a location manager
+        let locationManager = CLLocationManager()
+        
+        // Request location permission
+        locationManager.requestWhenInUseAuthorization()
+        
+        // Get the current location
+        if let location = locationManager.location?.coordinate {
+            userLocation = location
+        }
+        
+        return userLocation
+    }
+    
+    private func isWithin(radius: Double, userLocation: CLLocationCoordinate2D, pointLocation: CLLocationCoordinate2D) -> Bool {
+        // Calculate the distance between two coordinates
+        let userLocationCLLocation = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
+        let pointLocationCLLocation = CLLocation(latitude: pointLocation.latitude, longitude: pointLocation.longitude)
+        
+        // Distance in meters
+        let distance = userLocationCLLocation.distance(from: pointLocationCLLocation)
+        
+        // Check if the distance is within 500 meters
+        return distance <= radius
     }
 }
