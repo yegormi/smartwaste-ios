@@ -17,7 +17,7 @@ struct BucketMainView: View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack(alignment: .leading) {
                 Text("Bucket")
-                    .font(.system(size: 42))
+                    .font(.system(size: 36))
                     .foregroundStyle(.primary)
                     .padding(.bottom, 10)
                 
@@ -71,7 +71,8 @@ struct BucketMainView: View {
                     .scaleButton()
                 }
             }
-            .padding(30)
+            .padding(20)
+            .padding(.horizontal, 10)
             .onAppear {
                 if !viewStore.viewDidAppear {
                     viewStore.send(.viewDidAppear)
