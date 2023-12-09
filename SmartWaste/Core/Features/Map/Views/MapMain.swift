@@ -9,6 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 import MapKit
 import CoreLocation
+import BottomSheet
 
 struct MapMainView: View {
     let store: StoreOf<MapMain>
@@ -23,10 +24,13 @@ struct MapMainView: View {
                     viewStore.send(.viewDidAppear)
                 }
             }
-            .sheet(isPresented: viewStore.binding(
-                get: \.isSheetPresented,
-                send: MapMain.Action.sheetToggled
-            )) {
+            .bottomSheet(
+                isPresented: viewStore.binding(
+                    get: \.isSheetPresented,
+                    send: MapMain.Action.sheetToggled
+                ),
+                prefersGrabberVisible: true
+            ) {
                 AnnotationDetailsVIew(
                     annotation: viewStore.annotation ?? viewStore.emptyAnnotation,
                     onGoButtonTapped: { viewStore.send(.goButtonTapped) },
@@ -52,7 +56,6 @@ struct MapMainView: View {
                     }
                 }
                 .padding(30)
-//                .presentationDetents([.medium])
             }
         }
         
@@ -64,7 +67,7 @@ struct MapMain: Reducer {
     @Dependency(\.mapClient)      var mapClient
     @Dependency(\.keychainClient) var keychainClient
     @Dependency(\.bucketClient)   var bucketClient
-
+    
     
     struct State: Equatable {
         var points: [MapPoint]
@@ -100,9 +103,9 @@ struct MapMain: Reducer {
         case checkDistance
         case onCheckSuccess(Bool)
         
-//        case dumpItems
-//        case onDumpItemsSuccess(ProgressResponse)
-//        case clearBucket
+        //        case dumpItems
+        //        case onDumpItemsSuccess(ProgressResponse)
+        //        case clearBucket
     }
     
     var body: some Reducer<State, Action> {
@@ -166,23 +169,23 @@ struct MapMain: Reducer {
                 }
                 return .none
                 
-//                // MARK: Dump Action
-//            case .dumpItems:
-//                let bucketDump = BucketDump(bucketItems: state.bucket)
-//                return .run { send in
-//                    do {
-//                        let progress = try await dumpItems(bucket: bucketDump.items)
-//                        await send(.onDumpItemsSuccess(progress))
-//                    } catch {
-//                        print(error)
-//                    }
-//                }
-//            case .onDumpItemsSuccess(let progress):
-//                state.progress = progress
-//                return .send(.clearBucket)
-//            case .clearBucket:
-//                state.bucket = []
-//                return .none
+                //                // MARK: Dump Action
+                //            case .dumpItems:
+                //                let bucketDump = BucketDump(bucketItems: state.bucket)
+                //                return .run { send in
+                //                    do {
+                //                        let progress = try await dumpItems(bucket: bucketDump.items)
+                //                        await send(.onDumpItemsSuccess(progress))
+                //                    } catch {
+                //                        print(error)
+                //                    }
+                //                }
+                //            case .onDumpItemsSuccess(let progress):
+                //                state.progress = progress
+                //                return .send(.clearBucket)
+                //            case .clearBucket:
+                //                state.bucket = []
+                //                return .none
             }
         }
     }

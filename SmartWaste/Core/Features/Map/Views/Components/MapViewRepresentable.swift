@@ -76,6 +76,7 @@ struct MapViewRepresentable: UIViewRepresentable {
     
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
+        locationManager.setup()
         mapView.delegate = context.coordinator
         mapView.setRegion(locationManager.region, animated: false)
         mapView.mapType = .standard

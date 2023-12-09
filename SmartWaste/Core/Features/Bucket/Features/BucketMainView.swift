@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import AlertToast
+import BottomSheet
 
 struct BucketMainView: View {
     let store: StoreOf<BucketMain>
@@ -16,7 +17,7 @@ struct BucketMainView: View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack(alignment: .leading) {
                 Text("Bucket")
-                    .font(.system(size: 30))
+                    .font(.system(size: 42))
                     .foregroundStyle(.primary)
                     .padding(.bottom, 10)
                 
@@ -70,16 +71,19 @@ struct BucketMainView: View {
                     .scaleButton()
                 }
             }
-            .padding([.horizontal, .bottom], 30)
+            .padding(30)
             .onAppear {
                 if !viewStore.viewDidAppear {
                     viewStore.send(.viewDidAppear)
                 }
             }
-            .sheet(isPresented: viewStore.binding(
-                get: \.isSheetPresented,
-                send: BucketMain.Action.sheetToggled
-            )) {
+            .bottomSheet(
+                isPresented: viewStore.binding(
+                    get: \.isSheetPresented,
+                    send: BucketMain.Action.sheetToggled
+                ),
+                prefersGrabberVisible: true
+            ) {
                 AddItemViewUI(
                     title: "Add item",
                     options: viewStore.bucketOptions,
@@ -98,9 +102,8 @@ struct BucketMainView: View {
                     },
                     onCancelButtonTapped: { viewStore.send(.sheetToggled(false)) }
                 )
-                .padding(30)
-//                .presentationDetents([.medium])
-//                .presentationDragIndicator(.visible)
+                .padding(.top, 20)
+                .padding([.horizontal, .bottom], 30)
                 
                 .toast(isPresenting: viewStore.binding(
                     get: \.isErrorToastPresented,
@@ -129,7 +132,6 @@ struct BucketMainView: View {
                         }
                     )
                     .ignoresSafeArea(.all)
-                    
                 }
             }
         }
