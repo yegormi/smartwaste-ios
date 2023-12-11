@@ -14,7 +14,6 @@ struct SplashFeature: Reducer {
     @Dependency(\.keychainClient) var keychainClient
     
     struct State: Equatable {
-        var response: AuthResponse?
         static let initialState = Self()
     }
     
@@ -28,12 +27,10 @@ struct SplashFeature: Reducer {
         Reduce { state, action in
             switch action {
             case .appDidLaunch:
-                state.response = keychainClient.retrieveToken()
-                if state.response != nil {
-                    return .send(.tabs)
-                } else {
+                guard let token = keychainClient.retrieveToken() else {
                     return .send(.auth)
                 }
+                return .send(.tabs)
             case .auth:
                 return .none
             case .tabs:

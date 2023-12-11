@@ -29,7 +29,6 @@ struct SplashView: View {
                 }
             
         }
-        
     }
 }
 

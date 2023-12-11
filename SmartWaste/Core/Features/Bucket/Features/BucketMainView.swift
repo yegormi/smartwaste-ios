@@ -138,4 +138,3 @@ struct BucketMainView: View {
         }
     }
 }
-

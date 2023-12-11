@@ -33,29 +33,27 @@ struct MapMainView: View {
             ) {
                 AnnotationDetailsVIew(
                     annotation: viewStore.annotation ?? viewStore.emptyAnnotation,
-                    onGoButtonTapped: { viewStore.send(.goButtonTapped) },
+                    onGoButtonTapped: { viewStore.send(.actionToggled) },
                     onDumpBucketTapped: { },
                     isAllowedToDump: viewStore.isDumpAllowed
                 )
+                .padding(30)
                 .onAppear {
                     viewStore.send(.sheetDidAppear)
                 }
-                .confirmationDialog("", isPresented: viewStore.binding(
+                .confirmationDialog("Choose map app", isPresented: viewStore.binding(
                     get: \.isActionPresented,
-                    send: MapMain.Action.actionPresented
+                    send: MapMain.Action.actionToggled
                 )) {
-                    Button("Apple Maps") {
-                        if let annotation = viewStore.annotation {
+                    if let annotation = viewStore.annotation {
+                        Button("Apple Maps") {
                             viewStore.send(.openRoute(with: annotation, in: .appleMaps))
                         }
-                    }
-                    Button("Google Maps") {
-                        if let annotation = viewStore.annotation {
+                        Button("Google Maps") {
                             viewStore.send(.openRoute(with: annotation, in: .googleMaps))
                         }
                     }
                 }
-                .padding(30)
             }
         }
         
@@ -78,7 +76,7 @@ struct MapMain: Reducer {
             coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0),
             name: "",
             address: "",
-            emoji: []
+            emojiList: []
         )
         var isSheetPresented = false
         var isActionPresented = false
@@ -95,17 +93,16 @@ struct MapMain: Reducer {
         case onAnnotationTapped(AnnotationMark)
         case sheetToggled
         
-        case goButtonTapped
-        case actionPresented
+        case actionToggled
         case openRoute(with: AnnotationMark, in: MapLink)
         
         case sheetDidAppear
         case checkDistance
         case onCheckSuccess(Bool)
         
-        //        case dumpItems
-        //        case onDumpItemsSuccess(ProgressResponse)
-        //        case clearBucket
+        //  case dumpItems
+        //  case onDumpItemsSuccess(ProgressResponse)
+        //  сase clearBucket
     }
     
     var body: some Reducer<State, Action> {
@@ -144,10 +141,8 @@ struct MapMain: Reducer {
             case .sheetToggled:
                 state.isSheetPresented.toggle()
                 return .none
-                
-            case .goButtonTapped:
-                return .send(.actionPresented)
-            case .actionPresented:
+
+            case .actionToggled:
                 state.isActionPresented.toggle()
                 return .none
             case .openRoute(let annotation, let app):
@@ -169,23 +164,23 @@ struct MapMain: Reducer {
                 }
                 return .none
                 
-                //                // MARK: Dump Action
-                //            case .dumpItems:
-                //                let bucketDump = BucketDump(bucketItems: state.bucket)
-                //                return .run { send in
-                //                    do {
-                //                        let progress = try await dumpItems(bucket: bucketDump.items)
-                //                        await send(.onDumpItemsSuccess(progress))
-                //                    } catch {
-                //                        print(error)
-                //                    }
-                //                }
-                //            case .onDumpItemsSuccess(let progress):
-                //                state.progress = progress
-                //                return .send(.clearBucket)
-                //            case .clearBucket:
-                //                state.bucket = []
-                //                return .none
+                //        // MARK: Dump Action
+                //    case .dumpItems:
+                //        let bucketDump = BucketDump(bucketItems: state.bucket)
+                //        return .run { send in
+                //            do {
+                //                let progress = try await dumpItems(bucket: bucketDump.items)
+                //                await send(.onDumpItemsSuccess(progress))
+                //            } catch {
+                //                print(error)
+                //            }
+                //        }
+                //    case .onDumpItemsSuccess(let progress):
+                //        state.progress = progress
+                //        return .send(.clearBucket)
+                //    case .clearBucket:
+                //        state.bucket = []
+                //        return .none
             }
         }
     }
@@ -210,21 +205,19 @@ struct MapMain: Reducer {
     }
     
     private func getUserLocation() -> CLLocationCoordinate2D? {
-        let locationManager = CLLocationManager()
-        locationManager.requestWhenInUseAuthorization()
-        
-        if let location = locationManager.location?.coordinate {
-            return location
-        }
-        
-        return nil
+        let manager = LocationManager.shared
+        return manager.region.center
     }
     
-    private func isWithin(radius: Double, userLocation: CLLocationCoordinate2D, pointLocation: CLLocationCoordinate2D) -> Bool {
+    private func isWithin(
+        radius: Double,
+        userLocation: CLLocationCoordinate2D,
+        pointLocation: CLLocationCoordinate2D
+    ) -> Bool {
         let userLocationCLLocation = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
         let pointLocationCLLocation = CLLocation(latitude: pointLocation.latitude, longitude: pointLocation.longitude)
         
-        // Distance in meters
+        /// Distance in meters
         let distance = userLocationCLLocation.distance(from: pointLocationCLLocation)
         
         return distance <= radius

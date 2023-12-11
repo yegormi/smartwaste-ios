@@ -24,7 +24,7 @@ struct AnnotationDetailsVIew: View {
                 .foregroundStyle(.secondary)
             
             HStack(spacing: 10) {
-                ForEach(annotation.emoji, id: \.self) { emoji in
+                ForEach(annotation.emojiList, id: \.self) { emoji in
                     Text(emoji)
                         .font(.system(size: 30))
                 }

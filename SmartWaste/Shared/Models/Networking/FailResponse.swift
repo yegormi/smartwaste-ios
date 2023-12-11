@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FailResponse: Codable, Equatable {
+struct FailResponse: Codable, Equatable, Error {
     let code: String
     let message: String
 }

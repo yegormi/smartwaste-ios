@@ -34,7 +34,7 @@ struct RootCoordinator: Reducer {
                 state.routes.removeAll()
                 state.routes.push(.auth(.init()))
                 
-            case .routeAction(_, action: .auth(.authSuccessful)):
+            case .routeAction(_, action: .auth(.authResponse(.success))):
                 state.routes.removeAll()
                 state.routes.push(.tabs(.initState(from: .map)))
                 
