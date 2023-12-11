@@ -169,7 +169,7 @@ struct BucketMain: Reducer {
                     do {
                         let item = try await scanPhoto(image ?? UIImage.checkmark)
                         await send(.onScanPhotoSuccess(item))
-                    } catch ErrorHandle.imageConversionError {
+                    } catch ErrorResponse.imageConversionError {
                         print("Image could not be converted properly")
                     } catch {
                         print(error)

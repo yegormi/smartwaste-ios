@@ -18,4 +18,8 @@ enum AuthType {
             return "Sign up"
         }
     }
+    
+    mutating func toggle() {
+        self = (self == .signIn) ? .signUp : .signIn
+    }
 }

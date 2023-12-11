@@ -74,7 +74,7 @@ extension BucketClient: DependencyKey, TestDependencyKey {
                 "Authorization": "\(token)",
             ]
             guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-                throw ErrorHandle.imageConversionError
+                throw ErrorResponse.imageConversionError
             }
             
             return try await withCheckedThrowingContinuation { continuation in

@@ -8,27 +8,27 @@
 import MapKit
 
 final class LocationManager: NSObject, ObservableObject {
+    static let shared = LocationManager()
+    
     private let locationManager = CLLocationManager()
     
     @Published var region = MKCoordinateRegion(
         center: .init(latitude: 48.4647, longitude: 35.0462),
-        span: .init(latitudeDelta: 1, longitudeDelta: 1)
+        span: .init(latitudeDelta: 0.5, longitudeDelta: 0.5)
     )
     
     override init() {
         super.init()
-        
-        self.locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.setup()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        setup()
     }
     
     func setup() {
         switch locationManager.authorizationStatus {
-        //If we are authorized then we request location just once, to center the map
-        case .authorizedWhenInUse:
+        case .authorizedWhenInUse, .authorizedAlways:
             locationManager.requestLocation()
-        //If we don´t, we request authorization
         case .notDetermined:
             locationManager.startUpdatingLocation()
             locationManager.requestWhenInUseAuthorization()

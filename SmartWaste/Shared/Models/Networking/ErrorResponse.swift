@@ -11,4 +11,5 @@ enum ErrorResponse: Error {
     case networkError(Error)
     case decodingError(Error)
     case failedWithResponse(FailResponse)
+    case imageConversionError
 }

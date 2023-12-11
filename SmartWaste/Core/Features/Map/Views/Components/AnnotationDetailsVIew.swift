@@ -16,15 +16,15 @@ struct AnnotationDetailsVIew: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(annotation.name)
-                .font(.system(size: 24, weight: .semibold))
+                .font(.system(size: 22, weight: .semibold))
                 .foregroundStyle(.primary)
             
             Text(annotation.address)
-                .font(.system(size: 20))
-                .foregroundStyle(.primary)
+                .font(.system(size: 18))
+                .foregroundStyle(.secondary)
             
             HStack(spacing: 10) {
-                ForEach(annotation.emoji, id: \.self) { emoji in
+                ForEach(annotation.emojiList, id: \.self) { emoji in
                     Text(emoji)
                         .font(.system(size: 30))
                 }

@@ -9,7 +9,7 @@ import SwiftUI
 import MapKit
 
 struct MapViewRepresentable: UIViewRepresentable {
-    @StateObject var locationManager = LocationManager()
+    @StateObject var locationManager = LocationManager.shared
     let mapPoints: [MapPoint]
     let onAnnotationTapped: (AnnotationMark) -> Void
     
@@ -76,7 +76,6 @@ struct MapViewRepresentable: UIViewRepresentable {
     
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
-        locationManager.setup()
         mapView.delegate = context.coordinator
         mapView.setRegion(locationManager.region, animated: false)
         mapView.mapType = .standard
@@ -96,7 +95,7 @@ struct MapViewRepresentable: UIViewRepresentable {
             coordinate: point.coordinate,
             name: point.name,
             address: point.address,
-            emoji: point.categories.map { $0.emoji }
+            emojiList: point.categories.map { $0.emoji }
         )
     }
 }
@@ -105,13 +104,13 @@ class AnnotationMark: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     let name: String
     let address: String
-    let emoji: [String]
+    let emojiList: [String]
     
-    init(coordinate: CLLocationCoordinate2D, name: String, address: String, emoji: [String]) {
+    init(coordinate: CLLocationCoordinate2D, name: String, address: String, emojiList: [String]) {
         self.coordinate = coordinate
         self.name = name
         self.address = address
-        self.emoji = emoji
+        self.emojiList = emojiList
         super.init()
     }
 }
