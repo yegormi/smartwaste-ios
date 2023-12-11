@@ -33,7 +33,6 @@ struct ProfileMainView: View {
                         Text("Level up")
                         Spacer()
                         Text("\(viewStore.user?.completedScore ?? 0)/500")
-
                     }
                     
                     ProgressView(value: Double(viewStore.user?.completedScore ?? 0), total: 500)
@@ -56,7 +55,7 @@ struct ProfileMainView: View {
                             }
                         )
                     RoundedRectangle(cornerRadius: 40)
-                        .foregroundStyle(Color("PrimaryInverted"))
+                        .foregroundStyle(Color("Background"))
                         .overlay(
                             VStack(spacing: 0) {
                                 Text("Quests")
@@ -79,10 +78,10 @@ struct ProfileMainView: View {
                 Spacer()
             }
             .onAppear {
-//                if !viewStore.viewDidAppear {
-//                }
+                //                if !viewStore.viewDidAppear {
+                //                }
                 viewStore.send(.viewDidAppear)
-
+                
             }
         }
     }
