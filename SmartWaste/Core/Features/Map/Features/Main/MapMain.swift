@@ -51,7 +51,7 @@ struct MapMain: Reducer {
     }
     
     var body: some Reducer<State, Action> {
-        Reduce { state, action in
+        Reduce<State, Action> { state, action in
             switch action {
             case .viewDidAppear:
                 state.viewDidAppear = true
