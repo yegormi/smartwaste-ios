@@ -7,8 +7,6 @@
 
 import SwiftUI
 import ComposableArchitecture
-import AlertToast
-import BottomSheet
 
 struct BucketMainView: View {
     let store: StoreOf<BucketMain>
@@ -23,7 +21,7 @@ struct BucketMainView: View {
                 
                 ScrollView(showsIndicators: false) {
                     ForEach(viewStore.bucket) { item in
-                        BucketItemView(
+                        BucketItemUI(
                             item: item,
                             onDecrement: {
                                 viewStore.send(
@@ -42,7 +40,7 @@ struct BucketMainView: View {
                 
                 VStack(spacing: 15) {
                     Button {
-                        viewStore.send(.sheetToggled(true))
+                        viewStore.send(.addButtonTapped)
                     } label: {
                         RoundedRectangle(cornerRadius: 12)
                             .stroke(.green, lineWidth: 2)
@@ -78,62 +76,16 @@ struct BucketMainView: View {
                     viewStore.send(.viewDidAppear)
                 }
             }
-            .bottomSheet(
-                isPresented: viewStore.binding(
-                    get: \.isSheetPresented,
-                    send: BucketMain.Action.sheetToggled
-                ),
-                prefersGrabberVisible: true
-            ) {
-                AddItemViewUI(
-                    title: "Add item",
-                    options: viewStore.bucketOptions,
-                    selection: viewStore.binding(
-                        get: \.optionSelected,
-                        send: { .selectionChanged($0 ?? BucketItemOption(id: 1, name: "Material", categories: [])) }
-                    ),
-                    onScanButtonTapped: { viewStore.send(.onScanButtonTapped) },
-                    onAddButtonTapped: { item in
-                        if item.count <= 0 {
-                            return
-                        }
-                        print("Add button tapped! item: \(item.name) and count: \(item.count)")
-                        viewStore.send(.setBucket(with: item))
-                        viewStore.send(.sheetToggled(false))
-                    },
-                    onCancelButtonTapped: { viewStore.send(.sheetToggled(false)) }
+            .sheet(
+                store: self.store.scope(
+                    state: \.$addItem,
+                    action: \.addItem
                 )
-                .padding(.top, 20)
-                .padding([.horizontal, .bottom], 30)
-                
-                .toast(isPresenting: viewStore.binding(
-                    get: \.isErrorToastPresented,
-                    send: BucketMain.Action.errorToastToggled
-                )) {
-                    AlertToast(displayMode: .alert, type: .error(.red), title: "No suitable item was detected")
-                }
-                .toast(isPresenting: viewStore.binding(
-                    get: \.isLoadingToastPresented,
-                    send: BucketMain.Action.loadingToastToggled
-                )) {
-                    AlertToast(type: .loading, title: "Scanning image")
-                }
-                
-                .fullScreenCover(isPresented: viewStore.binding(
-                    get: \.isCameraPresented,
-                    send: BucketMain.Action.cameraPresented
-                )) {
-                    CameraView(
-                        capturedImage: viewStore.binding(
-                            get: \.capturedImage,
-                            send: { .imageCaptured($0 ?? UIImage.strokedCheckmark) }
-                        ),
-                        onImageSelected: {
-                            viewStore.send(.usePhotoTapped)
-                        }
-                    )
-                    .ignoresSafeArea(.all)
-                }
+            ) { store in
+                AddView(store: store)
+                    .padding(30)
+                    .presentationDetents([.fraction(0.5)])
+                    .presentationDragIndicator(.visible)
             }
         }
     }

@@ -1,13 +1,13 @@
 //
-//  BucketItemOptionView.swift
+//  BucketItemUI.swift
 //  SmartWaste
 //
-//  Created by Yegor Myropoltsev on 05.12.2023.
+//  Created by Yegor Myropoltsev on 12.12.2023.
 //
 
 import SwiftUI
 
-struct BucketItemView: View {
+struct BucketItemUI: View {
     var item: BucketItem
     let onDecrement: () -> Void
     let onIncrement: () -> Void
@@ -20,9 +20,8 @@ struct BucketItemView: View {
             .overlay(
                 HStack {
                     Text(item.name)
-                        .foregroundStyle(Color.primary)
                     Spacer()
-                    CounterView(
+                    CounterUI(
                         value: item.count,
                         limit: BucketItem.limit,
                         onDecrement: onDecrement,
@@ -34,11 +33,11 @@ struct BucketItemView: View {
     }
 }
 
-struct BucketItemView_Previews: PreviewProvider {
+struct BucketItemUI_Previews: PreviewProvider {
     static var testItem: BucketItem = BucketItem(id: 1, name: "Plastic bottle", count: 0, categories: [])
     
     static var previews: some View {
-        BucketItemView(
+        BucketItemUI(
             item: testItem,
             onDecrement: {},
             onIncrement: {}

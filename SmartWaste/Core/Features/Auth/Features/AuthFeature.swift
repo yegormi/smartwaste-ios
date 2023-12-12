@@ -103,7 +103,7 @@ struct AuthFeature: Reducer {
                 let email = state.email
                 let password = state.password
                 
-                return .run { [email = state.email] send in
+                return .run { send in
                     do {
                         let result = try await signIn(
                             email: email,

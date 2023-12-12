@@ -9,56 +9,6 @@ import SwiftUI
 import ComposableArchitecture
 import MapKit
 import CoreLocation
-import BottomSheet
-
-struct MapMainView: View {
-    let store: StoreOf<MapMain>
-    
-    var body: some View {
-        WithViewStore(self.store, observe: { $0 }) { viewStore in
-            MapViewRepresentable(mapPoints: viewStore.points) { annotation in
-                viewStore.send(.onAnnotationTapped(annotation), animation: .default)
-            }
-            .onAppear {
-                if !viewStore.viewDidAppear {
-                    viewStore.send(.viewDidAppear)
-                }
-            }
-            .bottomSheet(
-                isPresented: viewStore.binding(
-                    get: \.isSheetPresented,
-                    send: MapMain.Action.sheetToggled
-                ),
-                prefersGrabberVisible: true
-            ) {
-                AnnotationDetailsVIew(
-                    annotation: viewStore.annotation ?? viewStore.emptyAnnotation,
-                    onGoButtonTapped: { viewStore.send(.actionToggled) },
-                    onDumpBucketTapped: { },
-                    isAllowedToDump: viewStore.isDumpAllowed
-                )
-                .padding(30)
-                .onAppear {
-                    viewStore.send(.sheetDidAppear)
-                }
-                .confirmationDialog("Choose map app", isPresented: viewStore.binding(
-                    get: \.isActionPresented,
-                    send: MapMain.Action.actionToggled
-                )) {
-                    if let annotation = viewStore.annotation {
-                        Button("Apple Maps") {
-                            viewStore.send(.openRoute(with: annotation, in: .appleMaps))
-                        }
-                        Button("Google Maps") {
-                            viewStore.send(.openRoute(with: annotation, in: .googleMaps))
-                        }
-                    }
-                }
-            }
-        }
-        
-    }
-}
 
 @Reducer
 struct MapMain: Reducer {
@@ -68,22 +18,24 @@ struct MapMain: Reducer {
     
     
     struct State: Equatable {
+        @PresentationState var details: AnnotationFeature.State?
+        var viewDidAppear = false
+        
         var points: [MapPoint]
         var categories: [String]
-        var viewDidAppear = false
-        var annotation: AnnotationMark? = nil
+        var annotation: AnnotationMark?
+        
         var emptyAnnotation = AnnotationMark(
             coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0),
             name: "",
             address: "",
             emojiList: []
         )
-        var isSheetPresented = false
-        var isActionPresented = false
         var isDumpAllowed = false
     }
     
     enum Action: Equatable {
+        case details(PresentationAction<AnnotationFeature.Action>)
         case viewDidAppear
         
         case getPoints
@@ -91,22 +43,15 @@ struct MapMain: Reducer {
         case onGetPointsSuccess([MapPoint])
         
         case onAnnotationTapped(AnnotationMark)
-        case sheetToggled
         
-        case actionToggled
         case openRoute(with: AnnotationMark, in: MapLink)
         
-        case sheetDidAppear
         case checkDistance
         case onCheckSuccess(Bool)
-        
-        //  case dumpItems
-        //  case onDumpItemsSuccess(ProgressResponse)
-        //  сase clearBucket
     }
     
     var body: some Reducer<State, Action> {
-        Reduce<State, Action> { state, action in
+        Reduce { state, action in
             switch action {
             case .viewDidAppear:
                 state.viewDidAppear = true
@@ -137,19 +82,8 @@ struct MapMain: Reducer {
                 return .none
             case .onAnnotationTapped(let annotation):
                 state.annotation = annotation
-                return .send(.sheetToggled)
-            case .sheetToggled:
-                state.isSheetPresented.toggle()
+                state.details = .init(annotation: annotation, isAllowedToDump: false)
                 return .none
-
-            case .actionToggled:
-                state.isActionPresented.toggle()
-                return .none
-            case .openRoute(let annotation, let app):
-                openRoute(with: annotation, in: app)
-                return .none
-            case .sheetDidAppear:
-                return .send(.checkDistance)
             case .checkDistance:
                 if let userLocation = getUserLocation(), let pointLocation = state.annotation?.coordinate {
                     let isWithinRadius = isWithin(radius: 1000, userLocation: userLocation, pointLocation: pointLocation)
@@ -163,25 +97,17 @@ struct MapMain: Reducer {
                     state.isDumpAllowed = false
                 }
                 return .none
+            case .openRoute(let annotation, let app):
+                openRoute(with: annotation, in: app)
+                return .none
                 
-                //        // MARK: Dump Action
-                //    case .dumpItems:
-                //        let bucketDump = BucketDump(bucketItems: state.bucket)
-                //        return .run { send in
-                //            do {
-                //                let progress = try await dumpItems(bucket: bucketDump.items)
-                //                await send(.onDumpItemsSuccess(progress))
-                //            } catch {
-                //                print(error)
-                //            }
-                //        }
-                //    case .onDumpItemsSuccess(let progress):
-                //        state.progress = progress
-                //        return .send(.clearBucket)
-                //    case .clearBucket:
-                //        state.bucket = []
-                //        return .none
+                
+            case .details:
+                return .none
             }
+        }
+        .ifLet(\.$details, action: \.details) {
+            AnnotationFeature()
         }
     }
     

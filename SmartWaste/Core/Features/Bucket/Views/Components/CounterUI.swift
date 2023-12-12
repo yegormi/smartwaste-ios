@@ -1,13 +1,13 @@
 //
-//  CounterView.swift
+//  CounterUI.swift
 //  SmartWaste
 //
-//  Created by Yegor Myropoltsev on 05.12.2023.
+//  Created by Yegor Myropoltsev on 12.12.2023.
 //
 
 import SwiftUI
 
-struct CounterView: View {
+struct CounterUI: View {
     var value: Int
     let limit: Int
     let onDecrement: () -> Void
@@ -52,10 +52,10 @@ struct CounterView: View {
     }
 }
 
-struct CounterView_Previews: PreviewProvider {
+struct CounterUI_Previews: PreviewProvider {
     static var previews: some View {
         @State var value: Int = 0
-        CounterView(
+        CounterUI(
             value: value,
             limit: 10,
             onDecrement: { value -= 1 },

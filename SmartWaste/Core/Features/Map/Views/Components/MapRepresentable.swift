@@ -1,5 +1,5 @@
 //
-//  MapViewRepresentable.swift
+//  MapRepresentable.swift
 //  SmartWaste
 //
 //  Created by Yegor Myropoltsev on 15.11.2023.
@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 
-struct MapViewRepresentable: UIViewRepresentable {
+struct MapRepresentable: UIViewRepresentable {
     @StateObject var locationManager = LocationManager.shared
     let mapPoints: [MapPoint]
     let onAnnotationTapped: (AnnotationMark) -> Void
@@ -19,9 +19,9 @@ struct MapViewRepresentable: UIViewRepresentable {
     }
     
     class Coordinator: NSObject, MKMapViewDelegate {
-        var parent: MapViewRepresentable
+        var parent: MapRepresentable
         
-        init(_ parent: MapViewRepresentable) {
+        init(_ parent: MapRepresentable) {
             self.parent = parent
         }
         
