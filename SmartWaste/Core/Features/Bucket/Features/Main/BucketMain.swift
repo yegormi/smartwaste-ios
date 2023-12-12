@@ -16,7 +16,7 @@ struct BucketMain: Reducer {
     struct State: Equatable {
         @PresentationState var addItem: AddFeature.State?
         
-        var viewDidAppear:    Bool = false
+        var viewDidAppear: Bool = false
         
         var bucket:     [BucketItem] = []
         var categories: [String] = []
@@ -98,8 +98,7 @@ struct BucketMain: Reducer {
                 return .none
                 
             case .addItem(.presented(.onAddSuccess(let item))):
-                state.bucket.append(item)
-                return .none
+                return .send(.setBucket(with: item))
             case .addItem:
                 return .none
             }
