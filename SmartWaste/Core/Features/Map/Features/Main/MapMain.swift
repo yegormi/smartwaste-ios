@@ -42,28 +42,27 @@ struct MapMain: Reducer {
         case searchPoints([String])
         case onGetPointsSuccess([MapPoint])
         
+        
         case onAnnotationTapped(AnnotationMark)
-        
         case openRoute(with: AnnotationMark, in: MapLink)
+        case checkDistance(AnnotationMark)
         
-        case checkDistance
-        case onCheckSuccess(Bool)
     }
     
-    var body: some Reducer<State, Action> {
-        Reduce<State, Action> { state, action in
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
             switch action {
             case .viewDidAppear:
                 state.viewDidAppear = true
-                if state.categories.isEmpty {
-                    return .send(.getPoints)
+                guard state.categories.isEmpty else {
+                    return .send(.searchPoints(state.categories))
                 }
-                return .send(.searchPoints(state.categories))
+                return .send(.getPoints)
             case .getPoints:
                 return .run { send in
                     do {
                         let points = try await getPoints()
-                        await send(.onGetPointsSuccess(points), animation: .default)
+                        await send(.onGetPointsSuccess(points))
                     } catch {
                         print(error)
                     }
@@ -72,7 +71,7 @@ struct MapMain: Reducer {
                 return .run { send in
                     do {
                         let points = try await searchPoints(with: categories)
-                        await send(.onGetPointsSuccess(points), animation: .default)
+                        await send(.onGetPointsSuccess(points))
                     } catch {
                         print(error)
                     }
@@ -80,27 +79,25 @@ struct MapMain: Reducer {
             case .onGetPointsSuccess(let points):
                 state.points = points
                 return .none
+                
             case .onAnnotationTapped(let annotation):
                 state.annotation = annotation
-                state.details = .init(annotation: annotation, isAllowedToDump: false)
-                return .none
-            case .checkDistance:
-                if let userLocation = getUserLocation(), let pointLocation = state.annotation?.coordinate {
-                    let isWithinRadius = isWithin(radius: 1000, userLocation: userLocation, pointLocation: pointLocation)
-                    return .send(.onCheckSuccess(isWithinRadius))
+                return .send(.checkDistance(annotation))
+            case .checkDistance(let annotation):
+                if let userLocation = getUserLocation() {
+                    let isWithinRadius = isWithin(
+                        radius: 500,
+                        userLocation: userLocation,
+                        pointLocation: annotation.coordinate
+                    )
+                    state.isDumpAllowed = isWithinRadius
                 }
+                state.details = .init(annotation: annotation, isAllowedToDump: state.isDumpAllowed)
                 return .none
-            case .onCheckSuccess(let isWithinRadius):
-                if isWithinRadius {
-                    state.isDumpAllowed = true
-                } else {
-                    state.isDumpAllowed = false
-                }
-                return .none
+                
             case .openRoute(let annotation, let app):
                 openRoute(with: annotation, in: app)
                 return .none
-                
                 
             case .details:
                 return .none

@@ -86,14 +86,8 @@ struct MapRepresentable: UIViewRepresentable {
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
         uiView.removeAnnotations(uiView.annotations)
-        
-        for point in mapPoints {
-            let annotation = createAnnotation(from: point)
-            uiView.addAnnotation(annotation)
-        }
-        
-        //        let annotations = mapPoints.map { createAnnotation(from: $0) }
-        //        uiView.addAnnotations(annotations)
+        let annotations = mapPoints.map { createAnnotation(from: $0) }
+        uiView.addAnnotations(annotations)
     }
     
     private func createAnnotation(from point: MapPoint) -> AnnotationMark {
