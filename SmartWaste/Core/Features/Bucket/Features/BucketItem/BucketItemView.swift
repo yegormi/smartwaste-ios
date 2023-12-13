@@ -19,7 +19,7 @@ struct BucketItemView: View {
                 .frame(height: 60)
                 .overlay(
                     HStack {
-                        Text(viewStore.item.name)
+                        Text(viewStore.name)
                         Spacer()
                         CounterView(
                             store: self.store.scope(
@@ -41,7 +41,9 @@ struct BucketItemView_Previews: PreviewProvider {
         BucketItemView(
             store: Store(
                 initialState: .init(
-                    item: item,
+                    id: item.id,
+                    name: item.name, 
+                    categories: item.categories,
                     counter: CounterFeature.State(min: 0, max: 10, value: item.count)
                 )
             ) {

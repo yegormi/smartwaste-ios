@@ -11,11 +11,13 @@ struct BucketItem: Codable, Equatable, Identifiable {
     let id: Int
     let name: String
     var count: Int
-    let categories: [BucketCategory]?
+    let categories: [BucketCategory]
+        
+    mutating func decrement() {
+        self.count -= 1
+    }
     
-    static let limit: Int = 10
-    
-    mutating func updateCount(_ newCount: Int) {
-        self.count = newCount
+    mutating func increment() {
+        self.count += 1
     }
 }

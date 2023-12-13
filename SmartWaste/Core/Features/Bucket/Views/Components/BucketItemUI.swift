@@ -23,7 +23,7 @@ struct BucketItemUI: View {
                     Spacer()
                     CounterUI(
                         value: item.count,
-                        limit: BucketItem.limit,
+                        limit: 10,
                         onDecrement: onDecrement,
                         onIncrement: onIncrement
                     )

@@ -11,15 +11,26 @@ import ComposableArchitecture
 
 @Reducer
 struct BucketItemFeature: Reducer {
-    struct State: Equatable {
-        var item: BucketItem
+    struct State: Equatable, Identifiable {
+        let id: Int
+        let name: String
+        let categories: [BucketCategory]
         var counter: CounterFeature.State
+        
+        func toBucketItem() -> BucketItem {
+            BucketItem(
+                id: self.id,
+                name: self.name,
+                count: self.counter.value,
+                categories: self.categories
+            )
+        }
     }
-
+    
     enum Action: Equatable {
         case counter(CounterFeature.Action)
     }
-
+    
     var body: some ReducerOf<Self> {
         Scope(state: \.counter, action: /Action.counter) {
             CounterFeature()

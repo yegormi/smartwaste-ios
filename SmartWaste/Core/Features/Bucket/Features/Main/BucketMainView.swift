@@ -20,20 +20,13 @@ struct BucketMainView: View {
                     .padding(.bottom, 10)
                 
                 ScrollView(showsIndicators: false) {
-                    ForEach(viewStore.bucket) { item in
-                        BucketItemUI(
-                            item: item,
-                            onDecrement: {
-                                viewStore.send(
-                                    .updateItemCount(itemID: item.id, newCount: item.count - 1)
-                                )
-                            },
-                            onIncrement: {
-                                viewStore.send(
-                                    .updateItemCount(itemID: item.id, newCount: item.count + 1)
-                                )
-                            }
+                    ForEachStore(
+                        self.store.scope(
+                            state: \.bucketItems,
+                            action: \.bucketItems
                         )
+                    ) { store in
+                        BucketItemView(store: store)
                     }
                 }
                 .padding(.bottom, 10)
