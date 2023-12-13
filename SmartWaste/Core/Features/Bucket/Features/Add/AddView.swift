@@ -62,7 +62,7 @@ struct AddView: View {
                 if let countError = viewStore.countError {
                     Text(countError)
                         .foregroundColor(.red)
-                        .font(.system(size: 16))
+                        .font(.system(size: 15))
                         .frame(height: 10)
                         .padding(.bottom, 15)
                 }

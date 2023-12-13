@@ -59,9 +59,6 @@ struct AddFeature: Reducer {
         }
         Reduce { state, action in
             switch action {
-            case .counter:
-                return .none
-                
             case .selectionChanged(let option):
                 state.selection = option
                 return .none
@@ -71,6 +68,10 @@ struct AddFeature: Reducer {
             case .scanPhoto:
                 return .none
             case .scanPhotoSuccess(_):
+                return .none
+            
+            case .counter(.increment):
+                state.countError = nil
                 return .none
                 
             case .addButtonTapped:
@@ -92,6 +93,8 @@ struct AddFeature: Reducer {
                 return .run { _ in
                     await dismiss()
                 }
+            case .counter:
+                return .none
             }
         }
     }
