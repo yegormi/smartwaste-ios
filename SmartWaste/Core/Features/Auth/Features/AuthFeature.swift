@@ -110,7 +110,7 @@ struct AuthFeature: Reducer {
                             password: password
                         )
                         await send(.authResponse(.success(result)))
-                    } catch let ErrorResponse.failedWithResponse(error){
+                    } catch let ErrorTypes.failedWithResponse(error){
                         await send(.authResponse(.failure(error)))
                     } catch {
                         print(error)
@@ -131,7 +131,7 @@ struct AuthFeature: Reducer {
                             password: password
                         )
                         await send(.authResponse(.success(result)))
-                    } catch let ErrorResponse.failedWithResponse(error){
+                    } catch let ErrorTypes.failedWithResponse(error){
                         await send(.authResponse(.failure(error)))
                     } catch {
                         print(error)

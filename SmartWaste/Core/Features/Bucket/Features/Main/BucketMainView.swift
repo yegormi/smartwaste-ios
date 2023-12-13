@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import AlertToast
 
 struct BucketMainView: View {
     let store: StoreOf<BucketMain>
@@ -79,6 +80,12 @@ struct BucketMainView: View {
                     .padding(30)
                     .presentationDetents([.height(370)])
                     .presentationDragIndicator(.visible)
+            }
+            .toast(isPresenting: viewStore.binding(
+                get: \.isErrorPresented,
+                send: BucketMain.Action.errorPresented
+            )) {
+                AlertToast(displayMode: .alert, type: .error(.red), title: "The item already exists!")
             }
         }
     }

@@ -9,7 +9,7 @@ import SwiftUI
 import MapKit
 
 struct MapRepresentable: UIViewRepresentable {
-    @StateObject var locationManager = LocationManager.shared
+    @StateObject var locationManager = LocationManager()
     let mapPoints: [MapPoint]
     let onSelect: (AnnotationMark) -> Void
     

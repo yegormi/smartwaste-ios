@@ -94,7 +94,7 @@ private func handleResponse<T>(_ response: AFDataResponse<T>, _ continuation: Ch
     case .failure(let error):
         if let data = response.data,
            let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data) {
-            continuation.resume(throwing: ErrorResponse.failedWithResponse(failResponse))
+            continuation.resume(throwing: ErrorTypes.failedWithResponse(failResponse))
         } else {
             continuation.resume(throwing: error)
         }

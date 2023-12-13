@@ -16,7 +16,9 @@ struct BucketMain: Reducer {
     struct State: Equatable {
         @PresentationState var addItem: AddFeature.State?
         
-        var viewDidAppear: Bool = false
+        var viewDidAppear = false
+        var isErrorPresented = false
+        
         var bucketItems: IdentifiedArrayOf<BucketItemFeature.State> = []
         
         var bucketOptions: [BucketItemOption] = []
@@ -27,6 +29,7 @@ struct BucketMain: Reducer {
         case bucketItems(IdentifiedActionOf<BucketItemFeature>)
         
         case viewDidAppear
+        case errorPresented
         
         /// Item Actions
         case getItems
@@ -49,6 +52,10 @@ struct BucketMain: Reducer {
             case .viewDidAppear:
                 state.viewDidAppear = true
                 return .send(.getItems)
+            case .errorPresented:
+                state.isErrorPresented.toggle()
+                return .none
+                
             case .getItems:
                 return .run { send in
                     do {
@@ -65,7 +72,8 @@ struct BucketMain: Reducer {
                 
             case let .appendBucket(with: item):
                 guard state.bucketItems[id: item.id] == nil else {
-                    return .none // If the item already exists, do something
+                    /// If the item already exists
+                    return .send(.errorPresented)
                 }
                 let itemState = item.toState()
                 state.bucketItems.append(itemState)

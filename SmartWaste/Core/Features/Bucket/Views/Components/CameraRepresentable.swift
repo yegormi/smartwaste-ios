@@ -10,8 +10,7 @@ import UIKit
 import SwiftUI
 
 struct CameraRepresentable: UIViewControllerRepresentable {
-    @Binding var capturedImage: UIImage?
-    var onSelected: () -> Void
+    var onSelected: (UIImage) -> Void
     
     typealias UIViewControllerType = UIImagePickerController
     
@@ -54,8 +53,7 @@ extension CameraRepresentable {
             guard let image = info[.originalImage] as? UIImage else {
                 return
             }
-            parent.capturedImage = image
-            parent.onSelected()
+            parent.onSelected(image)
             picker.dismiss(animated: true)
         }
     }

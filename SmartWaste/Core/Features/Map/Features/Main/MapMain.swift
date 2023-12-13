@@ -128,7 +128,7 @@ struct MapMain: Reducer {
     }
     
     private func getUserLocation() -> CLLocationCoordinate2D? {
-        let manager = LocationManager.shared
+        let manager = LocationManager()
         return manager.region.center
     }
     

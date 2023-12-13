@@ -15,6 +15,7 @@ struct AddFeature: Reducer {
     
     struct State: Equatable {
         var counter: CounterFeature.State
+        @PresentationState var camera: CameraFeature.State?
         
         var title: String
         var options: [BucketItemOption]
@@ -41,6 +42,7 @@ struct AddFeature: Reducer {
     
     enum Action: Equatable {
         case counter(CounterFeature.Action)
+        case camera(PresentationAction<CameraFeature.Action>)
         
         case selectionChanged(BucketItemOption)
         
@@ -64,7 +66,12 @@ struct AddFeature: Reducer {
                 return .none
                 
             case .scanButtonTapped:
+                state.camera = .init()
                 return .none
+            case let .camera(.presented(.usePhotoTapped(with: image))):
+                state.capturedImage = image
+                return .none
+                
             case .scanPhoto:
                 return .none
             case .scanPhotoSuccess(_):
@@ -95,7 +102,12 @@ struct AddFeature: Reducer {
                 }
             case .counter:
                 return .none
+            case .camera:
+                return .none
             }
+        }
+        .ifLet(\.$camera, action: \.camera) {
+            CameraFeature()
         }
     }
 }

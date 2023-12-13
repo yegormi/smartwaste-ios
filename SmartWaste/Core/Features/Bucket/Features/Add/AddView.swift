@@ -94,6 +94,14 @@ struct AddView: View {
                 }
                 .buttonStyle(.plain)
             }
+            .fullScreenCover(
+                store: self.store.scope(
+                    state: \.$camera,
+                    action: \.camera
+                )
+            ) { store in
+                CameraView(store: store)
+            }
         }
     }
 }

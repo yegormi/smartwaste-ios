@@ -27,6 +27,8 @@
 		EE3097A62B20888C00B6CBFB /* BucketCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3097A52B20888C00B6CBFB /* BucketCategory.swift */; };
 		EE3097A82B20897700B6CBFB /* BucketList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3097A72B20897700B6CBFB /* BucketList.swift */; };
 		EE3097AA2B2113D000B6CBFB /* ProfileClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3097A92B2113D000B6CBFB /* ProfileClient.swift */; };
+		EE36E6342B29C52400E3328C /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE36E6322B29C52400E3328C /* CameraView.swift */; };
+		EE36E6352B29C52400E3328C /* CameraFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE36E6332B29C52400E3328C /* CameraFeature.swift */; };
 		EE3767F32B112A65007DFA25 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3767F22B112A65007DFA25 /* RootCoordinator.swift */; };
 		EE3767F62B112AAA007DFA25 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = EE3767F52B112AAA007DFA25 /* TCACoordinators */; };
 		EE3767F92B112D48007DFA25 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3767F72B112D48007DFA25 /* SplashView.swift */; };
@@ -37,7 +39,7 @@
 		EE5677642B10BDBF00DDE4A0 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EE5677632B10BDBF00DDE4A0 /* KeychainSwift */; };
 		EE5677672B11090A00DDE4A0 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = EE5677662B11090A00DDE4A0 /* AlertToast */; };
 		EE56776A2B110A6B00DDE4A0 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = EE5677692B110A6B00DDE4A0 /* Reachability */; };
-		EE5AE1A72AF9407E00381B33 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5AE1A62AF9407E00381B33 /* ErrorResponse.swift */; };
+		EE5AE1A72AF9407E00381B33 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5AE1A62AF9407E00381B33 /* ErrorTypes.swift */; };
 		EE68F4B92B278C880082EE56 /* Toggleable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE68F4B82B278C880082EE56 /* Toggleable.swift */; };
 		EE68F4BD2B27CB640082EE56 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE68F4BB2B27CB640082EE56 /* AddView.swift */; };
 		EE68F4BE2B27CB640082EE56 /* AddFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE68F4BC2B27CB640082EE56 /* AddFeature.swift */; };
@@ -48,8 +50,6 @@
 		EE7F96E22B1571B50071A99F /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F96E12B1571B50071A99F /* AuthClient.swift */; };
 		EE7F96E52B15E40B0071A99F /* KeychainClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F96E42B15E40B0071A99F /* KeychainClient.swift */; };
 		EE7F96E72B15ECC30071A99F /* MapClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F96E62B15ECC30071A99F /* MapClient.swift */; };
-		EE9C8E8B2B287B62009FC890 /* BucketItemUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9C8E8A2B287B62009FC890 /* BucketItemUI.swift */; };
-		EE9C8E8D2B287B9D009FC890 /* CounterUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9C8E8C2B287B9D009FC890 /* CounterUI.swift */; };
 		EE9C8E902B2887B3009FC890 /* AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9C8E8E2B2887B3009FC890 /* AnnotationView.swift */; };
 		EE9C8E912B2887B3009FC890 /* AnnotationFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9C8E8F2B2887B3009FC890 /* AnnotationFeature.swift */; };
 		EE9C8E942B2888B1009FC890 /* MapMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9C8E932B2888B1009FC890 /* MapMainView.swift */; };
@@ -121,12 +121,14 @@
 		EE3097A52B20888C00B6CBFB /* BucketCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketCategory.swift; sourceTree = "<group>"; };
 		EE3097A72B20897700B6CBFB /* BucketList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketList.swift; sourceTree = "<group>"; };
 		EE3097A92B2113D000B6CBFB /* ProfileClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileClient.swift; sourceTree = "<group>"; };
+		EE36E6322B29C52400E3328C /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		EE36E6332B29C52400E3328C /* CameraFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFeature.swift; sourceTree = "<group>"; };
 		EE3767F22B112A65007DFA25 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
 		EE3767F72B112D48007DFA25 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		EE3767F82B112D48007DFA25 /* SplashFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashFeature.swift; sourceTree = "<group>"; };
 		EE495A6B2B228EAF00E96082 /* ProgressResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressResponse.swift; sourceTree = "<group>"; };
 		EE56775F2B10AEDD00DDE4A0 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
-		EE5AE1A62AF9407E00381B33 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
+		EE5AE1A62AF9407E00381B33 /* ErrorTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 		EE68F4B82B278C880082EE56 /* Toggleable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toggleable.swift; sourceTree = "<group>"; };
 		EE68F4BB2B27CB640082EE56 /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 		EE68F4BC2B27CB640082EE56 /* AddFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeature.swift; sourceTree = "<group>"; };
@@ -137,8 +139,6 @@
 		EE7F96E12B1571B50071A99F /* AuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthClient.swift; sourceTree = "<group>"; };
 		EE7F96E42B15E40B0071A99F /* KeychainClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainClient.swift; sourceTree = "<group>"; };
 		EE7F96E62B15ECC30071A99F /* MapClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapClient.swift; sourceTree = "<group>"; };
-		EE9C8E8A2B287B62009FC890 /* BucketItemUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketItemUI.swift; sourceTree = "<group>"; };
-		EE9C8E8C2B287B9D009FC890 /* CounterUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterUI.swift; sourceTree = "<group>"; };
 		EE9C8E8E2B2887B3009FC890 /* AnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationView.swift; sourceTree = "<group>"; };
 		EE9C8E8F2B2887B3009FC890 /* AnnotationFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationFeature.swift; sourceTree = "<group>"; };
 		EE9C8E932B2888B1009FC890 /* MapMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMainView.swift; sourceTree = "<group>"; };
@@ -267,6 +267,15 @@
 				EE7F96E32B1571BA0071A99F /* DI */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		EE36E6362B29C52700E3328C /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				EE36E6332B29C52400E3328C /* CameraFeature.swift */,
+				EE36E6322B29C52400E3328C /* CameraView.swift */,
+			);
+			path = Camera;
 			sourceTree = "<group>";
 		};
 		EE3767F12B1127A5007DFA25 /* App */ = {
@@ -560,7 +569,7 @@
 		EEF6FD4B2B2218FC0052CB40 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				EE5AE1A62AF9407E00381B33 /* ErrorResponse.swift */,
+				EE5AE1A62AF9407E00381B33 /* ErrorTypes.swift */,
 				EEEB8D212AF8E5AD007DEBAE /* FailResponse.swift */,
 				EEFFBA072AF99F3F00238FA0 /* RequestError.swift */,
 				EEE812122B1AAA72006681DA /* ResponseMessage.swift */,
@@ -627,6 +636,8 @@
 			isa = PBXGroup;
 			children = (
 				EEF96E252B1E3013008A66E6 /* Features */,
+				EEF96E262B1E3013008A66E6 /* BucketScreen.swift */,
+				EEF96E272B1E3013008A66E6 /* BucketCoordinator.swift */,
 				EEF96E2C2B1E3013008A66E6 /* Views */,
 			);
 			name = Bucket;
@@ -636,12 +647,11 @@
 		EEF96E252B1E3013008A66E6 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				EE68F4C42B27CC1E0082EE56 /* Counter */,
 				EE68F4BF2B27CB6C0082EE56 /* Add */,
+				EE68F4C42B27CC1E0082EE56 /* Counter */,
+				EE36E6362B29C52700E3328C /* Camera */,
 				EE2FEF442B2869B20038233E /* BucketItem */,
 				EE68F4BA2B27CACB0082EE56 /* Main */,
-				EEF96E262B1E3013008A66E6 /* BucketScreen.swift */,
-				EEF96E272B1E3013008A66E6 /* BucketCoordinator.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -682,8 +692,6 @@
 			isa = PBXGroup;
 			children = (
 				EE0FF9CE2B21411F00D13CB6 /* CameraRepresentable.swift */,
-				EE9C8E8A2B287B62009FC890 /* BucketItemUI.swift */,
-				EE9C8E8C2B287B9D009FC890 /* CounterUI.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -807,6 +815,7 @@
 				EEF96E1E2B1E2963008A66E6 /* MapPoint.swift in Sources */,
 				EEF96E4C2B1F1CEC008A66E6 /* StatBox.swift in Sources */,
 				EEF96E4A2B1E9667008A66E6 /* BucketItemOption.swift in Sources */,
+				EE36E6342B29C52400E3328C /* CameraView.swift in Sources */,
 				EEF96E192B1E27EF008A66E6 /* MapCoordinatorView.swift in Sources */,
 				EE297A492B14D66C006FC0C4 /* TabsView.swift in Sources */,
 				EE9C8E942B2888B1009FC890 /* MapMainView.swift in Sources */,
@@ -830,7 +839,7 @@
 				EE13F5C22B18933C00B0A8CC /* ScaleButtonStyle.swift in Sources */,
 				EE3767F32B112A65007DFA25 /* RootCoordinator.swift in Sources */,
 				EE297A322B14A905006FC0C4 /* ProfileMain.swift in Sources */,
-				EE5AE1A72AF9407E00381B33 /* ErrorResponse.swift in Sources */,
+				EE5AE1A72AF9407E00381B33 /* ErrorTypes.swift in Sources */,
 				EEA012BA2AFA8180004311F3 /* RootCoordinatorView.swift in Sources */,
 				EE7F96E22B1571B50071A99F /* AuthClient.swift in Sources */,
 				EEF96E0E2B1E2759008A66E6 /* MapCoordinator.swift in Sources */,
@@ -842,6 +851,7 @@
 				EE9C8E902B2887B3009FC890 /* AnnotationView.swift in Sources */,
 				EEF96E322B1E3013008A66E6 /* BucketCoordinator.swift in Sources */,
 				EE68F4BD2B27CB640082EE56 /* AddView.swift in Sources */,
+				EE36E6352B29C52400E3328C /* CameraFeature.swift in Sources */,
 				EEEB8D272AF8EAEA007DEBAE /* SignIn.swift in Sources */,
 				EE0C21882AE861D700668357 /* SmartWasteApp.swift in Sources */,
 				EEA012BB2AFA8180004311F3 /* RootScreen.swift in Sources */,
@@ -851,7 +861,6 @@
 				EE68F4C32B27CC190082EE56 /* CounterFeature.swift in Sources */,
 				EEFFBA082AF99F3F00238FA0 /* RequestError.swift in Sources */,
 				EEF2F1A42AF82EC9009F4677 /* InputFieldStyle.swift in Sources */,
-				EE9C8E8D2B287B9D009FC890 /* CounterUI.swift in Sources */,
 				EEEB8D222AF8E5AD007DEBAE /* FailResponse.swift in Sources */,
 				EEF96E312B1E3013008A66E6 /* BucketScreen.swift in Sources */,
 				EEEB8D292AF8EAFC007DEBAE /* SignUp.swift in Sources */,
@@ -860,7 +869,6 @@
 				EE70CBCB2B247677009A2F94 /* MapLink.swift in Sources */,
 				EE68F4B92B278C880082EE56 /* Toggleable.swift in Sources */,
 				EE9C8E912B2887B3009FC890 /* AnnotationFeature.swift in Sources */,
-				EE9C8E8B2B287B62009FC890 /* BucketItemUI.swift in Sources */,
 				EE297A472B14D662006FC0C4 /* TabsFeature.swift in Sources */,
 				EE0FF9CF2B21411F00D13CB6 /* CameraRepresentable.swift in Sources */,
 				EE2FEF432B2869AF0038233E /* BucketItemFeature.swift in Sources */,
@@ -1004,6 +1012,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartWaste/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to capture photos";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your location to validate your ability to dump your bucket";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -1039,6 +1048,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartWaste/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to capture photos";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your location to validate your ability to dump your bucket";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
