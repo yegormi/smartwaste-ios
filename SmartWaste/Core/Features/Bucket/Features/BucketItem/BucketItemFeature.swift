@@ -16,15 +16,6 @@ struct BucketItemFeature: Reducer {
         let name: String
         let categories: [BucketCategory]
         var counter: CounterFeature.State
-        
-        func toBucketItem() -> BucketItem {
-            BucketItem(
-                id: self.id,
-                name: self.name,
-                count: self.counter.value,
-                categories: self.categories
-            )
-        }
     }
     
     enum Action: Equatable {
