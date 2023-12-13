@@ -64,23 +64,18 @@ struct BucketMain: Reducer {
                 return .none
                 
             case let .appendBucket(with: item):
-                if state.bucketItems.firstIndex(where: { $0.id == item.id }) == nil {
-                    state.bucketItems.append(.init(
-                        id: item.id,
-                        name: item.name,
-                        categories: item.categories,
-                        counter: .init(min: 0, max: 10, value: item.count)))
+                guard state.bucketItems[id: item.id] == nil else {
+                    return .none // If the item already exists, do something
                 }
+                let itemState = item.toState()
+                state.bucketItems.append(itemState)
                 return .none
+                
             case let .bucketItems(.element(id: id, action: .counter(.decrement))):
-                /// Find the index of the corresponding item
-                if let index = state.bucketItems.firstIndex(where: { $0.id == id }) {
-                    /// Check if the counter value is zero
-                    if state.bucketItems[index].counter.value == 0 {
-                        /// Remove the item if the counter value is zero
-                        state.bucketItems.remove(at: index)
-                    }
+                guard state.bucketItems[id: id]?.counter.value == 0 else {
+                    return .none
                 }
+                state.bucketItems.remove(id: id)
                 return .none
                 
             case .addButtonTapped:
@@ -91,17 +86,18 @@ struct BucketMain: Reducer {
                     selection: state.bucketOptions.first
                 )
                 return .none
+                
             case .showRecyclePointsTapped:
                 let categories = Array(Set(
                     state.bucketItems.flatMap { $0.categories.map { $0.slug } }
                 ))
                 return .send(.wentToMap(with: categories))
+
+            case let .addItem(.presented(.onAddSuccess(item))):
+                return .send(.appendBucket(with: item))
                 
             case .wentToMap:
                 return .none
-                
-            case let .addItem(.presented(.onAddSuccess(item))):
-                return .send(.appendBucket(with: item))
             case .addItem:
                 return .none
             case .bucketItems:

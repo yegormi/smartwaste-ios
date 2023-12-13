@@ -77,7 +77,7 @@ struct BucketMainView: View {
             ) { store in
                 AddView(store: store)
                     .padding(30)
-                    .presentationDetents([.fraction(0.5)])
+                    .presentationDetents([.height(370)])
                     .presentationDragIndicator(.visible)
             }
         }

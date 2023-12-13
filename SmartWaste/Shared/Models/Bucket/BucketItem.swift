@@ -12,12 +12,25 @@ struct BucketItem: Codable, Equatable, Identifiable {
     let name: String
     var count: Int
     let categories: [BucketCategory]
-        
+}
+
+extension BucketItem {
     mutating func decrement() {
         self.count -= 1
     }
     
     mutating func increment() {
         self.count += 1
+    }
+}
+
+extension BucketItem {
+    func toState() -> BucketItemFeature.State {
+        return .init(
+            id: self.id,
+            name: self.name,
+            categories: self.categories,
+            counter: .init(min: 0, max: 10, value: self.count)
+        )
     }
 }
