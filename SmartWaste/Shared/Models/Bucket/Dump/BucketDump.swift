@@ -14,8 +14,8 @@ struct BucketDump: Codable, Equatable {
         self.items = items
     }
     
-    init(bucketItems: [BucketItem]) {
-        self.items = bucketItems.map { DumpEntity(id: $0.id, count: $0.count) }
+    init(bucket: Bucket) {
+        self.items = bucket.items.map { DumpEntity(id: $0.id, count: $0.count) }
     }
 }
 

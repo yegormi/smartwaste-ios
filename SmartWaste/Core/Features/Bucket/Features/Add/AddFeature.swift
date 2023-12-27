@@ -11,24 +11,31 @@ import ComposableArchitecture
 
 @Reducer
 struct AddFeature: Reducer {
-    @Dependency(\.dismiss) var dismiss
+    @Dependency(\.dismiss)          var dismiss
+    @Dependency(\.bucketClient)     var bucketClient
+    @Dependency(\.bucketListClient) var bucketListClient
+    @Dependency(\.keychainClient)   var keychainClient
     
     struct State: Equatable {
         var counter: CounterFeature.State
         @PresentationState var camera: CameraFeature.State?
         
         var title: String
-        var options: [BucketItemOption]
-        var selection: BucketItemOption?
-        var emptySelection = BucketItemOption(id: 1, name: "Material", categories: [])
+        var options: [BucketOption]
+        var selection: BucketOption?
+        var emptySelection = BucketOption(id: 1, name: "Material", categories: [])
         
         var capturedImage: UIImage? = nil
-        var imageResponse: BucketList? = nil
-        var countError: String? = nil
+        var imageResponse: BucketOptions? = nil
+        var errorText: String? = nil
+        var errorToast: String = ""
         
-        func createBucketItem() -> BucketItem {
+        var isLoading = false
+        var isError = false
+        
+        func createBucketItem() throws -> BucketItem {
             guard let selectedOption = selection else {
-                fatalError("Selection should not be nil.")
+                throw ErrorTypes.selectionEmpty
             }
             
             return BucketItem(
@@ -44,14 +51,19 @@ struct AddFeature: Reducer {
         case counter(CounterFeature.Action)
         case camera(PresentationAction<CameraFeature.Action>)
         
-        case selectionChanged(BucketItemOption)
+        case selectionChanged(BucketOption)
+        case showError(String)
+        case showErrorToast(String)
         
         case scanButtonTapped
         case scanPhoto
-        case scanPhotoSuccess(BucketList)
+        case scanPhotoSuccess(BucketOptions)
+        
+        case loadingPresented(Bool)
+        case errorToastToggled
         
         case addButtonTapped
-        case onAddSuccess(BucketItem)
+        case addSucceeded(BucketItem)
         case cancelButtonTapped
     }
     
@@ -70,28 +82,75 @@ struct AddFeature: Reducer {
                 return .none
             case let .camera(.presented(.usePhotoTapped(with: image))):
                 state.capturedImage = image
-                return .none
+                // Present loading indicator
+                state.isLoading.toggle()
+                return .send(.scanPhoto)
                 
             case .scanPhoto:
+                return .run { [image = state.capturedImage] send in
+                    do {
+                        let item = try await scanPhoto(image ?? UIImage.checkmark)
+                        await send(.scanPhotoSuccess(item))
+                    } catch ErrorTypes.imageConversionError {
+                        print("Image could not be converted properly")
+                    } catch {
+                        print(error)
+                    }
+                }
+            case .scanPhotoSuccess(let result):
+                state.imageResponse = result
+                
+                guard let matched = result.items.first else {
+                    /// Hide loading indicator
+                    state.isLoading.toggle()
+                    /// Present error toast image not recognized
+                    return .send(.errorToastToggled)
+                }
+                
+                // Update the selection based on the matching item ID
+                if let matchingOption = state.options.first(where: { $0.id == matched.id }) {
+                    state.selection = matchingOption
+                }
+                
+                /// Hide loading indicator
+                state.isLoading.toggle()
                 return .none
-            case .scanPhotoSuccess(_):
+                
+            case .loadingPresented(let isOn):
+                state.isLoading = isOn
                 return .none
-            
+            case .errorToastToggled:
+                state.isError.toggle()
+                return .none
+            case .showErrorToast(let text):
+                state.errorToast = text
+                return .send(.errorToastToggled)
+                
             case .counter(.increment):
-                state.countError = nil
+                state.errorText = nil
+                return .none
+            case .showError(let text):
+                state.errorText = text
                 return .none
                 
             case .addButtonTapped:
                 guard state.counter.value > 0 else {
-                    state.countError = "You must add one or more items"
-                    return .none
+                    return .send(.showError("You must add one or more items"))
+                }
+                return .run { [state] send in
+                    do {
+                        let bucketItem = try state.createBucketItem()
+                        try await bucketListClient.createBucketItem(bucketItem)
+                        await send(.addSucceeded(bucketItem))
+                    } catch ErrorTypes.selectionEmpty {
+                        await send(.showErrorToast("Selection is empty!"))
+                    } catch {
+                        print(error)
+                    }
                 }
                 
-                state.countError = nil
-                let bucketItem = state.createBucketItem()
-                
-                return .send(.onAddSuccess(bucketItem))
-            case .onAddSuccess:
+            case .addSucceeded:
+                state.errorText = nil
                 return .run { _ in
                     await dismiss()
                 }
@@ -100,6 +159,7 @@ struct AddFeature: Reducer {
                 return .run { _ in
                     await dismiss()
                 }
+                
             case .counter:
                 return .none
             case .camera:
@@ -109,5 +169,10 @@ struct AddFeature: Reducer {
         .ifLet(\.$camera, action: \.camera) {
             CameraFeature()
         }
+    }
+    
+    private func scanPhoto(_ image: UIImage) async throws -> BucketOptions {
+        let token = keychainClient.retrieveToken()?.accessToken ?? ""
+        return try await bucketClient.scanPhoto(token: token, image: image)
     }
 }

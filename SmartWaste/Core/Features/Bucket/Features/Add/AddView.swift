@@ -8,6 +8,8 @@
 
 import SwiftUI
 import ComposableArchitecture
+import LoadingView
+import AlertToast
 
 struct AddView: View {
     let store: StoreOf<AddFeature>
@@ -26,7 +28,7 @@ struct AddView: View {
                             send: { .selectionChanged($0 ?? viewStore.emptySelection) }
                         )) {
                             ForEach(viewStore.options) { option in
-                                Text(option.name).tag(option as BucketItemOption?)
+                                Text(option.name).tag(option as BucketOption?)
                             }
                         }
                     } label: {
@@ -57,10 +59,10 @@ struct AddView: View {
                         action: \.counter)
                 )
                 .padding(.top, 20)
-                .padding(.bottom, (viewStore.countError != nil) ? 15 : 40)
+                .padding(.bottom, (viewStore.errorText != nil) ? 15 : 40)
                 
-                if let countError = viewStore.countError {
-                    Text(countError)
+                if let errorText = viewStore.errorText {
+                    Text(errorText)
                         .foregroundColor(.red)
                         .font(.system(size: 15))
                         .frame(height: 10)
@@ -102,16 +104,32 @@ struct AddView: View {
             ) { store in
                 CameraView(store: store)
             }
+            
+            .dotsIndicator(
+                when: viewStore.binding(
+                    get: \.isLoading,
+                    send: { .loadingPresented($0) }
+                ),
+                color: .green
+            )
+            .animation(.easeInOut, value: viewStore.isLoading)
+            
+            .toast(isPresenting: viewStore.binding(
+                get: \.isError,
+                send: AddFeature.Action.errorToastToggled
+            )) {
+                AlertToast(displayMode: .alert, type: .error(.red), title: viewStore.errorToast)
+            }
         }
     }
 }
 
 struct AddView_Previews: PreviewProvider {
     static var previews: some View {
-        let options: [BucketItemOption] = [
-            BucketItemOption(id: 1, name: "Glass", categories: []),
-            BucketItemOption(id: 2, name: "Paper", categories: []),
-            BucketItemOption(id: 3, name: "Metal", categories: [])
+        let options: [BucketOption] = [
+            BucketOption(id: 1, name: "Glass", categories: []),
+            BucketOption(id: 2, name: "Paper", categories: []),
+            BucketOption(id: 3, name: "Metal", categories: [])
         ]
         
         AddView(

@@ -8,9 +8,9 @@
 import Foundation
 
 struct ProgressResponse: Codable, Equatable {
-    let progresses: [Progress]
+    let progresses: [ProgressEntity]
 
-    struct Progress: Codable, Identifiable, Equatable {
+    struct ProgressEntity: Codable, Identifiable, Equatable {
         let id: Int
         let questId: Int
         let userId: Int

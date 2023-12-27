@@ -5,9 +5,9 @@
 //  Created by Yegor Myropoltsev on 28.11.2023.
 //
 
-import Foundation
-import ComposableArchitecture
 import Alamofire
+import ComposableArchitecture
+import Foundation
 
 // MARK: - API client interface
 
@@ -16,7 +16,7 @@ import Alamofire
 
 @DependencyClient
 struct MapClient {
-    var getPoints:    @Sendable (_ token: String) async throws -> [MapPoint]
+    var getPoints: @Sendable (_ token: String) async throws -> [MapPoint]
     var searchPoints: @Sendable (_ token: String, _ categories: [String]) async throws -> [MapPoint]
 }
 
@@ -33,42 +33,40 @@ extension MapClient: DependencyKey, TestDependencyKey {
     static let liveValue = MapClient(
         getPoints: { token in
             let endpoint = "/points"
-            
+
             let headers: HTTPHeaders = [
-                "Authorization": token
+                "Authorization": token,
             ]
-            
+
             return try await withCheckedThrowingContinuation { continuation in
                 AF.request(baseUrl + endpoint,
                            method: .get,
-                           headers: headers
-                )
-                .validate()
-                .responseDecodable(of: [MapPoint].self) { response in
-                    handleResponse(response, continuation)
-                }
+                           headers: headers)
+                    .validate()
+                    .responseDecodable(of: [MapPoint].self) { response in
+                        handleResponse(response, continuation)
+                    }
             }
         }, searchPoints: { token, categories in
             let endpoint = "/points"
-            
+
             let parameters: Parameters = [
-                "categories": categories
+                "categories": categories,
             ]
-            
+
             let headers: HTTPHeaders = [
-                "Authorization": token
+                "Authorization": token,
             ]
-            
+
             return try await withCheckedThrowingContinuation { continuation in
                 AF.request(baseUrl + endpoint,
                            method: .get,
                            parameters: parameters,
-                           headers: headers
-                )
-                .validate()
-                .responseDecodable(of: [MapPoint].self) { response in
-                    handleResponse(response, continuation)
-                }
+                           headers: headers)
+                    .validate()
+                    .responseDecodable(of: [MapPoint].self) { response in
+                        handleResponse(response, continuation)
+                    }
             }
         }
     )
@@ -86,14 +84,14 @@ extension MapClient {
     static let baseUrl = Constants.baseUrl
 }
 
-
 private func handleResponse<T>(_ response: AFDataResponse<T>, _ continuation: CheckedContinuation<T, Error>) {
     switch response.result {
-    case .success(let value):
+    case let .success(value):
         continuation.resume(returning: value)
-    case .failure(let error):
+    case let .failure(error):
         if let data = response.data,
-           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data) {
+           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data)
+        {
             continuation.resume(throwing: ErrorTypes.failedWithResponse(failResponse))
         } else {
             continuation.resume(throwing: error)

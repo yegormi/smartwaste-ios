@@ -163,6 +163,15 @@
       }
     },
     {
+      "identity" : "swiftui-loading-view",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DanielMandea/swiftui-loading-view",
+      "state" : {
+        "revision" : "d7c676f364fd3b0e15ddcb5c50c7cd288a954485",
+        "version" : "1.1.7"
+      }
+    },
+    {
       "identity" : "swiftui-navigation",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swiftui-navigation",

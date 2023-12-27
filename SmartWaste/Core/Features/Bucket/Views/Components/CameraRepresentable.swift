@@ -24,6 +24,8 @@ struct CameraRepresentable: UIViewControllerRepresentable {
             viewController.sourceType = .savedPhotosAlbum
         }
         
+        viewController.sourceType = .savedPhotosAlbum
+
         return viewController
     }
     

@@ -17,6 +17,7 @@ struct CameraView: View {
             CameraRepresentable() { image in 
                 viewStore.send(.usePhotoTapped(with: image))
             }
+            .ignoresSafeArea(.all)
         }
     }
 }

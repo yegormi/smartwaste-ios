@@ -11,5 +11,7 @@ enum ErrorTypes: Error {
     case networkError(Error)
     case decodingError(Error)
     case failedWithResponse(FailResponse)
+    
     case imageConversionError
+    case selectionEmpty
 }

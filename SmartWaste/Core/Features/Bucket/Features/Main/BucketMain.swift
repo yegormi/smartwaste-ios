@@ -10,18 +10,19 @@ import ComposableArchitecture
 
 @Reducer
 struct BucketMain: Reducer {
-    @Dependency(\.keychainClient) var keychainClient
-    @Dependency(\.bucketClient) var bucketClient
+    @Dependency(\.keychainClient)   var keychainClient
+    @Dependency(\.bucketListClient) var bucketListClient
+    @Dependency(\.bucketClient)     var bucketClient
     
     struct State: Equatable {
         @PresentationState var addItem: AddFeature.State?
         
         var viewDidAppear = false
-        var isErrorPresented = false
+        var isError = false
+        var errorToast: String = ""
         
         var bucketItems: IdentifiedArrayOf<BucketItemFeature.State> = []
-        
-        var bucketOptions: [BucketItemOption] = []
+        var bucketOptions: [BucketOption] = []
     }
     
     enum Action: Equatable {
@@ -29,11 +30,13 @@ struct BucketMain: Reducer {
         case bucketItems(IdentifiedActionOf<BucketItemFeature>)
         
         case viewDidAppear
-        case errorPresented
+        case onFetched([BucketItem])
+        case errorToggled
+        case showErrorToast(String)
         
         /// Item Actions
         case getItems
-        case getItemsSuccess([BucketItemOption])
+        case getItemsSuccess([BucketOption])
         
         /// Bucket
         case appendBucket(with: BucketItem)
@@ -51,10 +54,24 @@ struct BucketMain: Reducer {
             switch action {
             case .viewDidAppear:
                 state.viewDidAppear = true
+                return .run { send in
+                    do {
+                        let bucketItems = try await bucketListClient.fetchBucketItems()
+                        await send(.onFetched(bucketItems))
+                    } catch {
+                        print(error)
+                    }
+                }
+            case .onFetched(let items):
+                state.bucketItems = IdentifiedArrayOf(uniqueElements: items.map { $0.toState() })
+                whereIsMyDB()
                 return .send(.getItems)
-            case .errorPresented:
-                state.isErrorPresented.toggle()
+            case .errorToggled:
+                state.isError.toggle()
                 return .none
+            case .showErrorToast(let text):
+                state.errorToast = text
+                return .send(.errorToggled)
                 
             case .getItems:
                 return .run { send in
@@ -73,7 +90,7 @@ struct BucketMain: Reducer {
             case let .appendBucket(with: item):
                 guard state.bucketItems[id: item.id] == nil else {
                     /// If the item already exists
-                    return .send(.errorPresented)
+                    return .send(.showErrorToast("Item already exists"))
                 }
                 let itemState = item.toState()
                 state.bucketItems.append(itemState)
@@ -84,7 +101,13 @@ struct BucketMain: Reducer {
                     return .none
                 }
                 state.bucketItems.remove(id: id)
-                return .none
+                return .run { send in
+                    do {
+//                        try await bucketListClient.deleteBucketItem(by: id)
+                    } catch {
+                        print(error)
+                    }
+                }
                 
             case .addButtonTapped:
                 state.addItem = .init(
@@ -100,8 +123,8 @@ struct BucketMain: Reducer {
                     state.bucketItems.flatMap { $0.categories.map { $0.slug } }
                 ))
                 return .send(.wentToMap(with: categories))
-
-            case let .addItem(.presented(.onAddSuccess(item))):
+                
+            case let .addItem(.presented(.addSucceeded(item))):
                 return .send(.appendBucket(with: item))
                 
             case .wentToMap:
@@ -120,8 +143,20 @@ struct BucketMain: Reducer {
         }
     }
     
-    private func getItems() async throws -> BucketList {
+    private func getItems() async throws -> BucketOptions {
         let token = keychainClient.retrieveToken()?.accessToken ?? ""
         return try await bucketClient.getItems(token: token)
     }
+}
+
+func whereIsMyDB() {
+    let path = FileManager
+        .default
+        .urls(for: .applicationSupportDirectory, in: .userDomainMask)
+        .last?
+        .absoluteString
+        .replacingOccurrences(of: "file://", with: "")
+        .removingPercentEncoding
+    
+    print("🟦 \(path ?? "Not found")")
 }

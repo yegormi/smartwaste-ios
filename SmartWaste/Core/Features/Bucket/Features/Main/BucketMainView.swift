@@ -82,10 +82,10 @@ struct BucketMainView: View {
                     .presentationDragIndicator(.visible)
             }
             .toast(isPresenting: viewStore.binding(
-                get: \.isErrorPresented,
-                send: BucketMain.Action.errorPresented
+                get: \.isError,
+                send: BucketMain.Action.errorToggled
             )) {
-                AlertToast(displayMode: .alert, type: .error(.red), title: "The item already exists!")
+                AlertToast(displayMode: .alert, type: .error(.red), title: viewStore.errorToast)
             }
         }
     }
