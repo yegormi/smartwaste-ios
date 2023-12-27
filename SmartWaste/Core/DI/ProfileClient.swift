@@ -5,9 +5,9 @@
 //  Created by Yegor Myropoltsev on 06.12.2023.
 //
 
-import Foundation
-import ComposableArchitecture
 import Alamofire
+import ComposableArchitecture
+import Foundation
 
 // MARK: - API client interface
 
@@ -32,20 +32,19 @@ extension ProfileClient: DependencyKey, TestDependencyKey {
     static let liveValue = ProfileClient(
         getQuests: { token in
             let endpoint = "/self/quests"
-            
+
             let headers: HTTPHeaders = [
-                "Authorization": "\(token)"
+                "Authorization": "\(token)",
             ]
-            
+
             return try await withCheckedThrowingContinuation { continuation in
                 AF.request(baseUrl + endpoint,
                            method: .get,
-                           headers: headers
-                )
-                .validate()
-                .responseDecodable(of: QuestList.self) { response in
-                    handleResponse(response, continuation)
-                }
+                           headers: headers)
+                    .validate()
+                    .responseDecodable(of: QuestList.self) { response in
+                        handleResponse(response, continuation)
+                    }
             }
         }
     )
@@ -63,15 +62,15 @@ extension ProfileClient {
     static let baseUrl = Constants.baseUrl
 }
 
-
 private func handleResponse<T>(_ response: AFDataResponse<T>, _ continuation: CheckedContinuation<T, Error>) {
     switch response.result {
-    case .success(let value):
+    case let .success(value):
         continuation.resume(returning: value)
-    case .failure(let error):
+    case let .failure(error):
         if let data = response.data,
-           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data) {
-            continuation.resume(throwing: ErrorResponse.failedWithResponse(failResponse))
+           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data)
+        {
+            continuation.resume(throwing: ErrorTypes.failedWithResponse(failResponse))
         } else {
             continuation.resume(throwing: error)
         }

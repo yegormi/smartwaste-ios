@@ -8,8 +8,6 @@
 import MapKit
 
 final class LocationManager: NSObject, ObservableObject {
-    static let shared = LocationManager()
-    
     private let locationManager = CLLocationManager()
     
     @Published var region = MKCoordinateRegion(

@@ -27,7 +27,7 @@ struct SplashFeature: Reducer {
         Reduce { state, action in
             switch action {
             case .appDidLaunch:
-                guard let token = keychainClient.retrieveToken() else {
+                guard let _ = keychainClient.retrieveToken() else {
                     return .send(.auth)
                 }
                 return .send(.tabs)

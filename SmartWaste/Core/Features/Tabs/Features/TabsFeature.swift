@@ -109,7 +109,7 @@ struct TabsFeature: Reducer {
                     do {
                         let user = try await getSelf(with: token)
                         await send(.onGetSelfSuccess(user))
-                    } catch let ErrorResponse.failedWithResponse(user){
+                    } catch let ErrorTypes.failedWithResponse(user){
                         await send(.onGetSelfError(user))
                     } catch {
                         print(error)
