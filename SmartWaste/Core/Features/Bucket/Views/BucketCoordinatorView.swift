@@ -1,5 +1,5 @@
 //
-//  MapCoordinatorView.swift
+//  BucketCoordinatorView.swift
 //  SmartWaste
 //
 //  Created by Yegor Myropoltsev on 04.12.2023.

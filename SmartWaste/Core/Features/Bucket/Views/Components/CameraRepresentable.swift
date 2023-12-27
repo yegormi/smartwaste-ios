@@ -1,5 +1,5 @@
 //
-//  CameraView.swift
+//  CameraRepresentable.swift
 //  SmartWaste
 //
 //  Created by Yegor Myropoltsev on 15.11.2023.
@@ -9,26 +9,23 @@ import Foundation
 import UIKit
 import SwiftUI
 
-struct CameraView: UIViewControllerRepresentable {
-    @Binding var capturedImage: UIImage?
-    var onImageSelected: () -> Void
+struct CameraRepresentable: UIViewControllerRepresentable {
+    var onSelected: (UIImage) -> Void
     
     typealias UIViewControllerType = UIImagePickerController
     
     func makeUIViewController(context: Context) -> UIViewControllerType {
         let viewController = UIViewControllerType()
         viewController.delegate = context.coordinator
-                
+        
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             viewController.sourceType = .camera
-        }
-        else {
+        } else {
             viewController.sourceType = .savedPhotosAlbum
         }
         
-//        viewController.sourceType = .savedPhotosAlbum
+        viewController.sourceType = .savedPhotosAlbum
 
-        
         return viewController
     }
     
@@ -36,16 +33,16 @@ struct CameraView: UIViewControllerRepresentable {
         
     }
     
-    func makeCoordinator() -> CameraView.Coordinator {
+    func makeCoordinator() -> CameraRepresentable.Coordinator {
         return Coordinator(self)
     }
 }
 
-extension CameraView {
+extension CameraRepresentable {
     class Coordinator : NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-        var parent: CameraView
+        var parent: CameraRepresentable
         
-        init(_ parent: CameraView) {
+        init(_ parent: CameraRepresentable) {
             self.parent = parent
         }
         
@@ -58,10 +55,7 @@ extension CameraView {
             guard let image = info[.originalImage] as? UIImage else {
                 return
             }
-            
-            parent.capturedImage = image
-            parent.onImageSelected()
-            
+            parent.onSelected(image)
             picker.dismiss(animated: true)
         }
     }
