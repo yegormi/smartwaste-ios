@@ -11,10 +11,9 @@ import ComposableArchitecture
 
 @Reducer
 struct AddFeature: Reducer {
-    @Dependency(\.dismiss)          var dismiss
-    @Dependency(\.bucketClient)     var bucketClient
-    @Dependency(\.bucketListClient) var bucketListClient
-    @Dependency(\.keychainClient)   var keychainClient
+    @Dependency(\.dismiss)        var dismiss
+    @Dependency(\.bucketClient)   var bucketClient
+    @Dependency(\.keychainClient) var keychainClient
     
     struct State: Equatable {
         var counter: CounterFeature.State
@@ -140,7 +139,6 @@ struct AddFeature: Reducer {
                 return .run { [state] send in
                     do {
                         let bucketItem = try state.createBucketItem()
-                        try await bucketListClient.createBucketItem(bucketItem)
                         await send(.addSucceeded(bucketItem))
                     } catch ErrorTypes.selectionEmpty {
                         await send(.showErrorToast("Selection is empty!"))

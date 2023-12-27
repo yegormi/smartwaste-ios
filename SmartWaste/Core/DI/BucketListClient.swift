@@ -46,6 +46,7 @@ extension BucketListClient: DependencyKey {
                         } ?? []
                     )
                 }
+                print("✅ Successfully fetched items")
                 return bucketItems
             } catch {
                 print("❌ Couldn't fetch bucket items")
@@ -71,6 +72,7 @@ extension BucketListClient: DependencyKey {
             
             do {
                 try viewContext.save()
+                print("✅ Successfully created bucket item")
             } catch {
                 print("❌ Couldn't create bucket item")
             }
@@ -78,7 +80,7 @@ extension BucketListClient: DependencyKey {
         updateBucketItem: { bucketItem in
             let viewContext = CoreDataManager.shared.container.viewContext
             let fetchRequest: NSFetchRequest<BucketItemEntity> = BucketItemEntity.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "id == %@", bucketItem.id as CVarArg)
+            fetchRequest.predicate = NSPredicate(format: "id == %ld", bucketItem.id)
             
             do {
                 let fetchedEntities = try viewContext.fetch(fetchRequest)
@@ -102,6 +104,7 @@ extension BucketListClient: DependencyKey {
                     }
                     
                     try viewContext.save()
+                    print("✅ Successfully updated bucket item")
                 } else {
                     print("❌ Couldn't find bucket item with id: \(bucketItem.id)")
                 }
@@ -112,13 +115,14 @@ extension BucketListClient: DependencyKey {
         deleteBucketItem: { bucketItem in
             let viewContext = CoreDataManager.shared.container.viewContext
             let fetchRequest: NSFetchRequest<BucketItemEntity> = BucketItemEntity.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "id == %@", bucketItem.id as CVarArg)
+            fetchRequest.predicate = NSPredicate(format: "id == %ld", bucketItem.id)
             
             do {
                 let fetchedEntities = try viewContext.fetch(fetchRequest)
                 if let entity = fetchedEntities.first {
                     viewContext.delete(entity)
                     try viewContext.save()
+                    print("✅ Successfully deleted item")
                 } else {
                     print("❌ Couldn't find bucket item with id: \(bucketItem.id)")
                 }

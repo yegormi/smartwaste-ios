@@ -94,20 +94,39 @@ struct BucketMain: Reducer {
                 }
                 let itemState = item.toState()
                 state.bucketItems.append(itemState)
-                return .none
+                return .run { send in
+                    await bucketListClient.createBucketItem(item)
+                }
                 
             case let .bucketItems(.element(id: id, action: .counter(.decrement))):
-                guard state.bucketItems[id: id]?.counter.value == 0 else {
+                guard let bucketState = state.bucketItems[id: id], bucketState.counter.value >= 0 else {
                     return .none
                 }
-                state.bucketItems.remove(id: id)
+                let item = bucketState.toItem()
+                
+                if item.count <= 0 {
+                    state.bucketItems.remove(id: id)
+                }
+                
                 return .run { send in
-                    do {
-//                        try await bucketListClient.deleteBucketItem(by: id)
-                    } catch {
-                        print(error)
+                    await bucketListClient.updateBucketItem(item)
+
+                    // Check if the counter has reached 0 and delete the item
+                    if item.count <= 0 {
+                        await bucketListClient.deleteBucketItem(item)
                     }
                 }
+
+
+            case let .bucketItems(.element(id: id, action: .counter(.increment))):
+                guard let bucketState = state.bucketItems[id: id] else {
+                    return .none
+                }
+                
+                return .run { [item = bucketState.toItem()] _ in
+                    await bucketListClient.updateBucketItem(item)
+                }
+
                 
             case .addButtonTapped:
                 state.addItem = .init(
