@@ -11,7 +11,7 @@ import ComposableArchitecture
 @Reducer
 struct BucketMain: Reducer {
     @Dependency(\.keychainClient)   var keychainClient
-    @Dependency(\.bucketListClient) var bucketListClient
+    @Dependency(\.bucketDB) var bucketDB
     @Dependency(\.bucketClient)     var bucketClient
     
     struct State: Equatable {
@@ -56,7 +56,7 @@ struct BucketMain: Reducer {
                 state.viewDidAppear = true
                 return .run { send in
                     do {
-                        let bucketItems = try await bucketListClient.fetchBucketItems()
+                        let bucketItems = try await bucketDB.fetchBucketItems()
                         await send(.onFetched(bucketItems))
                     } catch {
                         print(error)
@@ -95,7 +95,7 @@ struct BucketMain: Reducer {
                 let itemState = item.toState()
                 state.bucketItems.append(itemState)
                 return .run { send in
-                    await bucketListClient.createBucketItem(item)
+                    await bucketDB.createBucketItem(item)
                 }
                 
             case let .bucketItems(.element(id: id, action: .counter(.decrement))):
@@ -109,11 +109,11 @@ struct BucketMain: Reducer {
                 }
                 
                 return .run { send in
-                    await bucketListClient.updateBucketItem(item)
+                    await bucketDB.updateBucketItem(item)
 
                     // Check if the counter has reached 0 and delete the item
                     if item.count <= 0 {
-                        await bucketListClient.deleteBucketItem(item)
+                        await bucketDB.deleteBucketItem(item)
                     }
                 }
 
@@ -124,13 +124,13 @@ struct BucketMain: Reducer {
                 }
                 
                 return .run { [item = bucketState.toItem()] _ in
-                    await bucketListClient.updateBucketItem(item)
+                    await bucketDB.updateBucketItem(item)
                 }
 
                 
             case .addButtonTapped:
                 state.addItem = .init(
-                    counter: .init(min: 0, max: 10),
+                    counter: .init(min: Constants.minCount, max: Constants.maxCount),
                     title: "Add item",
                     options: state.bucketOptions,
                     selection: state.bucketOptions.first

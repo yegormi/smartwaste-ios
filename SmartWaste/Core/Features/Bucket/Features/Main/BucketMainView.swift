@@ -76,8 +76,8 @@ struct BucketMainView: View {
             ) { store in
                 AddView(store: store)
                     .padding(30)
-//                    .presentationDetents([.height(370)])
-//                    .presentationDragIndicator(.visible)
+                    .presentationDetents([.height(370)])
+                    .presentationDragIndicator(.visible)
             }
             .toast(isPresenting: viewStore.binding(
                 get: \.isError,

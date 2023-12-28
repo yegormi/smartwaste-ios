@@ -10,15 +10,13 @@ import SwiftUI
 
 @main
 struct SmartWasteApp: App {
-    @Dependency(\.bucketListClient) var bucketListClient
-    
     let store: StoreOf<RootCoordinator>
     let coreDataManager: CoreDataManager
     
     init() {
         self.store = Store(initialState: .initialState) {
             RootCoordinator()
-//                ._printChanges()
+                ._printChanges()
         }
         self.coreDataManager = CoreDataManager.shared
     }

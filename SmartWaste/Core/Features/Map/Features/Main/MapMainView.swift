@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import AlertToast
 
 struct MapMainView: View {
     let store: StoreOf<MapMain>
@@ -29,10 +30,15 @@ struct MapMainView: View {
             ) { store in
                 AnnotationView(store: store)
                     .padding(30)
-//                    .presentationDetents([.fraction(0.5)])
-//                    .presentationDragIndicator(.visible)
+                    .presentationDetents([.fraction(0.5)])
+                    .presentationDragIndicator(.visible)
             }
-            
+            .toast(isPresenting: viewStore.binding(
+                get: \.isSuccessToastPresented,
+                send: MapMain.Action.successToastPresented)
+            ) {
+                AlertToast(displayMode: .alert, type: .complete(.green), title: "Bucket has been successfully dumped!")
+            }
         }
     }
 }

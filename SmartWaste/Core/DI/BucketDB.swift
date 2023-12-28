@@ -1,5 +1,5 @@
 //
-//  BucketListClient.swift
+//  BucketDB.swift
 //  SmartWaste
 //
 //  Created by Yegor Myropoltsev on 27.12.2023.
@@ -9,7 +9,7 @@ import ComposableArchitecture
 import CoreData
 
 @DependencyClient
-struct BucketListClient {
+struct BucketDB {
     var fetchBucketItems: () async throws -> [BucketItem]
     var createBucketItem: (BucketItem) async -> Void
     var updateBucketItem: (BucketItem) async -> Void
@@ -18,14 +18,14 @@ struct BucketListClient {
 }
 
 extension DependencyValues {
-    var bucketListClient: BucketListClient {
-        get { self[BucketListClient.self] }
-        set { self[BucketListClient.self] = newValue }
+    var bucketDB: BucketDB {
+        get { self[BucketDB.self] }
+        set { self[BucketDB.self] = newValue }
     }
 }
 
-extension BucketListClient: DependencyKey {
-    static let liveValue = BucketListClient(
+extension BucketDB: DependencyKey {
+    static let liveValue = BucketDB(
         fetchBucketItems: {
             let viewContext = CoreDataManager.shared.container.viewContext
             let fetchRequest: NSFetchRequest<BucketItemEntity> = BucketItemEntity.fetchRequest()

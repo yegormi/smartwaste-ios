@@ -32,16 +32,17 @@ struct MapMain: Reducer {
             emojiList: []
         )
         var isDumpAllowed = false
+        var isSuccessToastPresented = false
     }
     
     enum Action: Equatable {
         case details(PresentationAction<AnnotationFeature.Action>)
+        case successToastPresented(Bool)
         case viewDidAppear
         
         case getPoints
         case searchPoints([String])
         case onGetPointsSuccess([MapPoint])
-        
         
         case onAnnotationTapped(AnnotationMark)
         case openRoute(with: AnnotationMark, in: MapLink)
@@ -52,6 +53,9 @@ struct MapMain: Reducer {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
+            case .successToastPresented(let isOn):
+                state.isSuccessToastPresented = isOn
+                return .none
             case .viewDidAppear:
                 state.viewDidAppear = true
                 guard state.categories.isEmpty else {
@@ -99,6 +103,8 @@ struct MapMain: Reducer {
                 openRoute(with: annotation, in: app)
                 return .none
                 
+            case .details(.presented(.clearBucket)):
+                return .send(.successToastPresented(true))
             case .details:
                 return .none
             }

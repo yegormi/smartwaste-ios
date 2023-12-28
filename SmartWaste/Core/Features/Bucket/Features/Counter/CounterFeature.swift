@@ -29,10 +29,10 @@ struct CounterFeature: Reducer {
         Reduce { state, action in
             switch action {
             case .decrement:
-                state.value -= 1
+                state.value = max(state.min, state.value - 1)
                 return .none
             case .increment:
-                state.value += 1
+                state.value = min(state.max, state.value + 1)
                 return .none
             }
         }

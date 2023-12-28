@@ -14,7 +14,7 @@ import CoreLocation
 struct AnnotationFeature: Reducer {
     @Dependency(\.keychainClient)   var keychainClient
     @Dependency(\.bucketClient)     var bucketClient
-    @Dependency(\.bucketListClient) var bucketListClient
+    @Dependency(\.bucketDB) var bucketDB
     @Dependency(\.dismiss)          var dismiss
     
     struct State: Equatable {
@@ -108,7 +108,7 @@ struct AnnotationFeature: Reducer {
             case .getBucket:
                 return .run { send in
                     do {
-                        let items = try await bucketListClient.fetchBucketItems()
+                        let items = try await bucketDB.fetchBucketItems()
                         await send(.onGetBucketSuccess(items))
                     } catch {
                         print(error)
@@ -133,7 +133,7 @@ struct AnnotationFeature: Reducer {
             case .clearBucket:
                 /// Clear bucket in database
                 return .run { _ in
-                    try await bucketListClient.deleteAllBucketItems()
+                    try await bucketDB.deleteAllBucketItems()
                     await dismiss()
                 }
             }
