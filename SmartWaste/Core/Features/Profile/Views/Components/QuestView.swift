@@ -21,7 +21,7 @@ struct QuestView: View {
     
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
-            .fill(value == total ? Color.green : Color("YellowDarkened"))
+            .fill(value == total ? Color("QuestGreen") : Color("QuestYellow"))
             .frame(height: 50)
             .overlay(
                 HStack {

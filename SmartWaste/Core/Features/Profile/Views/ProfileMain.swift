@@ -42,7 +42,7 @@ struct ProfileMainView: View {
                 
                 ZStack {
                     RoundedRectangle(cornerRadius: 40)
-                        .foregroundStyle(Color.green)
+                        .foregroundStyle(Color("QuestGreen"))
                         .overlay(
                             VStack {
                                 HStack(spacing: 50) {

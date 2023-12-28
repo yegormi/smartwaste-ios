@@ -59,8 +59,8 @@ struct AnnotationView: View {
                                 .font(.system(size: 20))
                         )
                 }
-                .disabled(!viewStore.isAllowedToDump)
-                .opacity(viewStore.isAllowedToDump ? 1.0 : 0.5)
+                .disabled(!viewStore.isDumpAllowed)
+                .opacity(viewStore.isDumpAllowed ? 1.0 : 0.5)
                 .scaleButton()
             }
             .confirmationDialog(
@@ -69,6 +69,9 @@ struct AnnotationView: View {
                     action: \.confirmationDialog
                 )
             )
+            .onAppear {
+                viewStore.send(.viewDidAppear)
+            }
         }
     }
 }

@@ -66,9 +66,7 @@ struct BucketMainView: View {
             .padding(20)
             .padding(.horizontal, 10)
             .onAppear {
-                if !viewStore.viewDidAppear {
-                    viewStore.send(.viewDidAppear)
-                }
+                viewStore.send(.viewDidAppear)
             }
             .sheet(
                 store: self.store.scope(
@@ -78,8 +76,8 @@ struct BucketMainView: View {
             ) { store in
                 AddView(store: store)
                     .padding(30)
-                    .presentationDetents([.height(370)])
-                    .presentationDragIndicator(.visible)
+//                    .presentationDetents([.height(370)])
+//                    .presentationDragIndicator(.visible)
             }
             .toast(isPresenting: viewStore.binding(
                 get: \.isError,

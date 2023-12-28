@@ -92,7 +92,7 @@ struct MapMain: Reducer {
                     )
                     state.isDumpAllowed = isWithinRadius
                 }
-                state.details = .init(annotation: annotation, isAllowedToDump: state.isDumpAllowed)
+                state.details = .init(annotation: annotation, isDumpAllowed: state.isDumpAllowed)
                 return .none
                 
             case .openRoute(let annotation, let app):

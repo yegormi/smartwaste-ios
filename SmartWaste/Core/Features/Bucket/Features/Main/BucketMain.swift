@@ -177,5 +177,5 @@ func whereIsMyDB() {
         .replacingOccurrences(of: "file://", with: "")
         .removingPercentEncoding
     
-    print("🟦 \(path ?? "Not found")")
+    print("🟦 Path to CoreData files: \(path ?? "Not found")")
 }

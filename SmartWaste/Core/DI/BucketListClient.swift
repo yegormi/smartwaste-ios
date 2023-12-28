@@ -14,6 +14,7 @@ struct BucketListClient {
     var createBucketItem: (BucketItem) async -> Void
     var updateBucketItem: (BucketItem) async -> Void
     var deleteBucketItem: (BucketItem) async -> Void
+    var deleteAllBucketItems: () async throws -> Void
 }
 
 extension DependencyValues {
@@ -103,7 +104,9 @@ extension BucketListClient: DependencyKey {
                         entity.addToItemToCategory(categoryEntity)
                     }
                     
-                    try viewContext.save()
+                    if viewContext.hasChanges {
+                        try viewContext.save()
+                    }
                     print("✅ Successfully updated bucket item")
                 } else {
                     print("❌ Couldn't find bucket item with id: \(bucketItem.id)")
@@ -128,6 +131,19 @@ extension BucketListClient: DependencyKey {
                 }
             } catch {
                 print("❌ Couldn't delete this item")
+            }
+        },
+        deleteAllBucketItems: {
+            let viewContext = CoreDataManager.shared.container.viewContext
+            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = BucketItemEntity.fetchRequest()
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+            
+            do {
+                try viewContext.execute(deleteRequest)
+                try viewContext.save()
+                print("✅ Successfully deleted all items")
+            } catch {
+                print("❌ Couldn't delete all items: \(error)")
             }
         }
     )

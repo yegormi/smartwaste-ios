@@ -29,8 +29,8 @@ struct MapMainView: View {
             ) { store in
                 AnnotationView(store: store)
                     .padding(30)
-                    .presentationDetents([.fraction(0.5)])
-                    .presentationDragIndicator(.visible)
+//                    .presentationDetents([.fraction(0.5)])
+//                    .presentationDragIndicator(.visible)
             }
             
         }
