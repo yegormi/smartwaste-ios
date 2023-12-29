@@ -52,6 +52,8 @@
 		EE7F96E22B1571B50071A99F /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F96E12B1571B50071A99F /* AuthClient.swift */; };
 		EE7F96E52B15E40B0071A99F /* KeychainClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F96E42B15E40B0071A99F /* KeychainClient.swift */; };
 		EE7F96E72B15ECC30071A99F /* MapClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F96E62B15ECC30071A99F /* MapClient.swift */; };
+		EE928D372B3F1C9A0011FD0E /* AuthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE928D362B3F1C9A0011FD0E /* AuthTests.swift */; };
+		EE928D3A2B3F24940011FD0E /* TabsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE928D392B3F24940011FD0E /* TabsTests.swift */; };
 		EE9C8E902B2887B3009FC890 /* AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9C8E8E2B2887B3009FC890 /* AnnotationView.swift */; };
 		EE9C8E912B2887B3009FC890 /* AnnotationFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9C8E8F2B2887B3009FC890 /* AnnotationFeature.swift */; };
 		EE9C8E942B2888B1009FC890 /* MapMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9C8E932B2888B1009FC890 /* MapMainView.swift */; };
@@ -158,6 +160,8 @@
 		EE7F96E12B1571B50071A99F /* AuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthClient.swift; sourceTree = "<group>"; };
 		EE7F96E42B15E40B0071A99F /* KeychainClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainClient.swift; sourceTree = "<group>"; };
 		EE7F96E62B15ECC30071A99F /* MapClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapClient.swift; sourceTree = "<group>"; };
+		EE928D362B3F1C9A0011FD0E /* AuthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTests.swift; sourceTree = "<group>"; };
+		EE928D392B3F24940011FD0E /* TabsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsTests.swift; sourceTree = "<group>"; };
 		EE9C8E8E2B2887B3009FC890 /* AnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationView.swift; sourceTree = "<group>"; };
 		EE9C8E8F2B2887B3009FC890 /* AnnotationFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationFeature.swift; sourceTree = "<group>"; };
 		EE9C8E932B2888B1009FC890 /* MapMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMainView.swift; sourceTree = "<group>"; };
@@ -350,6 +354,8 @@
 		EE4BE26F2B3D8C2B00F8398B /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				EE928D3B2B3F24970011FD0E /* Tabs */,
+				EE928D382B3F1C9E0011FD0E /* Auth */,
 				EE4BE2812B3DA23700F8398B /* Bucket */,
 				EE4BE26E2B3D8C2600F8398B /* Counter */,
 			);
@@ -432,6 +438,22 @@
 				EE7F96E42B15E40B0071A99F /* KeychainClient.swift */,
 			);
 			path = DI;
+			sourceTree = "<group>";
+		};
+		EE928D382B3F1C9E0011FD0E /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				EE928D362B3F1C9A0011FD0E /* AuthTests.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		EE928D3B2B3F24970011FD0E /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				EE928D392B3F24940011FD0E /* TabsTests.swift */,
+			);
+			path = Tabs;
 			sourceTree = "<group>";
 		};
 		EE9888C92B155528009445BC /* Features */ = {
@@ -1033,7 +1055,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE4BE2792B3D916600F8398B /* CounterTests.swift in Sources */,
+				EE928D372B3F1C9A0011FD0E /* AuthTests.swift in Sources */,
 				EE4BE2802B3DA22800F8398B /* BucketTests.swift in Sources */,
+				EE928D3A2B3F24940011FD0E /* TabsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1379,7 +1403,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.0;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

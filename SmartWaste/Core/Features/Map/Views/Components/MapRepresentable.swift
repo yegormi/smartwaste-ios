@@ -9,7 +9,6 @@ import SwiftUI
 import MapKit
 
 struct MapRepresentable: UIViewRepresentable {
-    @StateObject var locationManager = LocationManager()
     let mapPoints: [MapPoint]
     let onSelect: (AnnotationMark) -> Void
     
@@ -35,7 +34,9 @@ struct MapRepresentable: UIViewRepresentable {
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
             if let annotation = view.annotation as? AnnotationMark {
                 print("Marker tapped! Name: \(annotation.name), Address: \(annotation.address)")
-                parent.onSelect(annotation)
+                DispatchQueue.main.async {
+                    self.parent.onSelect(annotation)
+                }
             }
         }
         
@@ -77,7 +78,7 @@ struct MapRepresentable: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
-        mapView.setRegion(locationManager.region, animated: false)
+//        mapView.setRegion(locationManager.region, animated: false)
         mapView.mapType = .standard
         mapView.showsUserLocation = true
         mapView.showsScale = true
@@ -129,11 +130,6 @@ class ClusterAnnotationView: MKMarkerAnnotationView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func prepareForDisplay() {
-        super.prepareForDisplay()
-        canShowCallout = true
     }
 }
 

@@ -8,6 +8,11 @@
 import ComposableArchitecture
 import CoreData
 
+// MARK: - API client interface
+
+// Typically this interface would live in its own module, separate from the live implementation.
+// This allows the feature to compile faster since it only depends on the interface.
+
 @DependencyClient
 struct BucketDB {
     var fetchBucketItems: () async throws -> [BucketItem]
@@ -23,6 +28,8 @@ extension DependencyValues {
         set { self[BucketDB.self] = newValue }
     }
 }
+
+// MARK: - Live API implementation
 
 extension BucketDB: DependencyKey {
     static let liveValue = BucketDB(
@@ -149,3 +156,22 @@ extension BucketDB: DependencyKey {
     )
 }
 
+// MARK: - Test Implementation
+
+extension BucketDB {
+    static let testValue = BucketDB(
+        fetchBucketItems: {
+            return [
+                BucketItem(id: 1, name: "Glass bottle", count: 1, categories: []),
+                BucketItem(id: 2, name: "Plastic bottle", count: 2, categories: []),
+                BucketItem(id: 3, name: "Paper", count: 3, categories: []),
+                BucketItem(id: 4, name: "Food", count: 4, categories: []),
+                BucketItem(id: 5, name: "Metal", count: 5, categories: [])
+            ]
+        },
+        createBucketItem: { _ in },
+        updateBucketItem: { _ in },
+        deleteBucketItem: { _ in },
+        deleteAllBucketItems: {}
+    )
+}

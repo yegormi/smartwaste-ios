@@ -17,9 +17,9 @@ import UIKit
 @DependencyClient
 struct BucketClient {
     var getCategories: @Sendable (_ token: String) async throws -> [BucketCategory]
-    var getItems: @Sendable (_ token: String) async throws -> BucketOptions
-    var scanPhoto: @Sendable (_ token: String, _ image: UIImage) async throws -> BucketOptions
-    var dumpItems: @Sendable (_ token: String, _ bucket: [DumpEntity]) async throws -> ProgressResponse
+    var getItems:      @Sendable (_ token: String) async throws -> BucketOptions
+    var scanPhoto:     @Sendable (_ token: String, _ image: UIImage) async throws -> BucketOptions
+    var dumpItems:     @Sendable (_ token: String, _ bucket: [DumpEntity]) async throws -> ProgressResponse
 }
 
 extension DependencyValues {
@@ -119,7 +119,20 @@ extension BucketClient: DependencyKey, TestDependencyKey {
 // MARK: - Test Implementation
 
 extension BucketClient {
-    static let testValue = Self()
+    static let testValue = BucketClient(
+        getCategories: { _ in
+            return [BucketCategory(id: 1, name: "Paper", slug: "paper", emoji: "📄")]
+        },
+        getItems: { _ in
+            return BucketOptions(items: [])
+        },
+        scanPhoto: { _, _ in
+            return BucketOptions(items: [])
+        },
+        dumpItems: { _, _ in
+            return ProgressResponse(progresses: [])
+        }
+    )
 }
 
 // MARK: - Constants

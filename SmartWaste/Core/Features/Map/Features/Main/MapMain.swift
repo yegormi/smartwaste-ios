@@ -23,7 +23,6 @@ struct MapMain: Reducer {
         
         var points: [MapPoint]
         var categories: [String]
-        var annotation: AnnotationMark?
         
         var emptyAnnotation = AnnotationMark(
             coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0),
@@ -44,10 +43,7 @@ struct MapMain: Reducer {
         case searchPoints([String])
         case onGetPointsSuccess([MapPoint])
         
-        case onAnnotationTapped(AnnotationMark)
-        case openRoute(with: AnnotationMark, in: MapLink)
-        case checkDistance(AnnotationMark)
-        
+        case onAnnotationTapped(AnnotationMark)        
     }
     
     var body: some ReducerOf<Self> {
@@ -85,22 +81,7 @@ struct MapMain: Reducer {
                 return .none
                 
             case .onAnnotationTapped(let annotation):
-                state.annotation = annotation
-                return .send(.checkDistance(annotation))
-            case .checkDistance(let annotation):
-                if let userLocation = getUserLocation() {
-                    let isWithinRadius = isWithin(
-                        radius: 500,
-                        userLocation: userLocation,
-                        pointLocation: annotation.coordinate
-                    )
-                    state.isDumpAllowed = isWithinRadius
-                }
-                state.details = .init(annotation: annotation, isDumpAllowed: state.isDumpAllowed)
-                return .none
-                
-            case .openRoute(let annotation, let app):
-                openRoute(with: annotation, in: app)
+                state.details = .init(annotation: annotation)
                 return .none
                 
             case .details(.presented(.clearBucket)):
@@ -122,33 +103,5 @@ struct MapMain: Reducer {
     private func searchPoints(with categories: [String]) async throws -> [MapPoint] {
         let token = keychainClient.retrieveToken()?.accessToken ?? ""
         return try await mapClient.searchPoints(token: token, categories: categories)
-    }
-    
-    private func openRoute(with anotation: AnnotationMark, in application: MapLink) {
-        application.open(with: anotation.coordinate)
-    }
-    
-    private func dumpItems(bucket: [DumpEntity]) async throws -> ProgressResponse {
-        let token = keychainClient.retrieveToken()?.accessToken ?? ""
-        return try await bucketClient.dumpItems(token: token, bucket: bucket)
-    }
-    
-    private func getUserLocation() -> CLLocationCoordinate2D? {
-        let manager = LocationManager()
-        return manager.region.center
-    }
-    
-    private func isWithin(
-        radius: Double,
-        userLocation: CLLocationCoordinate2D,
-        pointLocation: CLLocationCoordinate2D
-    ) -> Bool {
-        let userLocationCLLocation = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
-        let pointLocationCLLocation = CLLocation(latitude: pointLocation.latitude, longitude: pointLocation.longitude)
-        
-        /// Distance in meters
-        let distance = userLocationCLLocation.distance(from: pointLocationCLLocation)
-        
-        return distance <= radius
     }
 }

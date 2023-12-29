@@ -122,7 +122,9 @@ struct TabsFeature: Reducer {
                 state.error = error
                 
                 switch error.code {
-                case RequestError.tokenExpired.code:
+                case
+                    RequestError.tokenExpired.code,
+                    RequestError.tokenInvalid.code:
                     return .send(.expiredAlertPresented)
                 default:
                     return .none

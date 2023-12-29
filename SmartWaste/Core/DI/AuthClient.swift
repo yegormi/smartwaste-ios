@@ -16,8 +16,8 @@ import Foundation
 
 @DependencyClient
 struct AuthClient {
-    var performSignIn: @Sendable (String, String) async throws -> AuthResponse
-    var performSignUp: @Sendable (String, String, String) async throws -> AuthResponse
+    var performSignIn:  @Sendable (String, String) async throws -> AuthResponse
+    var performSignUp:  @Sendable (String, String, String) async throws -> AuthResponse
     var performGetSelf: @Sendable (String) async throws -> User
 }
 

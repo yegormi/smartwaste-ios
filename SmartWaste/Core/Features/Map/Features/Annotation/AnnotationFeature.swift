@@ -12,18 +12,19 @@ import CoreLocation
 
 @Reducer
 struct AnnotationFeature: Reducer {
-    @Dependency(\.keychainClient)   var keychainClient
-    @Dependency(\.bucketClient)     var bucketClient
-    @Dependency(\.bucketDB) var bucketDB
-    @Dependency(\.dismiss)          var dismiss
+    @Dependency(\.keychainClient) var keychainClient
+    @Dependency(\.bucketClient)   var bucketClient
+    @Dependency(\.bucketDB)       var bucketDB
+    @Dependency(\.dismiss)        var dismiss
     
     struct State: Equatable {
         @PresentationState var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
         
         var annotation: AnnotationMark
+        
+        var isDumpAllowed: Bool = false
         var bucket: [BucketItem]? = nil
         var progress: ProgressResponse? = nil
-        var isDumpAllowed: Bool
     }
     
     enum Action: Equatable {

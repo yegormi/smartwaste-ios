@@ -25,7 +25,7 @@ final class LocationManager: NSObject, ObservableObject {
     
     func setup() {
         switch locationManager.authorizationStatus {
-        case .authorizedWhenInUse, .authorizedAlways:
+        case .authorizedWhenInUse:
             locationManager.requestLocation()
         case .notDetermined:
             locationManager.startUpdatingLocation()

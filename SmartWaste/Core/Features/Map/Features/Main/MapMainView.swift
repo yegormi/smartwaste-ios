@@ -14,8 +14,8 @@ struct MapMainView: View {
     
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-            MapRepresentable(mapPoints: viewStore.points) { annotation in
-                viewStore.send(.onAnnotationTapped(annotation))
+            MapRepresentable(mapPoints: viewStore.points) { item in
+                viewStore.send(.onAnnotationTapped(item))
             }
             .onAppear {
                 if !viewStore.viewDidAppear {

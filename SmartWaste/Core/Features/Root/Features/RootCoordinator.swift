@@ -29,18 +29,18 @@ struct RootCoordinator: Reducer {
             case .routeAction(_, action: .splash(.auth)):
                 state.routes.removeAll()
                 state.routes.push(.auth(.init()))
-                
-            case .routeAction(_, .tabs(.alert(.presented(.expiredConfirmTapped)))):
+            
+            case .routeAction(_, action: .splash(.tabs)):
                 state.routes.removeAll()
-                state.routes.push(.auth(.init()))
+                state.routes.push(.tabs(.initState(from: .map)))
                 
             case .routeAction(_, action: .auth(.authResponse(.success))):
                 state.routes.removeAll()
                 state.routes.push(.tabs(.initState(from: .map)))
                 
-            case .routeAction(_, action: .splash(.tabs)):
+            case .routeAction(_, action: .tabs(.alert(.presented(.expiredConfirmTapped)))):
                 state.routes.removeAll()
-                state.routes.push(.tabs(.initState(from: .map)))
+                state.routes.push(.auth(.init()))
                 
             case .routeAction(_, action: .tabs(.profile(.routeAction(_, action: .main(.onSignOutSuccess))))):
                 state.routes.removeAll()
