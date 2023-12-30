@@ -15,15 +15,14 @@ struct MapMain: Reducer {
     @Dependency(\.mapClient)      var mapClient
     @Dependency(\.keychainClient) var keychainClient
     @Dependency(\.bucketClient)   var bucketClient
-    
-    
+
     struct State: Equatable {
         @PresentationState var details: AnnotationFeature.State?
         var viewDidAppear = false
-        
+
         var points: [MapPoint]
         var categories: [String]
-        
+
         var emptyAnnotation = AnnotationMark(
             coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0),
             name: "",
@@ -33,19 +32,19 @@ struct MapMain: Reducer {
         var isDumpAllowed = false
         var isSuccessToastPresented = false
     }
-    
+
     enum Action: Equatable {
         case details(PresentationAction<AnnotationFeature.Action>)
         case successToastPresented(Bool)
         case viewDidAppear
-        
+
         case getPoints
         case searchPoints([String])
         case onGetPointsSuccess([MapPoint])
-        
-        case onAnnotationTapped(AnnotationMark)        
+
+        case onAnnotationTapped(AnnotationMark)
     }
-    
+
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -79,11 +78,11 @@ struct MapMain: Reducer {
             case .onGetPointsSuccess(let points):
                 state.points = points
                 return .none
-                
+
             case .onAnnotationTapped(let annotation):
                 state.details = .init(annotation: annotation)
                 return .none
-                
+
             case .details(.presented(.clearBucket)):
                 return .send(.successToastPresented(true))
             case .details:
@@ -94,12 +93,12 @@ struct MapMain: Reducer {
             AnnotationFeature()
         }
     }
-    
+
     private func getPoints() async throws -> [MapPoint] {
         let token = keychainClient.retrieveToken()?.accessToken ?? ""
         return try await mapClient.getPoints(token: token)
     }
-    
+
     private func searchPoints(with categories: [String]) async throws -> [MapPoint] {
         let token = keychainClient.retrieveToken()?.accessToken ?? ""
         return try await mapClient.searchPoints(token: token, categories: categories)

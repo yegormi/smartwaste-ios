@@ -12,7 +12,7 @@ import SwiftUI
 struct SmartWasteApp: App {
     let store: StoreOf<RootCoordinator>
     let coreDataManager: CoreDataManager
-    
+
     init() {
         self.store = Store(initialState: .initialState) {
             RootCoordinator()
@@ -20,7 +20,7 @@ struct SmartWasteApp: App {
         }
         self.coreDataManager = CoreDataManager.shared
     }
-    
+
     var body: some Scene {
         WindowGroup {
             RootCoordinatorView(

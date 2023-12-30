@@ -10,12 +10,12 @@ import SwiftUI
 struct StatBox: View {
     let label: String
     let value: Int
-    
+
     init(_ label: String, value: Int) {
         self.label = label
         self.value = value
     }
-    
+
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
             .foregroundStyle(Color.white.opacity(0.2))

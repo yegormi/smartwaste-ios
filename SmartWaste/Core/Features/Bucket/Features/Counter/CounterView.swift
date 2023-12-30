@@ -11,7 +11,7 @@ import ComposableArchitecture
 
 struct CounterView: View {
     let store: StoreOf<CounterFeature>
-    
+
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             HStack(spacing: 0) {
@@ -31,11 +31,11 @@ struct CounterView: View {
                 .disabled(viewStore.minReached)
                 .opacity(viewStore.minReached ? 0.3 : 1)
                 .scaleButton()
-                
+
                 Text("\(viewStore.value)")
                     .font(.system(size: 28))
                     .frame(width: 60, height: 40)
-                
+
                 Button {
                     viewStore.send(.increment)
                 } label: {

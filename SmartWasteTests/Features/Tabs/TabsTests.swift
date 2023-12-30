@@ -21,15 +21,15 @@ class TabsTests: XCTestCase {
                 AuthResponse(accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzAzODc1MzUzLCJleHAiOjE3MDM4Nzg5NTN9.AcXkuntCYTVWBTTMu0l89Sgl4SKgboR7PXJt2ush-gA")
             }
         }
-        
+
         await store.send(.tabSelected(.profile)) {
             $0.selectedTab = .profile
         }
-        
+
         await store.send(.tabSelected(.bucket)) {
             $0.selectedTab = .bucket
         }
-        
+
         await store.send(.tabSelected(.bucket))
         await store.receive(.goBackToPrevious)
     }

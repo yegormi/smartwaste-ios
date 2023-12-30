@@ -16,7 +16,7 @@ struct BucketItemFeature: Reducer {
         let name: String
         let categories: [BucketCategory]
         var counter: CounterFeature.State
-        
+
         func toItem () -> BucketItem {
             return BucketItem(
                 id: self.id,
@@ -26,11 +26,11 @@ struct BucketItemFeature: Reducer {
             )
         }
     }
-    
+
     enum Action: Equatable {
         case counter(CounterFeature.Action)
     }
-    
+
     var body: some ReducerOf<Self> {
         Scope(state: \.counter, action: /Action.counter) {
             CounterFeature()

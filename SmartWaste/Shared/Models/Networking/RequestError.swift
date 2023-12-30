@@ -14,7 +14,7 @@ enum RequestError: String, Equatable {
     case emailNotUnique     // signup email
     case tokenExpired       // token expired
     case tokenInvalid       // token invalid
-    
+
     var code: String {
         switch self {
         case .userNotFound:
@@ -31,7 +31,7 @@ enum RequestError: String, Equatable {
             return "jwt-invalid"
         }
     }
-    
+
     var string: String {
         switch self {
         case .userNotFound:

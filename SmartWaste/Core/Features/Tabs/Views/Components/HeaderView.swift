@@ -10,11 +10,11 @@ import SwiftUI
 struct HeaderView: View {
     let text: String
     let hasNotch: Bool = UIDevice.current.hasNotch
-    
+
     init(_ text: String) {
         self.text = text
     }
-    
+
     var body: some View {
         HStack {
             Text(text)

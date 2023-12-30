@@ -11,7 +11,7 @@ import TCACoordinators
 
 struct MapCoordinatorView: View {
     let store: StoreOf<MapCoordinator>
-    
+
     var body: some View {
         TCARouter(store) { screen in
             SwitchStore(screen) { screen in

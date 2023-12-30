@@ -14,24 +14,24 @@ struct User: Codable, Equatable {
     let score: Int
     let buckets: Int
     let createdAt: String
-    
+
     var days: Int { return daysGone(from: dateFromISOString(createdAt)) + 1 }
     var level: Int { return (self.score / 500) + 1 }
     var completedScore: Int { return self.score % 500 }
-    
+
     private func dateFromISOString(_ dateString: String) -> Date {
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds, .withTimeZone]
-        
+
         return dateFormatter.date(from: dateString) ?? Date()
     }
-    
+
     private func daysGone(from day: Date) -> Int {
         let calendar = Calendar.current
         let currentDate = Date()
-        
+
         let components = calendar.dateComponents([.day], from: day, to: currentDate)
-        
+
         return components.day ?? 0
     }
 }

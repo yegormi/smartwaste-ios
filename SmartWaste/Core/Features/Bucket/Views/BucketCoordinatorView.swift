@@ -11,7 +11,7 @@ import TCACoordinators
 
 struct BucketCoordinatorView: View {
     let store: StoreOf<BucketCoordinator>
-    
+
     var body: some View {
         TCARouter(store) { screen in
             SwitchStore(screen) { screen in

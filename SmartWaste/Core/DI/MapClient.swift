@@ -35,7 +35,7 @@ extension MapClient: DependencyKey, TestDependencyKey {
             let endpoint = "/points"
 
             let headers: HTTPHeaders = [
-                "Authorization": token,
+                "Authorization": token
             ]
 
             return try await withCheckedThrowingContinuation { continuation in
@@ -51,11 +51,11 @@ extension MapClient: DependencyKey, TestDependencyKey {
             let endpoint = "/points"
 
             let parameters: Parameters = [
-                "categories": categories,
+                "categories": categories
             ]
 
             let headers: HTTPHeaders = [
-                "Authorization": token,
+                "Authorization": token
             ]
 
             return try await withCheckedThrowingContinuation { continuation in
@@ -90,8 +90,7 @@ private func handleResponse<T>(_ response: AFDataResponse<T>, _ continuation: Ch
         continuation.resume(returning: value)
     case let .failure(error):
         if let data = response.data,
-           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data)
-        {
+           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data) {
             continuation.resume(throwing: ErrorTypes.failedWithResponse(failResponse))
         } else {
             continuation.resume(throwing: error)

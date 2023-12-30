@@ -10,7 +10,7 @@ import SwiftUI
 struct AuthToggleButton: View {
     let authType: AuthType
     let onTap: () -> Void
-    
+
     var body: some View {
         HStack {
             Text(authType == .signIn ? "Don't have an account?" : "Already have an account?")

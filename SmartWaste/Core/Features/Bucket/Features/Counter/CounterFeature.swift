@@ -15,16 +15,16 @@ struct CounterFeature: Reducer {
         let min: Int
         let max: Int
         var value: Int = 0
-        
+
         var minReached: Bool { value <= min }
         var maxReached: Bool { value >= max }
     }
-    
+
     enum Action: Equatable {
         case decrement
         case increment
     }
-    
+
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {

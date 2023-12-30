@@ -13,13 +13,13 @@ import ComposableArchitecture
 struct CameraFeature: Reducer {
     struct State: Equatable {
     }
-    
+
     enum Action: Equatable {
         case usePhotoTapped(with: UIImage)
     }
-    
+
     var body: some ReducerOf<Self> {
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             case .usePhotoTapped:
                 return .none

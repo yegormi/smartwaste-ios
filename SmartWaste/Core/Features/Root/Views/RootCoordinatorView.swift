@@ -12,7 +12,7 @@ import TCACoordinators
 
 struct RootCoordinatorView: View {
     let store: StoreOf<RootCoordinator>
-    
+
     var body: some View {
         TCARouter(store) { screen in
             SwitchStore(screen) { screen in

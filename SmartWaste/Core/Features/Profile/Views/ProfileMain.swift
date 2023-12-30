@@ -10,16 +10,16 @@ import ComposableArchitecture
 
 struct ProfileMainView: View {
     let store: StoreOf<ProfileMain>
-    
+
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack {
                 VStack {
                     HStack {
                         ProfileCard(user: viewStore.user)
-                        
+
                         Spacer()
-                        
+
                         Button {
                             viewStore.send(.signOutButtonTapped)
                         } label: {
@@ -28,18 +28,18 @@ struct ProfileMainView: View {
                         }
                     }
                     .padding(.vertical, 10)
-                    
+
                     HStack {
                         Text("Level up")
                         Spacer()
                         Text("\(viewStore.user?.completedScore ?? 0)/500")
                     }
-                    
+
                     ProgressView(value: Double(viewStore.user?.completedScore ?? 0), total: 500)
                         .scaleEffect(x: 1, y: 3, anchor: .center)
                 }
                 .padding([.horizontal, .bottom], 20)
-                
+
                 ZStack {
                     RoundedRectangle(cornerRadius: 40)
                         .foregroundStyle(Color("QuestGreen"))
@@ -73,7 +73,7 @@ struct ProfileMainView: View {
                             }
                         )
                         .offset(y: 150)
-                    
+
                 }
                 Spacer()
             }
@@ -95,33 +95,31 @@ struct ProfileMainView_Previews: PreviewProvider {
     }
 }
 
-
-
 @Reducer
 struct ProfileMain: Reducer {
     @Dependency(\.keychainClient) var keychainClient
     @Dependency(\.authClient) var authClient
     @Dependency(\.profileClient) var profileClient
-    
+
     struct State: Equatable {
         var viewDidAppear = false
         var user: User?
         var quests: [Quest]?
     }
-    
+
     enum Action: Equatable {
         case viewDidAppear
-        
+
         case getSelf
         case onGetSelfSuccess(User)
-        
+
         case getQuests
         case onGetQuestsSuccess([Quest])
-        
+
         case signOutButtonTapped
         case onSignOutSuccess
     }
-    
+
     var body: some Reducer<State, Action> {
         Reduce<State, Action> { state, action in
             switch action {
@@ -140,7 +138,7 @@ struct ProfileMain: Reducer {
             case .onGetSelfSuccess(let user):
                 state.user = user
                 return .send(.getQuests)
-                
+
             case .getQuests:
                 return .run { send in
                     do {
@@ -162,17 +160,17 @@ struct ProfileMain: Reducer {
             }
         }
     }
-    
+
     private func getSelf() async throws -> User {
         let token = keychainClient.retrieveToken()?.accessToken ?? ""
         return try await authClient.performGetSelf(token)
     }
-    
+
     private func getQuests() async throws -> QuestList {
         let token = keychainClient.retrieveToken()?.accessToken ?? ""
         return try await profileClient.getQuests(token: token)
     }
-    
+
     private func deleteToken() {
         keychainClient.deleteToken()
     }

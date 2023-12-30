@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ErrorText: View {
     let message: String
-    
+
     var body: some View {
         HStack {
             Text(message)

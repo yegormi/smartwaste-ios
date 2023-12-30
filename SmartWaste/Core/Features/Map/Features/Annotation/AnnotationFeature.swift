@@ -16,41 +16,40 @@ struct AnnotationFeature: Reducer {
     @Dependency(\.bucketClient)   var bucketClient
     @Dependency(\.bucketDB)       var bucketDB
     @Dependency(\.dismiss)        var dismiss
-    
+
     struct State: Equatable {
         @PresentationState var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
-        
+
         var annotation: AnnotationMark
-        
+
         var isDumpAllowed: Bool = false
-        var bucket: [BucketItem]? = nil
-        var progress: ProgressResponse? = nil
+        var bucket: [BucketItem]?
+        var progress: ProgressResponse?
     }
-    
+
     enum Action: Equatable {
         case confirmationDialog(PresentationAction<ConfirmationDialog>)
         case viewDidAppear
-        
+
         case goButtonTapped
-        
+
         case dumpBucketTapped
-        
+
         case checkDistance
         case onCheckSuccess(Bool)
         case getBucket
         case onGetBucketSuccess([BucketItem])
-        
+
         case dumpItems
         case onDumpItemsSuccess(ProgressResponse)
         case clearBucket
-        
-        
+
         enum ConfirmationDialog: Equatable {
             case appleMapsTapped
             case googleMapsTapped
         }
     }
-    
+
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -69,7 +68,7 @@ struct AnnotationFeature: Reducer {
                     ButtonState(role: .cancel) {
                         TextState("Cancel")
                     }
-                    
+
                 } message: {
                     TextState("Choose map application")
                 }
@@ -80,16 +79,16 @@ struct AnnotationFeature: Reducer {
             case .confirmationDialog(.presented(.googleMapsTapped)):
                 openRoute(with: state.annotation, in: .googleMaps)
                 return .none
-                
+
             case .dumpBucketTapped:
                 return .send(.dumpItems)
-                
+
             case .confirmationDialog:
                 return .none
-                
+
                 // MARK: Dump Action
             case .checkDistance:
-                if let userLocation = getUserLocation()  {
+                if let userLocation = getUserLocation() {
                     let isWithinRadius = isWithin(
                         radius: 1000,
                         userLocation: userLocation,
@@ -140,36 +139,36 @@ struct AnnotationFeature: Reducer {
             }
         }
         .ifLet(\.$confirmationDialog, action: \.confirmationDialog)
-        
+
     }
-    
+
     private func openRoute(with anotation: AnnotationMark, in application: MapLink) {
         application.open(with: anotation.coordinate)
     }
-    
+
     private func dumpItems(bucket: [DumpEntity]) async throws -> ProgressResponse {
         let token = keychainClient.retrieveToken()?.accessToken ?? ""
         return try await bucketClient.dumpItems(token: token, bucket: bucket)
     }
-    
+
     private func getUserLocation() -> CLLocationCoordinate2D? {
         let locationManager = CLLocationManager()
         locationManager.requestWhenInUseAuthorization()
-        
+
         if let location = locationManager.location?.coordinate {
             return location
         }
-        
+
         return nil
     }
-    
+
     private func isWithin(radius: Double, userLocation: CLLocationCoordinate2D, pointLocation: CLLocationCoordinate2D) -> Bool {
         let userLocationCLLocation = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
         let pointLocationCLLocation = CLLocation(latitude: pointLocation.latitude, longitude: pointLocation.longitude)
-        
+
         // Distance in meters
         let distance = userLocationCLLocation.distance(from: pointLocationCLLocation)
-        
+
         return distance <= radius
     }
 }

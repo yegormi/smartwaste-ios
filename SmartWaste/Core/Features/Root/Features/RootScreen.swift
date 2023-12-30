@@ -16,13 +16,13 @@ struct RootScreen: Reducer {
         case auth(AuthFeature.State)
         case tabs(TabsFeature.State)
     }
-    
+
     enum Action: Equatable {
         case splash(SplashFeature.Action)
         case auth(AuthFeature.Action)
         case tabs(TabsFeature.Action)
     }
-    
+
     var body: some Reducer<State, Action> {
         Scope(state: /State.splash, action: /Action.splash) {
             SplashFeature()

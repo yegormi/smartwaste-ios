@@ -11,7 +11,7 @@ import ComposableArchitecture
 
 struct BucketItemView: View {
     let store: StoreOf<BucketItemFeature>
-    
+
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             RoundedRectangle(cornerRadius: 10)
@@ -29,7 +29,7 @@ struct BucketItemView: View {
                         )
                     }.padding(20)
                 )
-            
+
         }
     }
 }
@@ -37,12 +37,12 @@ struct BucketItemView: View {
 struct BucketItemView_Previews: PreviewProvider {
     static var previews: some View {
         let item = BucketItem(id: 1, name: "Plastic bottle", count: 5, categories: [])
-        
+
         BucketItemView(
             store: Store(
                 initialState: .init(
                     id: item.id,
-                    name: item.name, 
+                    name: item.name,
                     categories: item.categories,
                     counter: CounterFeature.State(min: 0, max: 10, value: item.count)
                 )

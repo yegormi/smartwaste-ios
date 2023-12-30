@@ -9,7 +9,7 @@ import Foundation
 
 enum AuthType {
     case signIn, signUp
-    
+
     var text: String {
         switch self {
         case .signIn:
@@ -18,7 +18,7 @@ enum AuthType {
             return "Sign up"
         }
     }
-    
+
     mutating func toggle() {
         self = (self == .signIn) ? .signUp : .signIn
     }

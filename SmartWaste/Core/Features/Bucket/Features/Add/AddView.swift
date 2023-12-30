@@ -13,14 +13,14 @@ import AlertToast
 
 struct AddView: View {
     let store: StoreOf<AddFeature>
-    
+
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack(alignment: .leading, spacing: 0) {
                 Text(viewStore.title)
                     .font(.system(size: 30))
                     .padding(.bottom, 15)
-                
+
                 HStack(spacing: 15) {
                     Menu {
                         Picker("", selection: viewStore.binding(
@@ -44,7 +44,7 @@ struct AddView: View {
                         .background(Color.gray.opacity(0.15))
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
-                    
+
                     Button(action: {
                         viewStore.send(.scanButtonTapped)
                     }) {
@@ -60,7 +60,7 @@ struct AddView: View {
                 )
                 .padding(.top, 20)
                 .padding(.bottom, (viewStore.errorText != nil) ? 15 : 40)
-                
+
                 if let errorText = viewStore.errorText {
                     Text(errorText)
                         .foregroundColor(.red)
@@ -68,7 +68,7 @@ struct AddView: View {
                         .frame(height: 10)
                         .padding(.bottom, 15)
                 }
-                
+
                 Button(action: {
                     viewStore.send(.addButtonTapped)
                 }) {
@@ -82,7 +82,7 @@ struct AddView: View {
                 }
                 .buttonStyle(.plain)
                 .padding(.bottom, 10)
-                
+
                 Button(action: {
                     viewStore.send(.cancelButtonTapped)
                 }) {
@@ -104,7 +104,7 @@ struct AddView: View {
             ) { store in
                 CameraView(store: store)
             }
-            
+
             .dotsIndicator(
                 when: viewStore.binding(
                     get: \.isLoading,
@@ -113,7 +113,7 @@ struct AddView: View {
                 color: .green
             )
             .animation(.easeInOut, value: viewStore.isLoading)
-            
+
             .toast(isPresenting: viewStore.binding(
                 get: \.isError,
                 send: AddFeature.Action.errorToastToggled
@@ -131,7 +131,7 @@ struct AddView_Previews: PreviewProvider {
             BucketOption(id: 2, name: "Paper", categories: []),
             BucketOption(id: 3, name: "Metal", categories: [])
         ]
-        
+
         AddView(
             store: .init(
                 initialState: .init(

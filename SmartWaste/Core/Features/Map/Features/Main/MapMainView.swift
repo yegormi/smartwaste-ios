@@ -11,7 +11,7 @@ import AlertToast
 
 struct MapMainView: View {
     let store: StoreOf<MapMain>
-    
+
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             MapRepresentable(mapPoints: viewStore.points) { item in

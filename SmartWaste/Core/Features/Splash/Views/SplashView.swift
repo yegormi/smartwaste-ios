@@ -11,7 +11,7 @@ import ComposableArchitecture
 
 struct SplashView: View {
     let store: StoreOf<SplashFeature>
-    
+
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             Text("♻️ SmartWaste")
@@ -27,7 +27,7 @@ struct SplashView: View {
                         viewStore.send(.appDidLaunch, animation: .default)
                     }
                 }
-            
+
         }
     }
 }

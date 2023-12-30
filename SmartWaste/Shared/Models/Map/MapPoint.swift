@@ -15,7 +15,7 @@ struct MapPoint: Codable, Identifiable, Equatable {
     let name: String
     let address: String
     let categories: [BucketCategory]
-    
+
     var coordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: lat, longitude: lng)
     }

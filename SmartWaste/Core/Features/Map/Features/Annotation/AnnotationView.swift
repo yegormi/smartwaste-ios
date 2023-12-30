@@ -11,18 +11,18 @@ import ComposableArchitecture
 
 struct AnnotationView: View {
     let store: StoreOf<AnnotationFeature>
-    
+
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack(alignment: .leading, spacing: 10) {
                 Text(viewStore.annotation.name)
                     .font(.system(size: 22, weight: .semibold))
                     .foregroundStyle(.primary)
-                
+
                 Text(viewStore.annotation.address)
                     .font(.system(size: 18))
                     .foregroundStyle(.secondary)
-                
+
                 HStack(spacing: 10) {
                     ForEach(viewStore.annotation.emojiList, id: \.self) { emoji in
                         Text(emoji)
@@ -30,7 +30,7 @@ struct AnnotationView: View {
                     }
                 }
                 .padding(.bottom, 15)
-                
+
                 Button {
                     viewStore.send(.goButtonTapped)
                 } label: {
@@ -46,7 +46,7 @@ struct AnnotationView: View {
                 }
                 .scaleButton()
                 .padding(.bottom, 10)
-                
+
                 Button {
                     viewStore.send(.dumpBucketTapped)
                 } label: {

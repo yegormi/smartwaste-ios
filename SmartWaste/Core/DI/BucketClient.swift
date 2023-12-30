@@ -17,9 +17,9 @@ import UIKit
 @DependencyClient
 struct BucketClient {
     var getCategories: @Sendable (_ token: String) async throws -> [BucketCategory]
-    var getItems:      @Sendable (_ token: String) async throws -> BucketOptions
-    var scanPhoto:     @Sendable (_ token: String, _ image: UIImage) async throws -> BucketOptions
-    var dumpItems:     @Sendable (_ token: String, _ bucket: [DumpEntity]) async throws -> ProgressResponse
+    var getItems: @Sendable (_ token: String) async throws -> BucketOptions
+    var scanPhoto: @Sendable (_ token: String, _ image: UIImage) async throws -> BucketOptions
+    var dumpItems: @Sendable (_ token: String, _ bucket: [DumpEntity]) async throws -> ProgressResponse
 }
 
 extension DependencyValues {
@@ -37,7 +37,7 @@ extension BucketClient: DependencyKey, TestDependencyKey {
             let endpoint = "/categories"
 
             let headers: HTTPHeaders = [
-                "Authorization": "\(token)",
+                "Authorization": "\(token)"
             ]
 
             return try await withCheckedThrowingContinuation { continuation in
@@ -53,7 +53,7 @@ extension BucketClient: DependencyKey, TestDependencyKey {
             let endpoint = "/items"
 
             let headers: HTTPHeaders = [
-                "Authorization": "\(token)",
+                "Authorization": "\(token)"
             ]
 
             return try await withCheckedThrowingContinuation { continuation in
@@ -69,7 +69,7 @@ extension BucketClient: DependencyKey, TestDependencyKey {
             let endpoint = "/scan"
 
             let headers: HTTPHeaders = [
-                "Authorization": "\(token)",
+                "Authorization": "\(token)"
             ]
             guard let imageData = image.jpegData(compressionQuality: 0.8) else {
                 throw ErrorTypes.imageConversionError
@@ -98,7 +98,7 @@ extension BucketClient: DependencyKey, TestDependencyKey {
             let endpoint = "/dump"
 
             let headers: HTTPHeaders = [
-                "Authorization": "\(token)",
+                "Authorization": "\(token)"
             ]
 
             return try await withCheckedThrowingContinuation { continuation in
@@ -147,8 +147,7 @@ private func handleResponse<T>(_ response: AFDataResponse<T>, _ continuation: Ch
         continuation.resume(returning: value)
     case let .failure(error):
         if let data = response.data,
-           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data)
-        {
+           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data) {
             continuation.resume(throwing: ErrorTypes.failedWithResponse(failResponse))
         } else {
             continuation.resume(throwing: error)

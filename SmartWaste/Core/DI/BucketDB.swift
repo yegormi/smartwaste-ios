@@ -36,7 +36,7 @@ extension BucketDB: DependencyKey {
         fetchBucketItems: {
             let viewContext = CoreDataManager.shared.container.viewContext
             let fetchRequest: NSFetchRequest<BucketItemEntity> = BucketItemEntity.fetchRequest()
-            
+
             do {
                 let fetchedEntities = try viewContext.fetch(fetchRequest)
                 let bucketItems = fetchedEntities.map { entity in
@@ -64,11 +64,11 @@ extension BucketDB: DependencyKey {
         createBucketItem: { bucketItem in
             let viewContext = CoreDataManager.shared.container.viewContext
             let entity = BucketItemEntity(context: viewContext)
-            
+
             entity.id = Int16(bucketItem.id)
             entity.name = bucketItem.name
             entity.count = Int16(bucketItem.count)
-            
+
             for category in bucketItem.categories {
                 let categoryEntity = BucketCategoryEntity(context: viewContext)
                 categoryEntity.id = Int16(category.id)
@@ -77,7 +77,7 @@ extension BucketDB: DependencyKey {
                 categoryEntity.emoji = category.emoji
                 entity.addToItemToCategory(categoryEntity)
             }
-            
+
             do {
                 try viewContext.save()
                 print("✅ Successfully created bucket item")
@@ -89,18 +89,18 @@ extension BucketDB: DependencyKey {
             let viewContext = CoreDataManager.shared.container.viewContext
             let fetchRequest: NSFetchRequest<BucketItemEntity> = BucketItemEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id == %ld", bucketItem.id)
-            
+
             do {
                 let fetchedEntities = try viewContext.fetch(fetchRequest)
                 if let entity = fetchedEntities.first {
                     entity.name = bucketItem.name
                     entity.count = Int16(bucketItem.count)
-                    
+
                     // Remove existing categories
                     if let existingCategories = entity.itemToCategory {
                         entity.removeFromItemToCategory(existingCategories)
                     }
-                    
+
                     // Add updated categories
                     for category in bucketItem.categories {
                         let categoryEntity = BucketCategoryEntity(context: viewContext)
@@ -110,7 +110,7 @@ extension BucketDB: DependencyKey {
                         categoryEntity.emoji = category.emoji
                         entity.addToItemToCategory(categoryEntity)
                     }
-                    
+
                     if viewContext.hasChanges {
                         try viewContext.save()
                     }
@@ -126,7 +126,7 @@ extension BucketDB: DependencyKey {
             let viewContext = CoreDataManager.shared.container.viewContext
             let fetchRequest: NSFetchRequest<BucketItemEntity> = BucketItemEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id == %ld", bucketItem.id)
-            
+
             do {
                 let fetchedEntities = try viewContext.fetch(fetchRequest)
                 if let entity = fetchedEntities.first {
@@ -144,7 +144,7 @@ extension BucketDB: DependencyKey {
             let viewContext = CoreDataManager.shared.container.viewContext
             let fetchRequest: NSFetchRequest<NSFetchRequestResult> = BucketItemEntity.fetchRequest()
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-            
+
             do {
                 try viewContext.execute(deleteRequest)
                 try viewContext.save()

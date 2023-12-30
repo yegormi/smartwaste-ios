@@ -13,15 +13,15 @@ import Reachability
 struct AuthView: View {
     let store: StoreOf<AuthFeature>
     let reachability = Reachability.shared
-    
+
     @Namespace private var animation
-    
+
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             ScrollView {
                 VStack {
                     TitleView("♻️ SmartWaste")
-                    
+
                     HStack {
                         switch viewStore.authType {
                         case .signIn:
@@ -33,7 +33,7 @@ struct AuthView: View {
                         }
                         Spacer()
                     }
-                    
+
                     VStack(spacing: 15) {
                         if viewStore.authType == .signUp {
                             InputField(
@@ -47,7 +47,7 @@ struct AuthView: View {
                                 errorText: viewStore.usernameError
                             )
                         }
-                        
+
                         InputField(
                             label: "Email",
                             text: viewStore.binding(
@@ -58,7 +58,7 @@ struct AuthView: View {
                             isInvalid: viewStore.emailError != nil,
                             errorText: viewStore.emailError
                         )
-                        
+
                         InputField(
                             label: "Password",
                             text: viewStore.binding(
@@ -69,7 +69,7 @@ struct AuthView: View {
                             isInvalid: viewStore.passwordError != nil,
                             errorText: viewStore.passwordError
                         )
-                        
+
                         if viewStore.authType == .signUp {
                             InputField(
                                 label: "Confirm Password",
@@ -86,7 +86,7 @@ struct AuthView: View {
                             .transition(.scale)
                         }
                     }
-                    
+
                     AuthButton(authType: viewStore.authType, isLoading: viewStore.isLoading, color: .green) {
                         if reachability.currentPath.isReachable {
                             viewStore.send(.authButtonTapped)
@@ -100,14 +100,13 @@ struct AuthView: View {
                     .opacity(!viewStore.isLoginAllowed ? 0.5 : 1)
                     .padding(.top, 20)
 
-                    
                     AuthToggleButton(authType: viewStore.authType) {
                         viewStore.send(.toggleButtonTapped, animation: .easeInOut)
                     }
                     .padding(.vertical, 20)
                     .animation(.default, value: viewStore.authType)
                     .matchedGeometryEffect(id: "authToggle", in: animation)
-                    
+
                     Spacer()
                 }
                 .padding(30)

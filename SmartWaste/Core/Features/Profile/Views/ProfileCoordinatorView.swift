@@ -12,7 +12,7 @@ import TCACoordinators
 
 struct ProfileCoordinatorView: View {
     let store: StoreOf<ProfileCoordinator>
-    
+
     var body: some View {
         TCARouter(store) { screen in
             SwitchStore(screen) { screen in
