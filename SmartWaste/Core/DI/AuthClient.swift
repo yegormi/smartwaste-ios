@@ -66,7 +66,7 @@ extension AuthClient: DependencyKey, TestDependencyKey {
             let endpoint = "/self"
 
             let headers: HTTPHeaders = [
-                "Authorization": "\(token)",
+                "Authorization": "\(token)"
             ]
 
             return try await withCheckedThrowingContinuation { continuation in

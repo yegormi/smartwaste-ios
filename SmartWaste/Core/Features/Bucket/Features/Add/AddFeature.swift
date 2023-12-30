@@ -24,9 +24,9 @@ struct AddFeature: Reducer {
         var selection: BucketOption?
         var emptySelection = BucketOption(id: 1, name: "Material", categories: [])
         
-        var capturedImage: UIImage? = nil
-        var imageResponse: BucketOptions? = nil
-        var errorText: String? = nil
+        var capturedImage: UIImage?
+        var imageResponse: BucketOptions?
+        var errorText: String?
         var errorToast: String = ""
         
         var isLoading = false
