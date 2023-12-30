@@ -852,7 +852,6 @@
 				EE0C21802AE861D700668357 /* Sources */,
 				EE0C21812AE861D700668357 /* Frameworks */,
 				EE0C21822AE861D700668357 /* Resources */,
-				EEA97EA22B40B342004E4988 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -959,26 +958,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		EEA97EA22B40B342004E4988 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EE0C21802AE861D700668357 /* Sources */ = {
@@ -1223,7 +1202,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"SmartWaste/Preview Content\"";
 				DEVELOPMENT_TEAM = RX5QFP6Q25;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartWaste/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -1260,7 +1239,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"SmartWaste/Preview Content\"";
 				DEVELOPMENT_TEAM = RX5QFP6Q25;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartWaste/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
