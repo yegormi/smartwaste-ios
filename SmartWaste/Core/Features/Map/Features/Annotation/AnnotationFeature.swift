@@ -141,7 +141,9 @@ struct AnnotationFeature: Reducer {
         .ifLet(\.$confirmationDialog, action: \.confirmationDialog)
 
     }
+}
 
+extension AnnotationFeature {
     private func openRoute(with anotation: AnnotationMark, in application: MapLink) {
         application.open(with: anotation.coordinate)
     }

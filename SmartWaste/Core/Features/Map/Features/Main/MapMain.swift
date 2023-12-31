@@ -93,7 +93,9 @@ struct MapMain: Reducer {
             AnnotationFeature()
         }
     }
+}
 
+extension MapMain {
     private func getPoints() async throws -> [MapPoint] {
         let token = keychainClient.retrieveToken()?.accessToken ?? ""
         return try await mapClient.getPoints(token: token)

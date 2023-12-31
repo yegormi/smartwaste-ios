@@ -28,8 +28,8 @@ struct AuthFeature: Reducer {
         var response: AuthResponse?
         var failResponse: FailResponse?
 
-        var isLoading: Bool = false
-        var isToastPresented: Bool = false
+        var isLoading = false
+        var isToastPresented = false
 
         var isAbleToSignIn: Bool {
             !email.isEmpty && !password.isEmpty
@@ -194,7 +194,9 @@ struct AuthFeature: Reducer {
             }
         }
     }
+}
 
+extension AuthFeature {
     private func signIn(email: String, password: String) async throws -> AuthResponse {
         return try await authClient.performSignIn(email, password)
     }

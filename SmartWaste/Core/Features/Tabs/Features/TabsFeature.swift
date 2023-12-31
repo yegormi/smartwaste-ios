@@ -32,7 +32,7 @@ struct TabsFeature: Reducer {
         var selectedTab: Tab
 
         static func initState(from tab: Tab) -> Self {
-            State(
+            Self(
                 map: .initialState,
                 profile: .initialState,
                 bucket: .initialState,
@@ -40,7 +40,7 @@ struct TabsFeature: Reducer {
             )
         }
         static func initState(from tab: Tab, with categories: [String]) -> Self {
-            State(
+            Self(
                 map: .initState(with: categories),
                 profile: .initialState,
                 bucket: .initialState,
@@ -149,7 +149,9 @@ struct TabsFeature: Reducer {
         }
         .ifLet(\.$alert, action: \.alert)
     }
+}
 
+extension TabsFeature {
     private func deleteToken() {
         keychainClient.deleteToken()
     }
