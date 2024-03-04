@@ -8,6 +8,8 @@
 import SwiftUI
 
 enum Constants {
+    static let minCount = 0
+    static let maxCount = 10
     static let baseUrl = "https://smartwaste-api.azurewebsites.net"
     static let screen = UIScreen.main.bounds
 }

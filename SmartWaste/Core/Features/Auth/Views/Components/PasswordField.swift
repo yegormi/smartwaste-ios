@@ -10,11 +10,11 @@ import SwiftUI
 struct PasswordField: View {
     let label: String
     @Binding var input: String
-    
+
     @State private var showText: Bool = false
     @FocusState private var focus: Focus?
     @Environment(\.scenePhase) private var scenePhase
-    
+
     var body: some View {
         HStack {
             ZStack {
@@ -33,7 +33,7 @@ struct PasswordField: View {
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
             }
-            
+
             Button(action: {
                 showText.toggle()
             }) {

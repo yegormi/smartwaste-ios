@@ -17,14 +17,14 @@ struct ProfileCoordinator: Reducer {
             routes: [.root(.main(.init()))]
         )
     }
-    
+
     enum Action: Equatable, IndexedRouterAction {
         case routeAction(Int, action: ProfileScreen.Action)
         case updateRoutes([Route<ProfileScreen.State>])
     }
-    
+
     var body: some ReducerOf<Self> {
-        Reduce<State, Action> { state, action in
+        Reduce<State, Action> { _, action in
             switch action {
             default:
                 break

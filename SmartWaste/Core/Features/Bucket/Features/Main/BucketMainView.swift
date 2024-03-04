@@ -11,7 +11,7 @@ import AlertToast
 
 struct BucketMainView: View {
     let store: StoreOf<BucketMain>
-    
+
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack(alignment: .leading) {
@@ -19,7 +19,7 @@ struct BucketMainView: View {
                     .font(.system(size: 36))
                     .foregroundStyle(.primary)
                     .padding(.bottom, 10)
-                
+
                 ScrollView(showsIndicators: false) {
                     ForEachStore(
                         self.store.scope(
@@ -31,7 +31,7 @@ struct BucketMainView: View {
                     }
                 }
                 .padding(.bottom, 10)
-                
+
                 VStack(spacing: 15) {
                     Button {
                         viewStore.send(.addButtonTapped)
@@ -47,7 +47,7 @@ struct BucketMainView: View {
                             .contentShape(RoundedRectangle(cornerRadius: 12))
                     }
                     .scaleButton()
-                    
+
                     Button {
                         viewStore.send(.showRecyclePointsTapped)
                     } label: {
@@ -66,9 +66,7 @@ struct BucketMainView: View {
             .padding(20)
             .padding(.horizontal, 10)
             .onAppear {
-                if !viewStore.viewDidAppear {
-                    viewStore.send(.viewDidAppear)
-                }
+                viewStore.send(.viewDidAppear)
             }
             .sheet(
                 store: self.store.scope(

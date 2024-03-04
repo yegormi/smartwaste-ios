@@ -16,8 +16,8 @@ import Foundation
 
 @DependencyClient
 struct MapClient {
-    var getPoints: @Sendable (_ token: String) async throws -> [MapPoint]
-    var searchPoints: @Sendable (_ token: String, _ categories: [String]) async throws -> [MapPoint]
+    var getPoints: @Sendable () async throws -> [MapPoint]
+    var searchPoints: @Sendable (_ categories: [String]) async throws -> [MapPoint]
 }
 
 extension DependencyValues {
@@ -30,39 +30,32 @@ extension DependencyValues {
 // MARK: - Live API implementation
 
 extension MapClient: DependencyKey, TestDependencyKey {
+    @Dependency(\.sessionClient) static var sessionClient
+    static let session = sessionClient.current
+    
     static let liveValue = MapClient(
-        getPoints: { token in
+        getPoints: {
             let endpoint = "/points"
 
-            let headers: HTTPHeaders = [
-                "Authorization": token,
-            ]
-
             return try await withCheckedThrowingContinuation { continuation in
-                AF.request(baseUrl + endpoint,
-                           method: .get,
-                           headers: headers)
+                session.request(baseUrl + endpoint,
+                           method: .get)
                     .validate()
                     .responseDecodable(of: [MapPoint].self) { response in
                         handleResponse(response, continuation)
                     }
             }
-        }, searchPoints: { token, categories in
+        }, searchPoints: {categories in
             let endpoint = "/points"
 
             let parameters: Parameters = [
-                "categories": categories,
-            ]
-
-            let headers: HTTPHeaders = [
-                "Authorization": token,
+                "categories": categories
             ]
 
             return try await withCheckedThrowingContinuation { continuation in
-                AF.request(baseUrl + endpoint,
+                session.request(baseUrl + endpoint,
                            method: .get,
-                           parameters: parameters,
-                           headers: headers)
+                           parameters: parameters)
                     .validate()
                     .responseDecodable(of: [MapPoint].self) { response in
                         handleResponse(response, continuation)
@@ -90,8 +83,7 @@ private func handleResponse<T>(_ response: AFDataResponse<T>, _ continuation: Ch
         continuation.resume(returning: value)
     case let .failure(error):
         if let data = response.data,
-           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data)
-        {
+           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data) {
             continuation.resume(throwing: ErrorTypes.failedWithResponse(failResponse))
         } else {
             continuation.resume(throwing: error)

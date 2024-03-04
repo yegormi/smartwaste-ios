@@ -24,7 +24,7 @@ extension BucketItem {
             id: self.id,
             name: self.name,
             categories: self.categories,
-            counter: .init(min: 0, max: 10, value: self.count)
+            counter: .init(min: Constants.minCount, max: Constants.maxCount, value: self.count)
         )
     }
 }

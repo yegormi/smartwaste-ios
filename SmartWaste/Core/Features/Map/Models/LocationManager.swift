@@ -9,12 +9,12 @@ import MapKit
 
 final class LocationManager: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
-    
+
     @Published var region = MKCoordinateRegion(
         center: .init(latitude: 48.4647, longitude: 35.0462),
         span: .init(latitudeDelta: 0.5, longitudeDelta: 0.5)
     )
-    
+
     override init() {
         super.init()
         locationManager.delegate = self
@@ -22,10 +22,10 @@ final class LocationManager: NSObject, ObservableObject {
         locationManager.distanceFilter = kCLDistanceFilterNone
         setup()
     }
-    
+
     func setup() {
         switch locationManager.authorizationStatus {
-        case .authorizedWhenInUse, .authorizedAlways:
+        case .authorizedWhenInUse:
             locationManager.requestLocation()
         case .notDetermined:
             locationManager.startUpdatingLocation()
@@ -41,11 +41,11 @@ extension LocationManager: CLLocationManagerDelegate {
         guard .authorizedWhenInUse == manager.authorizationStatus else { return }
         locationManager.requestLocation()
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Something went wrong: \(error)")
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManager.stopUpdatingLocation()
         locations.last.map {

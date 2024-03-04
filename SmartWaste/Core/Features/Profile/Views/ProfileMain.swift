@@ -42,7 +42,7 @@ struct ProfileMainView: View {
                 
                 ZStack {
                     RoundedRectangle(cornerRadius: 40)
-                        .foregroundStyle(Color.green)
+                        .foregroundStyle(Color("QuestGreen"))
                         .overlay(
                             VStack {
                                 HStack(spacing: 50) {
@@ -80,6 +80,12 @@ struct ProfileMainView: View {
             .onAppear {
                 viewStore.send(.viewDidAppear)
             }
+            .alert(
+                store: self.store.scope(
+                    state: \.$alert,
+                    action: \.alert
+                )
+            )
         }
     }
 }
@@ -95,8 +101,6 @@ struct ProfileMainView_Previews: PreviewProvider {
     }
 }
 
-
-
 @Reducer
 struct ProfileMain: Reducer {
     @Dependency(\.keychainClient) var keychainClient
@@ -107,10 +111,12 @@ struct ProfileMain: Reducer {
         var viewDidAppear = false
         var user: User?
         var quests: [Quest]?
+        @PresentationState var alert: AlertState<Action.Alert>?
     }
     
     enum Action: Equatable {
         case viewDidAppear
+        case alert(PresentationAction<Alert>)
         
         case getSelf
         case onGetSelfSuccess(User)
@@ -120,6 +126,10 @@ struct ProfileMain: Reducer {
         
         case signOutButtonTapped
         case onSignOutSuccess
+        
+        enum Alert: Equatable {
+            case signOutTapped
+        }
     }
     
     var body: some Reducer<State, Action> {
@@ -128,6 +138,12 @@ struct ProfileMain: Reducer {
             case .viewDidAppear:
                 state.viewDidAppear = true
                 return .send(.getSelf)
+            case .alert(.presented(.signOutTapped)):
+                deleteToken()
+                return .send(.onSignOutSuccess)
+            case .alert:
+                return .none
+                
             case .getSelf:
                 return .run { send in
                     do {
@@ -155,8 +171,19 @@ struct ProfileMain: Reducer {
                 state.quests = quests
                 return .none
             case .signOutButtonTapped:
-                deleteToken()
-                return .send(.onSignOutSuccess)
+                state.alert = AlertState {
+                    TextState("Are you sure?")
+                } actions: {
+                    ButtonState(role: .cancel) {
+                        TextState("Cancel")
+                    }
+                    ButtonState(role: .destructive, action: .signOutTapped) {
+                        TextState("Sign Out")
+                    }
+                } message: {
+                    TextState("Please confirm if you want to sign out")
+                }
+                return .none
             case .onSignOutSuccess:
                 return .none
             }
@@ -164,13 +191,11 @@ struct ProfileMain: Reducer {
     }
     
     private func getSelf() async throws -> User {
-        let token = keychainClient.retrieveToken()?.accessToken ?? ""
-        return try await authClient.performGetSelf(token)
+        return try await authClient.performGetSelf()
     }
     
     private func getQuests() async throws -> QuestList {
-        let token = keychainClient.retrieveToken()?.accessToken ?? ""
-        return try await profileClient.getQuests(token: token)
+        return try await profileClient.getQuests()
     }
     
     private func deleteToken() {

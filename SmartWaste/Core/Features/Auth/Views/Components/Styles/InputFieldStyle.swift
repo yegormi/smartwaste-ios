@@ -9,7 +9,7 @@ import SwiftUI
 
 struct InputFieldStyle: ViewModifier {
     let keyboard: KeyboardType
-    
+
     func body(content: Content) -> some View {
         content
             .padding(.horizontal, 10)

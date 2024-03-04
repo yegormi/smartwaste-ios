@@ -1,5 +1,5 @@
 //
-//  BucketListClient.swift
+//  BucketDB.swift
 //  SmartWaste
 //
 //  Created by Yegor Myropoltsev on 27.12.2023.
@@ -8,27 +8,35 @@
 import ComposableArchitecture
 import CoreData
 
+// MARK: - API client interface
+
+// Typically this interface would live in its own module, separate from the live implementation.
+// This allows the feature to compile faster since it only depends on the interface.
+
 @DependencyClient
-struct BucketListClient {
+struct BucketDB {
     var fetchBucketItems: () async throws -> [BucketItem]
     var createBucketItem: (BucketItem) async -> Void
     var updateBucketItem: (BucketItem) async -> Void
     var deleteBucketItem: (BucketItem) async -> Void
+    var deleteAllBucketItems: () async throws -> Void
 }
 
 extension DependencyValues {
-    var bucketListClient: BucketListClient {
-        get { self[BucketListClient.self] }
-        set { self[BucketListClient.self] = newValue }
+    var bucketDB: BucketDB {
+        get { self[BucketDB.self] }
+        set { self[BucketDB.self] = newValue }
     }
 }
 
-extension BucketListClient: DependencyKey {
-    static let liveValue = BucketListClient(
+// MARK: - Live API implementation
+
+extension BucketDB: DependencyKey {
+    static let liveValue = BucketDB(
         fetchBucketItems: {
             let viewContext = CoreDataManager.shared.container.viewContext
             let fetchRequest: NSFetchRequest<BucketItemEntity> = BucketItemEntity.fetchRequest()
-            
+
             do {
                 let fetchedEntities = try viewContext.fetch(fetchRequest)
                 let bucketItems = fetchedEntities.map { entity in
@@ -56,11 +64,11 @@ extension BucketListClient: DependencyKey {
         createBucketItem: { bucketItem in
             let viewContext = CoreDataManager.shared.container.viewContext
             let entity = BucketItemEntity(context: viewContext)
-            
+
             entity.id = Int16(bucketItem.id)
             entity.name = bucketItem.name
             entity.count = Int16(bucketItem.count)
-            
+
             for category in bucketItem.categories {
                 let categoryEntity = BucketCategoryEntity(context: viewContext)
                 categoryEntity.id = Int16(category.id)
@@ -69,7 +77,7 @@ extension BucketListClient: DependencyKey {
                 categoryEntity.emoji = category.emoji
                 entity.addToItemToCategory(categoryEntity)
             }
-            
+
             do {
                 try viewContext.save()
                 print("✅ Successfully created bucket item")
@@ -81,18 +89,18 @@ extension BucketListClient: DependencyKey {
             let viewContext = CoreDataManager.shared.container.viewContext
             let fetchRequest: NSFetchRequest<BucketItemEntity> = BucketItemEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id == %ld", bucketItem.id)
-            
+
             do {
                 let fetchedEntities = try viewContext.fetch(fetchRequest)
                 if let entity = fetchedEntities.first {
                     entity.name = bucketItem.name
                     entity.count = Int16(bucketItem.count)
-                    
+
                     // Remove existing categories
                     if let existingCategories = entity.itemToCategory {
                         entity.removeFromItemToCategory(existingCategories)
                     }
-                    
+
                     // Add updated categories
                     for category in bucketItem.categories {
                         let categoryEntity = BucketCategoryEntity(context: viewContext)
@@ -102,8 +110,10 @@ extension BucketListClient: DependencyKey {
                         categoryEntity.emoji = category.emoji
                         entity.addToItemToCategory(categoryEntity)
                     }
-                    
-                    try viewContext.save()
+
+                    if viewContext.hasChanges {
+                        try viewContext.save()
+                    }
                     print("✅ Successfully updated bucket item")
                 } else {
                     print("❌ Couldn't find bucket item with id: \(bucketItem.id)")
@@ -116,7 +126,7 @@ extension BucketListClient: DependencyKey {
             let viewContext = CoreDataManager.shared.container.viewContext
             let fetchRequest: NSFetchRequest<BucketItemEntity> = BucketItemEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id == %ld", bucketItem.id)
-            
+
             do {
                 let fetchedEntities = try viewContext.fetch(fetchRequest)
                 if let entity = fetchedEntities.first {
@@ -129,7 +139,39 @@ extension BucketListClient: DependencyKey {
             } catch {
                 print("❌ Couldn't delete this item")
             }
+        },
+        deleteAllBucketItems: {
+            let viewContext = CoreDataManager.shared.container.viewContext
+            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = BucketItemEntity.fetchRequest()
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+            do {
+                try viewContext.execute(deleteRequest)
+                try viewContext.save()
+                print("✅ Successfully deleted all items")
+            } catch {
+                print("❌ Couldn't delete all items: \(error)")
+            }
         }
     )
 }
 
+// MARK: - Test Implementation
+
+extension BucketDB {
+    static let testValue = BucketDB(
+        fetchBucketItems: {
+            return [
+                BucketItem(id: 1, name: "Glass bottle", count: 1, categories: []),
+                BucketItem(id: 2, name: "Plastic bottle", count: 2, categories: []),
+                BucketItem(id: 3, name: "Paper", count: 3, categories: []),
+                BucketItem(id: 4, name: "Food", count: 4, categories: []),
+                BucketItem(id: 5, name: "Metal", count: 5, categories: [])
+            ]
+        },
+        createBucketItem: { _ in },
+        updateBucketItem: { _ in },
+        deleteBucketItem: { _ in },
+        deleteAllBucketItems: {}
+    )
+}

@@ -10,7 +10,7 @@ import SkeletonUI
 
 struct ProfileCard: View {
     let user: User?
-    
+
     var body: some View {
         HStack(spacing: 15) {
             Image(systemName: "person.circle.fill")
@@ -20,7 +20,7 @@ struct ProfileCard: View {
                 .skeleton(with: user == nil,
                           size: CGSize(width: 80, height: 80),
                           shape: .circle)
-            
+
             VStack(alignment: .leading, spacing: 2) {
                 Text(user?.username)
                     .lineLimit(1)
@@ -29,7 +29,7 @@ struct ProfileCard: View {
                     .foregroundColor(.primary)
                     .skeleton(with: user == nil,
                               size: CGSize(width: 100, height: 20))
-                
+
                 Text(user?.email)
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
@@ -42,21 +42,18 @@ struct ProfileCard: View {
     }
 }
 
-
-
 struct ProfileCard_Previews: PreviewProvider {
     static var testItem: User = User(
         id: 1,
-        email: "gleb.mokryy@gmail.com", 
+        email: "gleb.mokryy@gmail.com",
         username: "glebushkaa",
         score: 400,
         buckets: 2,
         createdAt: "2023-11-17T15:19:03.511Z"
     )
-    
+
     static var previews: some View {
         ProfileCard(user: testItem)
             .previewLayout(.sizeThatFits)
     }
 }
-

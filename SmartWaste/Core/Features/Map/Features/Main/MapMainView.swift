@@ -7,14 +7,15 @@
 
 import SwiftUI
 import ComposableArchitecture
+import AlertToast
 
 struct MapMainView: View {
     let store: StoreOf<MapMain>
-    
+
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-            MapRepresentable(mapPoints: viewStore.points) { annotation in
-                viewStore.send(.onAnnotationTapped(annotation))
+            MapRepresentable(mapPoints: viewStore.points) { item in
+                viewStore.send(.onAnnotationTapped(item))
             }
             .onAppear {
                 if !viewStore.viewDidAppear {
@@ -32,7 +33,12 @@ struct MapMainView: View {
                     .presentationDetents([.fraction(0.5)])
                     .presentationDragIndicator(.visible)
             }
-            
+            .toast(isPresenting: viewStore.binding(
+                get: \.isSuccessToastPresented,
+                send: MapMain.Action.successToastPresented)
+            ) {
+                AlertToast(displayMode: .alert, type: .complete(.green), title: "Bucket has been successfully dumped!")
+            }
         }
     }
 }

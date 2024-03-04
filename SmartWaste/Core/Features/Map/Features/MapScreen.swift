@@ -13,11 +13,11 @@ struct MapScreen: Reducer {
     enum State: Equatable {
         case main(MapMain.State)
     }
-    
+
     enum Action: Equatable {
         case main(MapMain.Action)
     }
-    
+
     var body: some Reducer<State, Action> {
         Scope(state: /State.main, action: /Action.main) {
             MapMain()

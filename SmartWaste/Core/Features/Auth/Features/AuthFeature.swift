@@ -13,62 +13,62 @@ import Alamofire
 struct AuthFeature: Reducer {
     @Dependency(\.keychainClient) var keychainClient
     @Dependency(\.authClient)     var authClient
-    
+
     struct State: Equatable {
-        var username:        String = ""
-        var email:           String = ""
-        var password:        String = ""
+        var username: String = ""
+        var email: String = ""
+        var password: String = ""
         var confirmPassword: String = ""
-        
+
         var usernameError: String?
-        var emailError:    String?
+        var emailError: String?
         var passwordError: String?
-        
-        var authType:     AuthType = .signIn
-        var response:     AuthResponse?
+
+        var authType: AuthType = .signIn
+        var response: AuthResponse?
         var failResponse: FailResponse?
-        
-        var isLoading:        Bool = false
-        var isToastPresented: Bool = false
-        
+
+        var isLoading = false
+        var isToastPresented = false
+
         var isAbleToSignIn: Bool {
             !email.isEmpty && !password.isEmpty
         }
         var isAbleToSignUp: Bool {
-            !username.isEmpty && !email.isEmpty && 
+            !username.isEmpty && !email.isEmpty &&
             !password.isEmpty && !confirmPassword.isEmpty &&
             password == confirmPassword
         }
-        
+
         var isLoginAllowed: Bool {
             authType == .signIn ? isAbleToSignIn && !isLoading : isAbleToSignUp && !isLoading
         }
-        
+
         mutating func resetErrors() {
             usernameError = nil
             emailError = nil
             passwordError = nil
         }
     }
-    
+
     enum Action: Equatable {
         case usernameChanged(String)
         case emailChanged(String)
         case passwordChanged(String)
         case confirmPasswordChanged(String)
-        
+
         case toggleButtonTapped
         case authButtonTapped
         case signIn
         case signUp
-        
+
         case authResponse(Result<AuthResponse, FailResponse>)
-        
+
         case toastToggled
     }
-    
+
     private enum CancelID { case auth }
-    
+
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
@@ -89,20 +89,20 @@ struct AuthFeature: Reducer {
                 return .none
             case .toggleButtonTapped:
                 state.authType.toggle()
-                
+
                 state.failResponse = nil
                 state.emailError = nil
                 state.usernameError = nil
                 state.passwordError = nil
-                
+
                 state.isLoading = false
-            
+
                 return .cancel(id: CancelID.auth)
-                
+
             case .signIn:
                 let email = state.email
                 let password = state.password
-                
+
                 return .run { send in
                     do {
                         let result = try await signIn(
@@ -110,19 +110,19 @@ struct AuthFeature: Reducer {
                             password: password
                         )
                         await send(.authResponse(.success(result)))
-                    } catch let ErrorTypes.failedWithResponse(error){
+                    } catch let ErrorTypes.failedWithResponse(error) {
                         await send(.authResponse(.failure(error)))
                     } catch {
                         print(error)
                     }
                 }
                 .cancellable(id: CancelID.auth, cancelInFlight: true)
-                
+
             case .signUp:
                 let email = state.email
                 let password = state.password
                 let username = state.username
-                
+
                 return .run { send in
                     do {
                         let result = try await signUp(
@@ -131,17 +131,17 @@ struct AuthFeature: Reducer {
                             password: password
                         )
                         await send(.authResponse(.success(result)))
-                    } catch let ErrorTypes.failedWithResponse(error){
+                    } catch let ErrorTypes.failedWithResponse(error) {
                         await send(.authResponse(.failure(error)))
                     } catch {
                         print(error)
                     }
                 }
                 .cancellable(id: CancelID.auth, cancelInFlight: true)
-                
+
             case .authButtonTapped:
                 state.isLoading = true
-                
+
                 if !Validation.isValidUsername(with: state.username) && state.authType == .signUp {
                     state.usernameError = "Invalid username"
                     state.isLoading = false
@@ -152,7 +152,7 @@ struct AuthFeature: Reducer {
                     state.isLoading = false
                     return .none
                 }
-                
+
                 switch state.authType {
                 case .signIn:
                     return .send(.signIn)
@@ -166,13 +166,13 @@ struct AuthFeature: Reducer {
                 state.isLoading = false
                 keychainClient.saveToken(response)
                 return .none
-                
+
             case .authResponse(.failure(let error)):
                 state.failResponse = error
                 state.isLoading = false
-                
+
                 state.resetErrors()
-                
+
                 switch error.code {
                 case RequestError.usernameNotUnique.code:
                     state.usernameError = RequestError.usernameNotUnique.string
@@ -185,22 +185,23 @@ struct AuthFeature: Reducer {
                 default:
                     break
                 }
-                
+
                 return .none
-                
+
             case .toastToggled:
                 state.isToastPresented.toggle()
                 return .none
             }
         }
     }
-    
+}
+
+extension AuthFeature {
     private func signIn(email: String, password: String) async throws -> AuthResponse {
         return try await authClient.performSignIn(email, password)
     }
-    
+
     private func signUp(username: String, email: String, password: String) async throws -> AuthResponse {
         return try await authClient.performSignUp(username, email, password)
     }
 }
-

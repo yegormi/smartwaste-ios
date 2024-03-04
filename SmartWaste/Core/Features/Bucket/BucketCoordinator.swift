@@ -17,14 +17,14 @@ struct BucketCoordinator: Reducer {
             routes: [.root(.main(.init()))]
         )
     }
-    
+
     enum Action: Equatable, IndexedRouterAction {
         case routeAction(Int, action: BucketScreen.Action)
         case updateRoutes([Route<BucketScreen.State>])
     }
-    
+
     var body: some ReducerOf<Self> {
-        Reduce<State, Action> { state, action in
+        Reduce<State, Action> { _, action in
             switch action {
             default:
                 break

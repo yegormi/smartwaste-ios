@@ -12,7 +12,7 @@ struct AuthButton: View {
     let isLoading: Bool
     let color: Color
     let action: () -> Void
-    
+
     var body: some View {
         Button(action: {
             action()
@@ -29,13 +29,12 @@ struct AuthButton: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                         .scaleEffect(1, anchor: .center)
                 }
-                
+
             }
             .disabled(isLoading)
         }
     }
 }
-
 
 struct AuthButton_Previews: PreviewProvider {
     static var previews: some View {

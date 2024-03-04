@@ -9,7 +9,7 @@ import SwiftUI
 
 struct InvalidBorderStyle: ViewModifier {
     let isInvalid: Bool
-    
+
     func body(content: Content) -> some View {
         content.overlay(
             RoundedRectangle(cornerRadius: 10)

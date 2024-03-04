@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct TabsView: View {
     let store: StoreOf<TabsFeature>
-    
+
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             VStack {
@@ -29,7 +29,7 @@ struct TabsView: View {
                     )
                     .tabItem { Label("Map", systemImage: "map.fill") }
                     .tag(Tab.map)
-                    
+
                     ProfileCoordinatorView(
                         store: self.store.scope(
                             state: \.profile,
@@ -38,7 +38,7 @@ struct TabsView: View {
                     )
                     .tabItem { Label("Profile", systemImage: "person.fill") }
                     .tag(Tab.profile)
-                    
+
                     BucketCoordinatorView(
                         store: self.store.scope(
                             state: \.bucket,
@@ -62,7 +62,6 @@ struct TabsView: View {
         }
     }
 }
-
 
 struct TabsView_Previews: PreviewProvider {
     static var previews: some View {

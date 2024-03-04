@@ -15,24 +15,24 @@ struct CounterFeature: Reducer {
         let min: Int
         let max: Int
         var value: Int = 0
-        
+
         var minReached: Bool { value <= min }
         var maxReached: Bool { value >= max }
     }
-    
+
     enum Action: Equatable {
         case decrement
         case increment
     }
-    
+
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .decrement:
-                state.value -= 1
+                state.value = max(state.min, state.value - 1)
                 return .none
             case .increment:
-                state.value += 1
+                state.value = min(state.max, state.value + 1)
                 return .none
             }
         }

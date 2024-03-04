@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AuthTitle: View {
     let authType: AuthType
-    
+
     var body: some View {
         Text(authType.text)
             .font(.system(size: 36))

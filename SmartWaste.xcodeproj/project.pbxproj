@@ -35,6 +35,8 @@
 		EE3767FA2B112D48007DFA25 /* SplashFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3767F82B112D48007DFA25 /* SplashFeature.swift */; };
 		EE40B6832B0FDD0A000C07BD /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = EE40B6822B0FDD0A000C07BD /* SkeletonUI */; };
 		EE495A6C2B228EAF00E96082 /* ProgressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE495A6B2B228EAF00E96082 /* ProgressResponse.swift */; };
+		EE4BE2792B3D916600F8398B /* CounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4BE2782B3D916600F8398B /* CounterTests.swift */; };
+		EE4BE2802B3DA22800F8398B /* BucketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4BE27F2B3DA22800F8398B /* BucketTests.swift */; };
 		EE5677602B10AEDD00DDE4A0 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE56775F2B10AEDD00DDE4A0 /* Validation.swift */; };
 		EE5677642B10BDBF00DDE4A0 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EE5677632B10BDBF00DDE4A0 /* KeychainSwift */; };
 		EE5677672B11090A00DDE4A0 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = EE5677662B11090A00DDE4A0 /* AlertToast */; };
@@ -50,6 +52,8 @@
 		EE7F96E22B1571B50071A99F /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F96E12B1571B50071A99F /* AuthClient.swift */; };
 		EE7F96E52B15E40B0071A99F /* KeychainClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F96E42B15E40B0071A99F /* KeychainClient.swift */; };
 		EE7F96E72B15ECC30071A99F /* MapClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F96E62B15ECC30071A99F /* MapClient.swift */; };
+		EE928D372B3F1C9A0011FD0E /* AuthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE928D362B3F1C9A0011FD0E /* AuthTests.swift */; };
+		EE928D3A2B3F24940011FD0E /* TabsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE928D392B3F24940011FD0E /* TabsTests.swift */; };
 		EE9C8E902B2887B3009FC890 /* AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9C8E8E2B2887B3009FC890 /* AnnotationView.swift */; };
 		EE9C8E912B2887B3009FC890 /* AnnotationFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9C8E8F2B2887B3009FC890 /* AnnotationFeature.swift */; };
 		EE9C8E942B2888B1009FC890 /* MapMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9C8E932B2888B1009FC890 /* MapMainView.swift */; };
@@ -57,9 +61,11 @@
 		EEA012BB2AFA8180004311F3 /* RootScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA012B92AFA8180004311F3 /* RootScreen.swift */; };
 		EEA012DA2AFB7C69004311F3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA012D92AFB7C69004311F3 /* Constants.swift */; };
 		EEBF24A62B2BBC7B00C3BD21 /* LoadingView in Frameworks */ = {isa = PBXBuildFile; productRef = EEBF24A52B2BBC7B00C3BD21 /* LoadingView */; };
+		EEBF55092B95C201006006B6 /* SessionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBF55082B95C201006006B6 /* SessionClient.swift */; };
+		EEBF550B2B95C210006006B6 /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBF550A2B95C210006006B6 /* AuthInterceptor.swift */; };
 		EED6B7FE2B3C3F8600E91BEE /* Bucket.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EED6B7FC2B3C3F8600E91BEE /* Bucket.xcdatamodeld */; };
 		EED6B80A2B3C498D00E91BEE /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED6B8092B3C498D00E91BEE /* CoreDataManager.swift */; };
-		EED6B80C2B3C4D2900E91BEE /* BucketListClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED6B80B2B3C4D2900E91BEE /* BucketListClient.swift */; };
+		EED6B80C2B3C4D2900E91BEE /* BucketDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED6B80B2B3C4D2900E91BEE /* BucketDB.swift */; };
 		EEE812132B1AAA72006681DA /* ResponseMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE812122B1AAA72006681DA /* ResponseMessage.swift */; };
 		EEEB8D1C2AF8D40F007DEBAE /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB8D1B2AF8D40F007DEBAE /* AuthButton.swift */; };
 		EEEB8D1E2AF8D895007DEBAE /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB8D1D2AF8D895007DEBAE /* AuthResponse.swift */; };
@@ -103,6 +109,16 @@
 		EEFFBA0C2AF9A7F100238FA0 /* ErrorField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFFBA0B2AF9A7F100238FA0 /* ErrorField.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		EE4BE27A2B3D916600F8398B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE0C217C2AE861D700668357 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EE0C21832AE861D700668357;
+			remoteInfo = SmartWaste;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		EE0C21842AE861D700668357 /* SmartWaste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartWaste.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE0C21872AE861D700668357 /* SmartWasteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWasteApp.swift; sourceTree = "<group>"; };
@@ -131,6 +147,9 @@
 		EE3767F72B112D48007DFA25 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		EE3767F82B112D48007DFA25 /* SplashFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashFeature.swift; sourceTree = "<group>"; };
 		EE495A6B2B228EAF00E96082 /* ProgressResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressResponse.swift; sourceTree = "<group>"; };
+		EE4BE2762B3D916500F8398B /* SmartWasteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartWasteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE4BE2782B3D916600F8398B /* CounterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterTests.swift; sourceTree = "<group>"; };
+		EE4BE27F2B3DA22800F8398B /* BucketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketTests.swift; sourceTree = "<group>"; };
 		EE56775F2B10AEDD00DDE4A0 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		EE5AE1A62AF9407E00381B33 /* ErrorTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 		EE68F4B82B278C880082EE56 /* Toggleable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toggleable.swift; sourceTree = "<group>"; };
@@ -143,15 +162,19 @@
 		EE7F96E12B1571B50071A99F /* AuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthClient.swift; sourceTree = "<group>"; };
 		EE7F96E42B15E40B0071A99F /* KeychainClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainClient.swift; sourceTree = "<group>"; };
 		EE7F96E62B15ECC30071A99F /* MapClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapClient.swift; sourceTree = "<group>"; };
+		EE928D362B3F1C9A0011FD0E /* AuthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTests.swift; sourceTree = "<group>"; };
+		EE928D392B3F24940011FD0E /* TabsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsTests.swift; sourceTree = "<group>"; };
 		EE9C8E8E2B2887B3009FC890 /* AnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationView.swift; sourceTree = "<group>"; };
 		EE9C8E8F2B2887B3009FC890 /* AnnotationFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationFeature.swift; sourceTree = "<group>"; };
 		EE9C8E932B2888B1009FC890 /* MapMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMainView.swift; sourceTree = "<group>"; };
 		EEA012B82AFA8180004311F3 /* RootCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinatorView.swift; sourceTree = "<group>"; };
 		EEA012B92AFA8180004311F3 /* RootScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootScreen.swift; sourceTree = "<group>"; };
 		EEA012D92AFB7C69004311F3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		EEBF55082B95C201006006B6 /* SessionClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionClient.swift; sourceTree = "<group>"; };
+		EEBF550A2B95C210006006B6 /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
 		EED6B7FD2B3C3F8600E91BEE /* Bucket.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bucket.xcdatamodel; sourceTree = "<group>"; };
 		EED6B8092B3C498D00E91BEE /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		EED6B80B2B3C4D2900E91BEE /* BucketListClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListClient.swift; sourceTree = "<group>"; };
+		EED6B80B2B3C4D2900E91BEE /* BucketDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketDB.swift; sourceTree = "<group>"; };
 		EEE812122B1AAA72006681DA /* ResponseMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseMessage.swift; sourceTree = "<group>"; };
 		EEEB8D1B2AF8D40F007DEBAE /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		EEEB8D1D2AF8D895007DEBAE /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
@@ -210,6 +233,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EE4BE2732B3D916500F8398B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -217,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				EE0C21862AE861D700668357 /* SmartWaste */,
+				EE4BE2772B3D916600F8398B /* SmartWasteTests */,
 				EE0C21852AE861D700668357 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -225,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				EE0C21842AE861D700668357 /* SmartWaste.app */,
+				EE4BE2762B3D916500F8398B /* SmartWasteTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -315,6 +347,41 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		EE4BE26E2B3D8C2600F8398B /* Counter */ = {
+			isa = PBXGroup;
+			children = (
+				EE4BE2782B3D916600F8398B /* CounterTests.swift */,
+			);
+			path = Counter;
+			sourceTree = "<group>";
+		};
+		EE4BE26F2B3D8C2B00F8398B /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				EE928D3B2B3F24970011FD0E /* Tabs */,
+				EE928D382B3F1C9E0011FD0E /* Auth */,
+				EE4BE2812B3DA23700F8398B /* Bucket */,
+				EE4BE26E2B3D8C2600F8398B /* Counter */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		EE4BE2772B3D916600F8398B /* SmartWasteTests */ = {
+			isa = PBXGroup;
+			children = (
+				EE4BE26F2B3D8C2B00F8398B /* Features */,
+			);
+			path = SmartWasteTests;
+			sourceTree = "<group>";
+		};
+		EE4BE2812B3DA23700F8398B /* Bucket */ = {
+			isa = PBXGroup;
+			children = (
+				EE4BE27F2B3DA22800F8398B /* BucketTests.swift */,
+			);
+			path = Bucket;
+			sourceTree = "<group>";
+		};
 		EE56775E2B10AB8F00DDE4A0 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -371,10 +438,28 @@
 				EE7F96E62B15ECC30071A99F /* MapClient.swift */,
 				EE3097A92B2113D000B6CBFB /* ProfileClient.swift */,
 				EE3097792B1F7E4700B6CBFB /* BucketClient.swift */,
-				EED6B80B2B3C4D2900E91BEE /* BucketListClient.swift */,
+				EED6B80B2B3C4D2900E91BEE /* BucketDB.swift */,
 				EE7F96E42B15E40B0071A99F /* KeychainClient.swift */,
+				EEBF55082B95C201006006B6 /* SessionClient.swift */,
+				EEBF550A2B95C210006006B6 /* AuthInterceptor.swift */,
 			);
 			path = DI;
+			sourceTree = "<group>";
+		};
+		EE928D382B3F1C9E0011FD0E /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				EE928D362B3F1C9A0011FD0E /* AuthTests.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		EE928D3B2B3F24970011FD0E /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				EE928D392B3F24940011FD0E /* TabsTests.swift */,
+			);
+			path = Tabs;
 			sourceTree = "<group>";
 		};
 		EE9888C92B155528009445BC /* Features */ = {
@@ -794,6 +879,24 @@
 			productReference = EE0C21842AE861D700668357 /* SmartWaste.app */;
 			productType = "com.apple.product-type.application";
 		};
+		EE4BE2752B3D916500F8398B /* SmartWasteTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EE4BE27C2B3D916600F8398B /* Build configuration list for PBXNativeTarget "SmartWasteTests" */;
+			buildPhases = (
+				EE4BE2722B3D916500F8398B /* Sources */,
+				EE4BE2732B3D916500F8398B /* Frameworks */,
+				EE4BE2742B3D916500F8398B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EE4BE27B2B3D916600F8398B /* PBXTargetDependency */,
+			);
+			name = SmartWasteTests;
+			productName = SmartWasteTests;
+			productReference = EE4BE2762B3D916500F8398B /* SmartWasteTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -801,11 +904,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 1510;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					EE0C21832AE861D700668357 = {
 						CreatedOnToolsVersion = 15.0.1;
+					};
+					EE4BE2752B3D916500F8398B = {
+						CreatedOnToolsVersion = 15.1;
+						TestTargetID = EE0C21832AE861D700668357;
 					};
 				};
 			};
@@ -834,6 +941,7 @@
 			projectRoot = "";
 			targets = (
 				EE0C21832AE861D700668357 /* SmartWaste */,
+				EE4BE2752B3D916500F8398B /* SmartWasteTests */,
 			);
 		};
 /* End PBXProject section */
@@ -845,6 +953,13 @@
 			files = (
 				EEF2F1A12AF82BBA009F4677 /* Preview Assets.xcassets in Resources */,
 				EEF2F1A22AF82BBA009F4677 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE4BE2742B3D916500F8398B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -872,10 +987,12 @@
 				EEF96E392B1E32ED008A66E6 /* User.swift in Sources */,
 				EE2809542AF84F3400093049 /* TitleView.swift in Sources */,
 				EEF2F1992AF82415009F4677 /* PasswordField.swift in Sources */,
+				EEBF550B2B95C210006006B6 /* AuthInterceptor.swift in Sources */,
 				EE28095A2AF856A600093049 /* AuthToggleButton.swift in Sources */,
 				EEF96E1E2B1E2963008A66E6 /* MapPoint.swift in Sources */,
 				EEF96E4C2B1F1CEC008A66E6 /* StatBox.swift in Sources */,
 				EEF96E4A2B1E9667008A66E6 /* BucketOption.swift in Sources */,
+				EEBF55092B95C201006006B6 /* SessionClient.swift in Sources */,
 				EE36E6342B29C52400E3328C /* CameraView.swift in Sources */,
 				EEF96E192B1E27EF008A66E6 /* MapCoordinatorView.swift in Sources */,
 				EE297A492B14D66C006FC0C4 /* TabsView.swift in Sources */,
@@ -886,7 +1003,7 @@
 				EE68F4C22B27CC190082EE56 /* CounterView.swift in Sources */,
 				EEF96E352B1E3013008A66E6 /* BucketCoordinatorView.swift in Sources */,
 				EEF96E3F2B1E5226008A66E6 /* ProfileCard.swift in Sources */,
-				EED6B80C2B3C4D2900E91BEE /* BucketListClient.swift in Sources */,
+				EED6B80C2B3C4D2900E91BEE /* BucketDB.swift in Sources */,
 				EE3097AA2B2113D000B6CBFB /* ProfileClient.swift in Sources */,
 				EE5677602B10AEDD00DDE4A0 /* Validation.swift in Sources */,
 				EEA012DA2AFB7C69004311F3 /* Constants.swift in Sources */,
@@ -941,7 +1058,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EE4BE2722B3D916500F8398B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE4BE2792B3D916600F8398B /* CounterTests.swift in Sources */,
+				EE928D372B3F1C9A0011FD0E /* AuthTests.swift in Sources */,
+				EE4BE2802B3DA22800F8398B /* BucketTests.swift in Sources */,
+				EE928D3A2B3F24940011FD0E /* TabsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EE4BE27B2B3D916600F8398B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EE0C21832AE861D700668357 /* SmartWaste */;
+			targetProxy = EE4BE27A2B3D916600F8398B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		EE0C21902AE861D900668357 /* Debug */ = {
@@ -1074,6 +1210,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"SmartWaste/Preview Content\"";
 				DEVELOPMENT_TEAM = RX5QFP6Q25;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartWaste/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -1084,7 +1221,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1110,6 +1247,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"SmartWaste/Preview Content\"";
 				DEVELOPMENT_TEAM = RX5QFP6Q25;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartWaste/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -1120,7 +1258,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1132,6 +1270,44 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EE4BE27D2B3D916600F8398B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T8N734ZH9D;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yegorchik.SmartWasteTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartWaste.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SmartWaste";
+			};
+			name = Debug;
+		};
+		EE4BE27E2B3D916600F8398B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T8N734ZH9D;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yegorchik.SmartWasteTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartWaste.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SmartWaste";
 			};
 			name = Release;
 		};
@@ -1152,6 +1328,15 @@
 			buildConfigurations = (
 				EE0C21932AE861D900668357 /* Debug */,
 				EE0C21942AE861D900668357 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EE4BE27C2B3D916600F8398B /* Build configuration list for PBXNativeTarget "SmartWasteTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE4BE27D2B3D916600F8398B /* Debug */,
+				EE4BE27E2B3D916600F8398B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1227,8 +1412,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
-				kind = exactVersion;
-				version = 1.5.3;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

@@ -16,7 +16,7 @@ import Foundation
 
 @DependencyClient
 struct ProfileClient {
-    var getQuests: @Sendable (_ token: String) async throws -> QuestList
+    var getQuests: @Sendable () async throws -> QuestList
 }
 
 extension DependencyValues {
@@ -29,18 +29,16 @@ extension DependencyValues {
 // MARK: - Live API implementation
 
 extension ProfileClient: DependencyKey, TestDependencyKey {
+    @Dependency(\.sessionClient) static var sessionClient
+    static let session = sessionClient.current
+    
     static let liveValue = ProfileClient(
-        getQuests: { token in
+        getQuests: {
             let endpoint = "/self/quests"
 
-            let headers: HTTPHeaders = [
-                "Authorization": "\(token)",
-            ]
-
             return try await withCheckedThrowingContinuation { continuation in
-                AF.request(baseUrl + endpoint,
-                           method: .get,
-                           headers: headers)
+                session.request(baseUrl + endpoint,
+                           method: .get)
                     .validate()
                     .responseDecodable(of: QuestList.self) { response in
                         handleResponse(response, continuation)
@@ -68,8 +66,7 @@ private func handleResponse<T>(_ response: AFDataResponse<T>, _ continuation: Ch
         continuation.resume(returning: value)
     case let .failure(error):
         if let data = response.data,
-           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data)
-        {
+           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data) {
             continuation.resume(throwing: ErrorTypes.failedWithResponse(failResponse))
         } else {
             continuation.resume(throwing: error)

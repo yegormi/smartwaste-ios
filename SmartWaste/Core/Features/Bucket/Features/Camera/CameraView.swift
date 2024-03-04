@@ -14,7 +14,7 @@ struct CameraView: View {
 
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-            CameraRepresentable() { image in 
+            CameraRepresentable { image in
                 viewStore.send(.usePhotoTapped(with: image))
             }
             .ignoresSafeArea(.all)
