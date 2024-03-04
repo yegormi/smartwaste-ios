@@ -104,10 +104,9 @@ struct TabsFeature: Reducer {
             case .onAppear:
                 return .send(.getSelf)
             case .getSelf:
-                state.token = retrieveToken()
-                return .run { [token = state.token] send in
+                return .run { send in
                     do {
-                        let user = try await getSelf(with: token)
+                        let user = try await getSelf()
                         await send(.onGetSelfSuccess(user))
                     } catch let ErrorTypes.failedWithResponse(user) {
                         await send(.onGetSelfError(user))
@@ -156,11 +155,7 @@ extension TabsFeature {
         keychainClient.deleteToken()
     }
 
-    private func retrieveToken() -> String {
-        keychainClient.retrieveToken()?.accessToken ?? ""
-    }
-
-    private func getSelf(with token: String) async throws -> User {
-        return try await authClient.performGetSelf(token)
+    private func getSelf() async throws -> User {
+        return try await authClient.performGetSelf()
     }
 }

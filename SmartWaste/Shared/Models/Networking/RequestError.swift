@@ -13,7 +13,7 @@ enum RequestError: String, Equatable {
     case usernameNotUnique  // signup username
     case emailNotUnique     // signup email
     case tokenExpired       // token expired
-    case tokenInvalid       // token invalid
+    case tokenInvalid       //valid
 
     var code: String {
         switch self {

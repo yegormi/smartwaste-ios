@@ -149,8 +149,7 @@ extension AnnotationFeature {
     }
 
     private func dumpItems(bucket: [DumpEntity]) async throws -> ProgressResponse {
-        let token = keychainClient.retrieveToken()?.accessToken ?? ""
-        return try await bucketClient.dumpItems(token: token, bucket: bucket)
+        return try await bucketClient.dumpItems(bucket: bucket)
     }
 
     private func getUserLocation() -> CLLocationCoordinate2D? {

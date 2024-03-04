@@ -18,7 +18,7 @@ import Foundation
 struct AuthClient {
     var performSignIn: @Sendable (String, String) async throws -> AuthResponse
     var performSignUp: @Sendable (String, String, String) async throws -> AuthResponse
-    var performGetSelf: @Sendable (String) async throws -> User
+    var performGetSelf: @Sendable () async throws -> User
 }
 
 extension DependencyValues {
@@ -31,13 +31,16 @@ extension DependencyValues {
 // MARK: - Live API implementation
 
 extension AuthClient: DependencyKey, TestDependencyKey {
+    @Dependency(\.sessionClient) static var sessionClient
+    static let session = sessionClient.current
+    
     static let liveValue = AuthClient(
         performSignIn: { email, password in
             let signInRequest = SignIn(email: email, password: password)
             let endpoint = "/auth/signin"
 
             return try await withCheckedThrowingContinuation { continuation in
-                AF.request(Self.baseUrl + endpoint,
+                session.request(Self.baseUrl + endpoint,
                            method: .post,
                            parameters: signInRequest,
                            encoder: JSONParameterEncoder.default)
@@ -52,7 +55,7 @@ extension AuthClient: DependencyKey, TestDependencyKey {
             let endpoint = "/auth/signup"
 
             return try await withCheckedThrowingContinuation { continuation in
-                AF.request(Self.baseUrl + endpoint,
+                session.request(Self.baseUrl + endpoint,
                            method: .post,
                            parameters: signUpRequest,
                            encoder: JSONParameterEncoder.default)
@@ -62,17 +65,12 @@ extension AuthClient: DependencyKey, TestDependencyKey {
                     }
             }
         },
-        performGetSelf: { token in
+        performGetSelf: {
             let endpoint = "/self"
 
-            let headers: HTTPHeaders = [
-                "Authorization": "\(token)"
-            ]
-
             return try await withCheckedThrowingContinuation { continuation in
-                AF.request(Self.baseUrl + endpoint,
-                           method: .get,
-                           headers: headers)
+                session.request(Self.baseUrl + endpoint,
+                           method: .get)
                     .validate()
                     .responseDecodable(of: User.self) { response in
                         handleResponse(response, continuation)

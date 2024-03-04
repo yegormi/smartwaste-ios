@@ -161,8 +161,7 @@ struct BucketMain: Reducer {
     }
 
     private func getItems() async throws -> BucketOptions {
-        let token = keychainClient.retrieveToken()?.accessToken ?? ""
-        return try await bucketClient.getItems(token: token)
+        return try await bucketClient.getItems()
     }
 }
 

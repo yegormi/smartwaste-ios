@@ -162,13 +162,11 @@ struct ProfileMain: Reducer {
     }
 
     private func getSelf() async throws -> User {
-        let token = keychainClient.retrieveToken()?.accessToken ?? ""
-        return try await authClient.performGetSelf(token)
+        return try await authClient.performGetSelf()
     }
 
     private func getQuests() async throws -> QuestList {
-        let token = keychainClient.retrieveToken()?.accessToken ?? ""
-        return try await profileClient.getQuests(token: token)
+        return try await profileClient.getQuests()
     }
 
     private func deleteToken() {

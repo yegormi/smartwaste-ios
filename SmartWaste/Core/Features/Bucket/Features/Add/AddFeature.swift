@@ -170,7 +170,6 @@ struct AddFeature: Reducer {
     }
 
     private func scanPhoto(_ image: UIImage) async throws -> BucketOptions {
-        let token = keychainClient.retrieveToken()?.accessToken ?? ""
-        return try await bucketClient.scanPhoto(token: token, image: image)
+        return try await bucketClient.scanPhoto(image: image)
     }
 }

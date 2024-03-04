@@ -16,10 +16,10 @@ import UIKit
 
 @DependencyClient
 struct BucketClient {
-    var getCategories: @Sendable (_ token: String) async throws -> [BucketCategory]
-    var getItems: @Sendable (_ token: String) async throws -> BucketOptions
-    var scanPhoto: @Sendable (_ token: String, _ image: UIImage) async throws -> BucketOptions
-    var dumpItems: @Sendable (_ token: String, _ bucket: [DumpEntity]) async throws -> ProgressResponse
+    var getCategories: @Sendable () async throws -> [BucketCategory]
+    var getItems: @Sendable () async throws -> BucketOptions
+    var scanPhoto: @Sendable (_ image: UIImage) async throws -> BucketOptions
+    var dumpItems: @Sendable (_ bucket: [DumpEntity]) async throws -> ProgressResponse
 }
 
 extension DependencyValues {
@@ -32,59 +32,47 @@ extension DependencyValues {
 // MARK: - Live API implementation
 
 extension BucketClient: DependencyKey, TestDependencyKey {
+    @Dependency(\.sessionClient) static var sessionClient
+    static let session = sessionClient.current
+    
     static let liveValue = BucketClient(
-        getCategories: { token in
+        getCategories: {
             let endpoint = "/categories"
 
-            let headers: HTTPHeaders = [
-                "Authorization": "\(token)"
-            ]
-
             return try await withCheckedThrowingContinuation { continuation in
-                AF.request(baseUrl + endpoint,
-                           method: .get,
-                           headers: headers)
+                session.request(baseUrl + endpoint,
+                           method: .get)
                     .validate()
                     .responseDecodable(of: [BucketCategory].self) { response in
                         handleResponse(response, continuation)
                     }
             }
-        }, getItems: { token in
+        }, getItems: {
             let endpoint = "/items"
 
-            let headers: HTTPHeaders = [
-                "Authorization": "\(token)"
-            ]
-
             return try await withCheckedThrowingContinuation { continuation in
-                AF.request(baseUrl + endpoint,
-                           method: .get,
-                           headers: headers)
+                session.request(baseUrl + endpoint,
+                           method: .get)
                     .validate()
                     .responseDecodable(of: BucketOptions.self) { response in
                         handleResponse(response, continuation)
                     }
             }
-        }, scanPhoto: { token, image in
+        }, scanPhoto: {image in
             let endpoint = "/scan"
-
-            let headers: HTTPHeaders = [
-                "Authorization": "\(token)"
-            ]
             guard let imageData = image.jpegData(compressionQuality: 0.8) else {
                 throw ErrorTypes.imageConversionError
             }
 
             return try await withCheckedThrowingContinuation { continuation in
-                AF.upload(
+                session.upload(
                     multipartFormData: { multipartFormData in
                         multipartFormData.append(
                             imageData, withName: "Photo", fileName: "Photo.jpeg", mimeType: "image/jpeg"
                         )
                     },
                     to: baseUrl + endpoint,
-                    method: .post,
-                    headers: headers
+                    method: .post
                 )
                 .validate()
                 .uploadProgress(queue: .main, closure: { progress in
@@ -94,19 +82,14 @@ extension BucketClient: DependencyKey, TestDependencyKey {
                     handleResponse(response, continuation)
                 }
             }
-        }, dumpItems: { token, bucket in
+        }, dumpItems: { bucket in
             let endpoint = "/dump"
 
-            let headers: HTTPHeaders = [
-                "Authorization": "\(token)"
-            ]
-
             return try await withCheckedThrowingContinuation { continuation in
-                AF.request(Self.baseUrl + endpoint,
+                session.request(Self.baseUrl + endpoint,
                            method: .post,
                            parameters: bucket,
-                           encoder: JSONParameterEncoder.default,
-                           headers: headers)
+                           encoder: JSONParameterEncoder.default)
                     .validate()
                     .responseDecodable(of: ProgressResponse.self) { response in
                         handleResponse(response, continuation)
@@ -120,16 +103,16 @@ extension BucketClient: DependencyKey, TestDependencyKey {
 
 extension BucketClient {
     static let testValue = BucketClient(
-        getCategories: { _ in
+        getCategories: { 
             return [BucketCategory(id: 1, name: "Paper", slug: "paper", emoji: "📄")]
         },
-        getItems: { _ in
+        getItems: { 
             return BucketOptions(items: [])
         },
-        scanPhoto: { _, _ in
+        scanPhoto: { _ in
             return BucketOptions(items: [])
         },
-        dumpItems: { _, _ in
+        dumpItems: { _ in
             return ProgressResponse(progresses: [])
         }
     )

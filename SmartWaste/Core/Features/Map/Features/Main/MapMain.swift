@@ -97,12 +97,10 @@ struct MapMain: Reducer {
 
 extension MapMain {
     private func getPoints() async throws -> [MapPoint] {
-        let token = keychainClient.retrieveToken()?.accessToken ?? ""
-        return try await mapClient.getPoints(token: token)
+        return try await mapClient.getPoints()
     }
 
     private func searchPoints(with categories: [String]) async throws -> [MapPoint] {
-        let token = keychainClient.retrieveToken()?.accessToken ?? ""
-        return try await mapClient.searchPoints(token: token, categories: categories)
+        return try await mapClient.searchPoints(categories: categories)
     }
 }

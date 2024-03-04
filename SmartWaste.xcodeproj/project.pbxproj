@@ -61,6 +61,8 @@
 		EEA012BB2AFA8180004311F3 /* RootScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA012B92AFA8180004311F3 /* RootScreen.swift */; };
 		EEA012DA2AFB7C69004311F3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA012D92AFB7C69004311F3 /* Constants.swift */; };
 		EEBF24A62B2BBC7B00C3BD21 /* LoadingView in Frameworks */ = {isa = PBXBuildFile; productRef = EEBF24A52B2BBC7B00C3BD21 /* LoadingView */; };
+		EEBF55092B95C201006006B6 /* SessionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBF55082B95C201006006B6 /* SessionClient.swift */; };
+		EEBF550B2B95C210006006B6 /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBF550A2B95C210006006B6 /* AuthInterceptor.swift */; };
 		EED6B7FE2B3C3F8600E91BEE /* Bucket.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EED6B7FC2B3C3F8600E91BEE /* Bucket.xcdatamodeld */; };
 		EED6B80A2B3C498D00E91BEE /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED6B8092B3C498D00E91BEE /* CoreDataManager.swift */; };
 		EED6B80C2B3C4D2900E91BEE /* BucketDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED6B80B2B3C4D2900E91BEE /* BucketDB.swift */; };
@@ -168,6 +170,8 @@
 		EEA012B82AFA8180004311F3 /* RootCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinatorView.swift; sourceTree = "<group>"; };
 		EEA012B92AFA8180004311F3 /* RootScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootScreen.swift; sourceTree = "<group>"; };
 		EEA012D92AFB7C69004311F3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		EEBF55082B95C201006006B6 /* SessionClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionClient.swift; sourceTree = "<group>"; };
+		EEBF550A2B95C210006006B6 /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
 		EED6B7FD2B3C3F8600E91BEE /* Bucket.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bucket.xcdatamodel; sourceTree = "<group>"; };
 		EED6B8092B3C498D00E91BEE /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		EED6B80B2B3C4D2900E91BEE /* BucketDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketDB.swift; sourceTree = "<group>"; };
@@ -436,6 +440,8 @@
 				EE3097792B1F7E4700B6CBFB /* BucketClient.swift */,
 				EED6B80B2B3C4D2900E91BEE /* BucketDB.swift */,
 				EE7F96E42B15E40B0071A99F /* KeychainClient.swift */,
+				EEBF55082B95C201006006B6 /* SessionClient.swift */,
+				EEBF550A2B95C210006006B6 /* AuthInterceptor.swift */,
 			);
 			path = DI;
 			sourceTree = "<group>";
@@ -981,10 +987,12 @@
 				EEF96E392B1E32ED008A66E6 /* User.swift in Sources */,
 				EE2809542AF84F3400093049 /* TitleView.swift in Sources */,
 				EEF2F1992AF82415009F4677 /* PasswordField.swift in Sources */,
+				EEBF550B2B95C210006006B6 /* AuthInterceptor.swift in Sources */,
 				EE28095A2AF856A600093049 /* AuthToggleButton.swift in Sources */,
 				EEF96E1E2B1E2963008A66E6 /* MapPoint.swift in Sources */,
 				EEF96E4C2B1F1CEC008A66E6 /* StatBox.swift in Sources */,
 				EEF96E4A2B1E9667008A66E6 /* BucketOption.swift in Sources */,
+				EEBF55092B95C201006006B6 /* SessionClient.swift in Sources */,
 				EE36E6342B29C52400E3328C /* CameraView.swift in Sources */,
 				EEF96E192B1E27EF008A66E6 /* MapCoordinatorView.swift in Sources */,
 				EE297A492B14D66C006FC0C4 /* TabsView.swift in Sources */,
