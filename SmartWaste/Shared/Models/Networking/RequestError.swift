@@ -8,12 +8,12 @@
 import Foundation
 
 enum RequestError: String, Equatable {
-    case userNotFound       // signin email
-    case invalidPassword    // signin password
-    case usernameNotUnique  // signup username
-    case emailNotUnique     // signup email
-    case tokenExpired       // token expired
-    case tokenInvalid       //valid
+    case userNotFound // signin email
+    case invalidPassword // signin password
+    case usernameNotUnique // signup username
+    case emailNotUnique // signup email
+    case tokenExpired // token expired
+    case tokenInvalid // valid
 
     var code: String {
         switch self {

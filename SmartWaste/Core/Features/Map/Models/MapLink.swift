@@ -5,8 +5,8 @@
 //  Created by Yegor Myropoltsev on 09.12.2023.
 //
 
-import UIKit
 import CoreLocation
+import UIKit
 
 enum MapLink: Equatable {
     case appleMaps

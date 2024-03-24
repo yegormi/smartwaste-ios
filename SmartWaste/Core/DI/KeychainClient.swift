@@ -45,7 +45,8 @@ extension KeychainClient: DependencyKey, TestDependencyKey {
         retrieveToken: {
             let keychain = KeychainSwift()
             if let authResponseData = keychain.getData(keychainKey),
-               let authResponse = try? JSONDecoder().decode(AuthResponse.self, from: authResponseData) {
+               let authResponse = try? JSONDecoder().decode(AuthResponse.self, from: authResponseData)
+            {
                 return authResponse
             }
             return nil

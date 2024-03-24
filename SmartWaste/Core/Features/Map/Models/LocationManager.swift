@@ -38,15 +38,15 @@ final class LocationManager: NSObject, ObservableObject {
 
 extension LocationManager: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        guard .authorizedWhenInUse == manager.authorizationStatus else { return }
+        guard manager.authorizationStatus == .authorizedWhenInUse else { return }
         locationManager.requestLocation()
     }
 
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    func locationManager(_: CLLocationManager, didFailWithError error: Error) {
         print("Something went wrong: \(error)")
     }
 
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManager.stopUpdatingLocation()
         locations.last.map {
             region = MKCoordinateRegion(

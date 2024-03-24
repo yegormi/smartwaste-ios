@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Validation {
+enum Validation {
     static func isValidUsername(with username: String) -> Bool {
         let regex = "^[a-zA-Z0-9_-]+$"
         return validateWithRegex(username, regex: regex)

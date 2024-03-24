@@ -16,7 +16,7 @@ struct InputField: View {
 
     init(label: String, text: Binding<String>, type: KeyboardType, isInvalid: Bool, errorText: String? = nil) {
         self.label = label
-        self._text = text
+        _text = text
         self.type = type
         self.isInvalid = isInvalid
         self.errorText = errorText

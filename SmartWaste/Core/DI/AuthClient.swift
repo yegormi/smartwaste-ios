@@ -33,7 +33,7 @@ extension DependencyValues {
 extension AuthClient: DependencyKey, TestDependencyKey {
     @Dependency(\.sessionClient) static var sessionClient
     static let session = sessionClient.current
-    
+
     static let liveValue = AuthClient(
         performSignIn: { email, password in
             let signInRequest = SignIn(email: email, password: password)
@@ -41,9 +41,9 @@ extension AuthClient: DependencyKey, TestDependencyKey {
 
             return try await withCheckedThrowingContinuation { continuation in
                 session.request(Self.baseUrl + endpoint,
-                           method: .post,
-                           parameters: signInRequest,
-                           encoder: JSONParameterEncoder.default)
+                                method: .post,
+                                parameters: signInRequest,
+                                encoder: JSONParameterEncoder.default)
                     .validate()
                     .responseDecodable(of: AuthResponse.self) { response in
                         handleResponse(response, continuation)
@@ -56,9 +56,9 @@ extension AuthClient: DependencyKey, TestDependencyKey {
 
             return try await withCheckedThrowingContinuation { continuation in
                 session.request(Self.baseUrl + endpoint,
-                           method: .post,
-                           parameters: signUpRequest,
-                           encoder: JSONParameterEncoder.default)
+                                method: .post,
+                                parameters: signUpRequest,
+                                encoder: JSONParameterEncoder.default)
                     .validate()
                     .responseDecodable(of: AuthResponse.self) { response in
                         handleResponse(response, continuation)
@@ -70,7 +70,7 @@ extension AuthClient: DependencyKey, TestDependencyKey {
 
             return try await withCheckedThrowingContinuation { continuation in
                 session.request(Self.baseUrl + endpoint,
-                           method: .get)
+                                method: .get)
                     .validate()
                     .responseDecodable(of: User.self) { response in
                         handleResponse(response, continuation)
@@ -98,7 +98,8 @@ private func handleResponse<T>(_ response: AFDataResponse<T>, _ continuation: Ch
         continuation.resume(returning: value)
     case let .failure(error):
         if let data = response.data,
-           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data) {
+           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data)
+        {
             continuation.resume(throwing: ErrorTypes.failedWithResponse(failResponse))
         } else {
             continuation.resume(throwing: error)

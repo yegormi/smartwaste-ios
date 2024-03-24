@@ -6,14 +6,14 @@
 //
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct BucketItemView: View {
     let store: StoreOf<BucketItemFeature>
 
     var body: some View {
-        WithViewStore(self.store, observe: { $0 }) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.gray.opacity(0.15))
                 .frame(height: 60)
@@ -29,7 +29,6 @@ struct BucketItemView: View {
                         )
                     }.padding(20)
                 )
-
         }
     }
 }

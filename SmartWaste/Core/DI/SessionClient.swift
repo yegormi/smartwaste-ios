@@ -36,7 +36,7 @@ extension SessionClient: DependencyKey, TestDependencyKey {
                 @Dependency(\.keychainClient) var keychainClient
                 return keychainClient.retrieveToken()?.accessToken
             }
-            
+
             return Session(interceptor: interceptor)
         }()
     )
@@ -47,4 +47,3 @@ extension SessionClient: DependencyKey, TestDependencyKey {
 extension SessionClient {
     static let testValue = Self(current: .default)
 }
-

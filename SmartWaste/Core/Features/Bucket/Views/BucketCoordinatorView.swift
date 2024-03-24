@@ -5,8 +5,8 @@
 //  Created by Yegor Myropoltsev on 04.12.2023.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 import TCACoordinators
 
 struct BucketCoordinatorView: View {
@@ -19,8 +19,8 @@ struct BucketCoordinatorView: View {
                 case .main:
                     CaseLet(
                         /BucketScreen.State.main,
-                         action: BucketScreen.Action.main,
-                         then: BucketMainView.init
+                        action: BucketScreen.Action.main,
+                        then: BucketMainView.init
                     )
                 }
             }

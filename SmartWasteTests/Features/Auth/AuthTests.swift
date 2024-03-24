@@ -5,8 +5,8 @@
 //  Created by Yegor Myropoltsev on 29.12.2023.
 //
 
-import XCTest
 import ComposableArchitecture
+import XCTest
 
 @testable import SmartWaste
 

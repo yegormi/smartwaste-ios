@@ -6,8 +6,8 @@
 //
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 @Reducer
 struct SplashFeature: Reducer {

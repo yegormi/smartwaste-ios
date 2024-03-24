@@ -1,18 +1,18 @@
 //
-//  BucketMainFeature.swift
+//  BucketMain.swift
 //  SmartWaste
 //
 //  Created by Yegor Myropoltsev on 05.12.2023.
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 @Reducer
 struct BucketMain: Reducer {
-    @Dependency(\.keychainClient)   var keychainClient
+    @Dependency(\.keychainClient) var keychainClient
     @Dependency(\.bucketDB) var bucketDB
-    @Dependency(\.bucketClient)     var bucketClient
+    @Dependency(\.bucketClient) var bucketClient
 
     struct State: Equatable {
         @PresentationState var addItem: AddFeature.State?
@@ -62,14 +62,14 @@ struct BucketMain: Reducer {
                         print(error)
                     }
                 }
-            case .onFetched(let items):
+            case let .onFetched(items):
                 state.bucketItems = IdentifiedArrayOf(uniqueElements: items.map { $0.toState() })
                 whereIsMyDB()
                 return .send(.getItems)
             case .errorToggled:
                 state.isError.toggle()
                 return .none
-            case .showErrorToast(let text):
+            case let .showErrorToast(text):
                 state.errorToast = text
                 return .send(.errorToggled)
 

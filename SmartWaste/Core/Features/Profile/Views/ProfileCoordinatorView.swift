@@ -1,13 +1,13 @@
 //
-//  HomeCoordinatorView.swift
+//  ProfileCoordinatorView.swift
 //  SmartWaste
 //
 //  Created by Yegor Myropoltsev on 07.11.2023.
 //
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 import TCACoordinators
 
 struct ProfileCoordinatorView: View {
@@ -20,8 +20,8 @@ struct ProfileCoordinatorView: View {
                 case .main:
                     CaseLet(
                         /ProfileScreen.State.main,
-                         action: ProfileScreen.Action.main,
-                         then: ProfileMainView.init
+                        action: ProfileScreen.Action.main,
+                        then: ProfileMainView.init
                     )
                 }
             }

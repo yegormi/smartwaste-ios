@@ -6,8 +6,8 @@
 //
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 @Reducer
 struct BucketItemFeature: Reducer {
@@ -17,12 +17,12 @@ struct BucketItemFeature: Reducer {
         let categories: [BucketCategory]
         var counter: CounterFeature.State
 
-        func toItem () -> BucketItem {
+        func toItem() -> BucketItem {
             return BucketItem(
-                id: self.id,
-                name: self.name,
-                count: self.counter.value,
-                categories: self.categories
+                id: id,
+                name: name,
+                count: counter.value,
+                categories: categories
             )
         }
     }

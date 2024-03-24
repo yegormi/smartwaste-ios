@@ -5,10 +5,10 @@
 //  Created by Yegor Myropoltsev on 05.11.2023.
 //
 
-import SwiftUI
-import ComposableArchitecture
 import AlertToast
+import ComposableArchitecture
 import Reachability
+import SwiftUI
 
 struct AuthView: View {
     let store: StoreOf<AuthFeature>
@@ -17,7 +17,7 @@ struct AuthView: View {
     @Namespace private var animation
 
     var body: some View {
-        WithViewStore(self.store, observe: { $0 }) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             ScrollView {
                 VStack {
                     TitleView("♻️ SmartWaste")
@@ -78,10 +78,9 @@ struct AuthView: View {
                                     send: AuthFeature.Action.confirmPasswordChanged
                                 ).removeDuplicates(),
                                 type: .password,
-                                isInvalid: (
-                                    viewStore.password != viewStore.confirmPassword &&
+                                isInvalid:
+                                viewStore.password != viewStore.confirmPassword &&
                                     !viewStore.confirmPassword.isEmpty
-                                )
                             )
                             .transition(.scale)
                         }

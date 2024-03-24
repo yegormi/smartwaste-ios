@@ -6,13 +6,12 @@
 //
 //
 
-import UIKit
 import ComposableArchitecture
+import UIKit
 
 @Reducer
 struct CameraFeature: Reducer {
-    struct State: Equatable {
-    }
+    struct State: Equatable {}
 
     enum Action: Equatable {
         case usePhotoTapped(with: UIImage)

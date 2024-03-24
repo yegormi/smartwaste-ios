@@ -1,12 +1,12 @@
 //
-//  HomeCoordinator.swift
+//  ProfileCoordinator.swift
 //  SmartWaste
 //
 //  Created by Yegor Myropoltsev on 27.11.2023.
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 import TCACoordinators
 
 @Reducer

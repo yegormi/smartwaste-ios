@@ -6,14 +6,14 @@
 //
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct CounterView: View {
     let store: StoreOf<CounterFeature>
 
     var body: some View {
-        WithViewStore(self.store, observe: { $0 }) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             HStack(spacing: 0) {
                 Button {
                     viewStore.send(.decrement)

@@ -6,14 +6,14 @@
 //
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct AnnotationView: View {
     let store: StoreOf<AnnotationFeature>
 
     var body: some View {
-        WithViewStore(self.store, observe: { $0 }) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             VStack(alignment: .leading, spacing: 10) {
                 Text(viewStore.annotation.name)
                     .font(.system(size: 22, weight: .semibold))

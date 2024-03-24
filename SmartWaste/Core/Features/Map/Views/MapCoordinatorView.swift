@@ -5,8 +5,8 @@
 //  Created by Yegor Myropoltsev on 04.12.2023.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 import TCACoordinators
 
 struct MapCoordinatorView: View {
@@ -19,8 +19,8 @@ struct MapCoordinatorView: View {
                 case .main:
                     CaseLet(
                         /MapScreen.State.main,
-                         action: MapScreen.Action.main,
-                         then: MapMainView.init
+                        action: MapScreen.Action.main,
+                        then: MapMainView.init
                     )
                 }
             }

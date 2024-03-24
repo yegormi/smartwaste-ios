@@ -5,8 +5,8 @@
 //  Created by Yegor Myropoltsev on 24.11.2023.
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 import TCACoordinators
 
 @Reducer

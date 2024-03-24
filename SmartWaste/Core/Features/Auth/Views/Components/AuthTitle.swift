@@ -15,8 +15,8 @@ struct AuthTitle: View {
             .font(.system(size: 36))
             .transition(
                 .scale(scale: 0.01, anchor: .center)
-                .combined(with: .opacity)
-                .animation(.easeInOut)
+                    .combined(with: .opacity)
+                    .animation(.easeInOut)
             )
     }
 }

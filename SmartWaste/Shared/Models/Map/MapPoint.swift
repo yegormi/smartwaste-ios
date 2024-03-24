@@ -5,8 +5,8 @@
 //  Created by Yegor Myropoltsev on 14.11.2023.
 //
 
-import Foundation
 import CoreLocation
+import Foundation
 
 struct MapPoint: Codable, Identifiable, Equatable {
     let id: Int

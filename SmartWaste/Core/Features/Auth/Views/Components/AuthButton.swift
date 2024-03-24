@@ -29,7 +29,6 @@ struct AuthButton: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                         .scaleEffect(1, anchor: .center)
                 }
-
             }
             .disabled(isLoading)
         }

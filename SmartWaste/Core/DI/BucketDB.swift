@@ -40,7 +40,7 @@ extension BucketDB: DependencyKey {
             do {
                 let fetchedEntities = try viewContext.fetch(fetchRequest)
                 let bucketItems = fetchedEntities.map { entity in
-                    return BucketItem(
+                    BucketItem(
                         id: Int(entity.id),
                         name: entity.name!,
                         count: Int(entity.count),
@@ -161,12 +161,12 @@ extension BucketDB: DependencyKey {
 extension BucketDB {
     static let testValue = BucketDB(
         fetchBucketItems: {
-            return [
+            [
                 BucketItem(id: 1, name: "Glass bottle", count: 1, categories: []),
                 BucketItem(id: 2, name: "Plastic bottle", count: 2, categories: []),
                 BucketItem(id: 3, name: "Paper", count: 3, categories: []),
                 BucketItem(id: 4, name: "Food", count: 4, categories: []),
-                BucketItem(id: 5, name: "Metal", count: 5, categories: [])
+                BucketItem(id: 5, name: "Metal", count: 5, categories: []),
             ]
         },
         createBucketItem: { _ in },

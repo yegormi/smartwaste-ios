@@ -5,8 +5,8 @@
 //  Created by Yegor Myropoltsev on 04.03.2024.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 struct AuthInterceptor: RequestInterceptor {
     private let tokenProvider: () -> String?
@@ -15,7 +15,7 @@ struct AuthInterceptor: RequestInterceptor {
         self.tokenProvider = tokenProvider
     }
 
-    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+    func adapt(_ urlRequest: URLRequest, for _: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         var modifiedRequest = urlRequest
 
         if let token = tokenProvider() {
@@ -25,7 +25,7 @@ struct AuthInterceptor: RequestInterceptor {
         completion(.success(modifiedRequest))
     }
 
-    func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
+    func retry(_: Request, for _: Session, dueTo _: Error, completion: @escaping (RetryResult) -> Void) {
         // Handle retry logic if needed
         completion(.doNotRetry)
     }

@@ -5,8 +5,8 @@
 //  Created by Yegor Myropoltsev on 04.12.2023.
 //
 
-import SwiftUI
 import SkeletonUI
+import SwiftUI
 
 struct ProfileCard: View {
     let user: User?
@@ -43,7 +43,7 @@ struct ProfileCard: View {
 }
 
 struct ProfileCard_Previews: PreviewProvider {
-    static var testItem: User = User(
+    static var testItem: User = .init(
         id: 1,
         email: "gleb.mokryy@gmail.com",
         username: "glebushkaa",

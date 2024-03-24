@@ -6,16 +6,16 @@
 //
 //
 
-import Foundation
 import ComposableArchitecture
 import CoreLocation
+import Foundation
 
 @Reducer
 struct AnnotationFeature: Reducer {
     @Dependency(\.keychainClient) var keychainClient
-    @Dependency(\.bucketClient)   var bucketClient
-    @Dependency(\.bucketDB)       var bucketDB
-    @Dependency(\.dismiss)        var dismiss
+    @Dependency(\.bucketClient) var bucketClient
+    @Dependency(\.bucketDB) var bucketDB
+    @Dependency(\.dismiss) var dismiss
 
     struct State: Equatable {
         @PresentationState var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
@@ -87,6 +87,7 @@ struct AnnotationFeature: Reducer {
                 return .none
 
                 // MARK: Dump Action
+
             case .checkDistance:
                 if let userLocation = getUserLocation() {
                     let isWithinRadius = isWithin(
@@ -97,7 +98,7 @@ struct AnnotationFeature: Reducer {
                     return .send(.onCheckSuccess(isWithinRadius))
                 }
                 return .none
-            case .onCheckSuccess(let isWithinRadius):
+            case let .onCheckSuccess(isWithinRadius):
                 if isWithinRadius {
                     state.isDumpAllowed = true
                     return .send(.getBucket)
@@ -114,7 +115,7 @@ struct AnnotationFeature: Reducer {
                         print(error)
                     }
                 }
-            case .onGetBucketSuccess(let items):
+            case let .onGetBucketSuccess(items):
                 state.bucket = items
                 return .none
             case .dumpItems:
@@ -127,7 +128,7 @@ struct AnnotationFeature: Reducer {
                         print(error)
                     }
                 }
-            case .onDumpItemsSuccess(let progress):
+            case let .onDumpItemsSuccess(progress):
                 state.progress = progress
                 return .send(.clearBucket)
             case .clearBucket:
@@ -139,7 +140,6 @@ struct AnnotationFeature: Reducer {
             }
         }
         .ifLet(\.$confirmationDialog, action: \.confirmationDialog)
-
     }
 }
 

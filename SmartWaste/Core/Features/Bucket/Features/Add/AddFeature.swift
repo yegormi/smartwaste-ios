@@ -6,13 +6,13 @@
 //
 //
 
-import UIKit
 import ComposableArchitecture
+import UIKit
 
 @Reducer
 struct AddFeature: Reducer {
-    @Dependency(\.dismiss)        var dismiss
-    @Dependency(\.bucketClient)   var bucketClient
+    @Dependency(\.dismiss) var dismiss
+    @Dependency(\.bucketClient) var bucketClient
     @Dependency(\.keychainClient) var keychainClient
 
     struct State: Equatable {
@@ -72,7 +72,7 @@ struct AddFeature: Reducer {
         }
         Reduce { state, action in
             switch action {
-            case .selectionChanged(let option):
+            case let .selectionChanged(option):
                 state.selection = option
                 return .none
 
@@ -96,7 +96,7 @@ struct AddFeature: Reducer {
                         print(error)
                     }
                 }
-            case .scanPhotoSuccess(let result):
+            case let .scanPhotoSuccess(result):
                 state.imageResponse = result
 
                 guard let matched = result.items.first else {
@@ -115,20 +115,20 @@ struct AddFeature: Reducer {
                 state.isLoading.toggle()
                 return .none
 
-            case .loadingPresented(let isOn):
+            case let .loadingPresented(isOn):
                 state.isLoading = isOn
                 return .none
             case .errorToastToggled:
                 state.isError.toggle()
                 return .none
-            case .showErrorToast(let text):
+            case let .showErrorToast(text):
                 state.errorToast = text
                 return .send(.errorToastToggled)
 
             case .counter(.increment):
                 state.errorText = nil
                 return .none
-            case .showError(let text):
+            case let .showError(text):
                 state.errorText = text
                 return .none
 

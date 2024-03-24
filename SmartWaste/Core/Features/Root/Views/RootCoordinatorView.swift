@@ -1,13 +1,13 @@
 //
-//  RootView.swift
+//  RootCoordinatorView.swift
 //  SmartWaste
 //
 //  Created by Yegor Myropoltsev on 07.11.2023.
 //
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 import TCACoordinators
 
 struct RootCoordinatorView: View {
@@ -20,20 +20,20 @@ struct RootCoordinatorView: View {
                 case .splash:
                     CaseLet(
                         /RootScreen.State.splash,
-                         action: RootScreen.Action.splash,
-                         then: SplashView.init
+                        action: RootScreen.Action.splash,
+                        then: SplashView.init
                     )
                 case .auth:
                     CaseLet(
                         /RootScreen.State.auth,
-                         action: RootScreen.Action.auth,
-                         then: AuthView.init
+                        action: RootScreen.Action.auth,
+                        then: AuthView.init
                     )
                 case .tabs:
                     CaseLet(
                         /RootScreen.State.tabs,
-                         action: RootScreen.Action.tabs,
-                         then: TabsView.init
+                        action: RootScreen.Action.tabs,
+                        then: TabsView.init
                     )
                 }
             }

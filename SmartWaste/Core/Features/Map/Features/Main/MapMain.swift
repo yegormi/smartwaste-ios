@@ -5,16 +5,16 @@
 //  Created by Yegor Myropoltsev on 04.12.2023.
 //
 
-import SwiftUI
 import ComposableArchitecture
-import MapKit
 import CoreLocation
+import MapKit
+import SwiftUI
 
 @Reducer
 struct MapMain: Reducer {
-    @Dependency(\.mapClient)      var mapClient
+    @Dependency(\.mapClient) var mapClient
     @Dependency(\.keychainClient) var keychainClient
-    @Dependency(\.bucketClient)   var bucketClient
+    @Dependency(\.bucketClient) var bucketClient
 
     struct State: Equatable {
         @PresentationState var details: AnnotationFeature.State?
@@ -48,7 +48,7 @@ struct MapMain: Reducer {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .successToastPresented(let isOn):
+            case let .successToastPresented(isOn):
                 state.isSuccessToastPresented = isOn
                 return .none
             case .viewDidAppear:
@@ -66,7 +66,7 @@ struct MapMain: Reducer {
                         print(error)
                     }
                 }
-            case .searchPoints(let categories):
+            case let .searchPoints(categories):
                 return .run { send in
                     do {
                         let points = try await searchPoints(with: categories)
@@ -75,11 +75,11 @@ struct MapMain: Reducer {
                         print(error)
                     }
                 }
-            case .onGetPointsSuccess(let points):
+            case let .onGetPointsSuccess(points):
                 state.points = points
                 return .none
 
-            case .onAnnotationTapped(let annotation):
+            case let .onAnnotationTapped(annotation):
                 state.details = .init(annotation: annotation)
                 return .none
 

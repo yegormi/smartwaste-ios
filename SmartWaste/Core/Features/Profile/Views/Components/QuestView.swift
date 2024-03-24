@@ -28,9 +28,9 @@ struct QuestView: View {
                     Spacer()
                     Text("\(value)/\(total)")
                 }
-                    .padding()
-                    .foregroundStyle(Color.white)
-                    .font(.system(size: 16, weight: .bold))
+                .padding()
+                .foregroundStyle(Color.white)
+                .font(.system(size: 16, weight: .bold))
             )
     }
 }

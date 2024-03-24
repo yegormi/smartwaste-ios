@@ -5,8 +5,8 @@
 //  Created by Yegor Myropoltsev on 27.11.2023.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct TabsView: View {
     let store: StoreOf<TabsFeature>

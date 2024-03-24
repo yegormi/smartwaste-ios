@@ -34,14 +34,14 @@ extension DependencyValues {
 extension BucketClient: DependencyKey, TestDependencyKey {
     @Dependency(\.sessionClient) static var sessionClient
     static let session = sessionClient.current
-    
+
     static let liveValue = BucketClient(
         getCategories: {
             let endpoint = "/categories"
 
             return try await withCheckedThrowingContinuation { continuation in
                 session.request(baseUrl + endpoint,
-                           method: .get)
+                                method: .get)
                     .validate()
                     .responseDecodable(of: [BucketCategory].self) { response in
                         handleResponse(response, continuation)
@@ -52,13 +52,13 @@ extension BucketClient: DependencyKey, TestDependencyKey {
 
             return try await withCheckedThrowingContinuation { continuation in
                 session.request(baseUrl + endpoint,
-                           method: .get)
+                                method: .get)
                     .validate()
                     .responseDecodable(of: BucketOptions.self) { response in
                         handleResponse(response, continuation)
                     }
             }
-        }, scanPhoto: {image in
+        }, scanPhoto: { image in
             let endpoint = "/scan"
             guard let imageData = image.jpegData(compressionQuality: 0.8) else {
                 throw ErrorTypes.imageConversionError
@@ -87,9 +87,9 @@ extension BucketClient: DependencyKey, TestDependencyKey {
 
             return try await withCheckedThrowingContinuation { continuation in
                 session.request(Self.baseUrl + endpoint,
-                           method: .post,
-                           parameters: bucket,
-                           encoder: JSONParameterEncoder.default)
+                                method: .post,
+                                parameters: bucket,
+                                encoder: JSONParameterEncoder.default)
                     .validate()
                     .responseDecodable(of: ProgressResponse.self) { response in
                         handleResponse(response, continuation)
@@ -103,17 +103,17 @@ extension BucketClient: DependencyKey, TestDependencyKey {
 
 extension BucketClient {
     static let testValue = BucketClient(
-        getCategories: { 
-            return [BucketCategory(id: 1, name: "Paper", slug: "paper", emoji: "📄")]
+        getCategories: {
+            [BucketCategory(id: 1, name: "Paper", slug: "paper", emoji: "📄")]
         },
-        getItems: { 
-            return BucketOptions(items: [])
+        getItems: {
+            BucketOptions(items: [])
         },
         scanPhoto: { _ in
-            return BucketOptions(items: [])
+            BucketOptions(items: [])
         },
         dumpItems: { _ in
-            return ProgressResponse(progresses: [])
+            ProgressResponse(progresses: [])
         }
     )
 }
@@ -130,7 +130,8 @@ private func handleResponse<T>(_ response: AFDataResponse<T>, _ continuation: Ch
         continuation.resume(returning: value)
     case let .failure(error):
         if let data = response.data,
-           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data) {
+           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data)
+        {
             continuation.resume(throwing: ErrorTypes.failedWithResponse(failResponse))
         } else {
             continuation.resume(throwing: error)

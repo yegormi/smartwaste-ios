@@ -6,16 +6,16 @@
 //
 //
 
-import SwiftUI
+import AlertToast
 import ComposableArchitecture
 import LoadingView
-import AlertToast
+import SwiftUI
 
 struct AddView: View {
     let store: StoreOf<AddFeature>
 
     var body: some View {
-        WithViewStore(self.store, observe: { $0 }) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             VStack(alignment: .leading, spacing: 0) {
                 Text(viewStore.title)
                     .font(.system(size: 30))
@@ -56,7 +56,8 @@ struct AddView: View {
                 CounterView(
                     store: self.store.scope(
                         state: \.counter,
-                        action: \.counter)
+                        action: \.counter
+                    )
                 )
                 .padding(.top, 20)
                 .padding(.bottom, (viewStore.errorText != nil) ? 15 : 40)
@@ -113,7 +114,6 @@ struct AddView: View {
                 color: .green
             )
             .animation(.easeInOut, value: viewStore.isLoading)
-
             .toast(isPresenting: viewStore.binding(
                 get: \.isError,
                 send: AddFeature.Action.errorToastToggled
@@ -129,7 +129,7 @@ struct AddView_Previews: PreviewProvider {
         let options: [BucketOption] = [
             BucketOption(id: 1, name: "Glass", categories: []),
             BucketOption(id: 2, name: "Paper", categories: []),
-            BucketOption(id: 3, name: "Metal", categories: [])
+            BucketOption(id: 3, name: "Metal", categories: []),
         ]
 
         AddView(

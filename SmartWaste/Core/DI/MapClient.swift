@@ -32,30 +32,30 @@ extension DependencyValues {
 extension MapClient: DependencyKey, TestDependencyKey {
     @Dependency(\.sessionClient) static var sessionClient
     static let session = sessionClient.current
-    
+
     static let liveValue = MapClient(
         getPoints: {
             let endpoint = "/points"
 
             return try await withCheckedThrowingContinuation { continuation in
                 session.request(baseUrl + endpoint,
-                           method: .get)
+                                method: .get)
                     .validate()
                     .responseDecodable(of: [MapPoint].self) { response in
                         handleResponse(response, continuation)
                     }
             }
-        }, searchPoints: {categories in
+        }, searchPoints: { categories in
             let endpoint = "/points"
 
             let parameters: Parameters = [
-                "categories": categories
+                "categories": categories,
             ]
 
             return try await withCheckedThrowingContinuation { continuation in
                 session.request(baseUrl + endpoint,
-                           method: .get,
-                           parameters: parameters)
+                                method: .get,
+                                parameters: parameters)
                     .validate()
                     .responseDecodable(of: [MapPoint].self) { response in
                         handleResponse(response, continuation)
@@ -83,7 +83,8 @@ private func handleResponse<T>(_ response: AFDataResponse<T>, _ continuation: Ch
         continuation.resume(returning: value)
     case let .failure(error):
         if let data = response.data,
-           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data) {
+           let failResponse = try? JSONDecoder().decode(FailResponse.self, from: data)
+        {
             continuation.resume(throwing: ErrorTypes.failedWithResponse(failResponse))
         } else {
             continuation.resume(throwing: error)

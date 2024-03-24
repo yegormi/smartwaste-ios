@@ -15,7 +15,8 @@ struct CoreDataManager {
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "Bucket")
         if inMemory,
-           let storeDescription = container.persistentStoreDescriptions.first {
+           let storeDescription = container.persistentStoreDescriptions.first
+        {
             storeDescription.url = URL(fileURLWithPath: "/dev/null")
         }
 
@@ -32,11 +33,11 @@ struct CoreDataManager {
         let result = CoreDataManager(inMemory: true)
         let viewContext = result.container.viewContext
 
-        for number in 0..<10 {
+        for number in 0 ..< 10 {
             let newItem = BucketItemEntity(context: viewContext)
             newItem.id = Int16(number)
             newItem.name = "Type #\(number)"
-            newItem.count = Int16(number*2)
+            newItem.count = Int16(number * 2)
         }
 
         do {

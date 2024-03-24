@@ -5,8 +5,8 @@
 //  Created by Yegor Myropoltsev on 29.12.2023.
 //
 
-import XCTest
 import ComposableArchitecture
+import XCTest
 
 @testable import SmartWaste
 
@@ -14,8 +14,9 @@ import ComposableArchitecture
 class TabsTests: XCTestCase {
     func testSwitchModes() async {
         let store = TestStore(initialState: TabsFeature.State(
-            map: .initialState, profile: .initialState, bucket: .initialState, selectedTab: .map)) {
-                TabsFeature()
+            map: .initialState, profile: .initialState, bucket: .initialState, selectedTab: .map
+        )) {
+            TabsFeature()
         } withDependencies: {
             $0.keychainClient.retrieveToken = {
                 AuthResponse(accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzAzODc1MzUzLCJleHAiOjE3MDM4Nzg5NTN9.AcXkuntCYTVWBTTMu0l89Sgl4SKgboR7PXJt2ush-gA")

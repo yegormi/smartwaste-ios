@@ -21,10 +21,10 @@ struct BucketItem: Codable, Equatable, Identifiable {
 extension BucketItem {
     func toState() -> BucketItemFeature.State {
         return .init(
-            id: self.id,
-            name: self.name,
-            categories: self.categories,
-            counter: .init(min: Constants.minCount, max: Constants.maxCount, value: self.count)
+            id: id,
+            name: name,
+            categories: categories,
+            counter: .init(min: Constants.minCount, max: Constants.maxCount, value: count)
         )
     }
 }

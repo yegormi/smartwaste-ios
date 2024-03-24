@@ -5,15 +5,15 @@
 //  Created by Yegor Myropoltsev on 12.12.2023.
 //
 
-import SwiftUI
-import ComposableArchitecture
 import AlertToast
+import ComposableArchitecture
+import SwiftUI
 
 struct MapMainView: View {
     let store: StoreOf<MapMain>
 
     var body: some View {
-        WithViewStore(self.store, observe: { $0 }) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             MapRepresentable(mapPoints: viewStore.points) { item in
                 viewStore.send(.onAnnotationTapped(item))
             }
@@ -35,7 +35,8 @@ struct MapMainView: View {
             }
             .toast(isPresenting: viewStore.binding(
                 get: \.isSuccessToastPresented,
-                send: MapMain.Action.successToastPresented)
+                send: MapMain.Action.successToastPresented
+            )
             ) {
                 AlertToast(displayMode: .alert, type: .complete(.green), title: "Bucket has been successfully dumped!")
             }

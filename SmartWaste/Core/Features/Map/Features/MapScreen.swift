@@ -5,8 +5,8 @@
 //  Created by Yegor Myropoltsev on 04.12.2023.
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 @Reducer
 struct MapScreen: Reducer {

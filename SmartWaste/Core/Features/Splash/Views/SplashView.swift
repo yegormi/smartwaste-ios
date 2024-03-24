@@ -6,28 +6,27 @@
 //
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct SplashView: View {
     let store: StoreOf<SplashFeature>
 
     var body: some View {
-        WithViewStore(self.store, observe: { $0 }) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             Text("♻️ SmartWaste")
                 .font(.system(size: 40))
                 .bold()
                 .transition(
                     .offset(y: -(Constants.screen.height))
-                    .combined(with: .scale(scale: 0.5))
-                    .combined(with: .opacity)
+                        .combined(with: .scale(scale: 0.5))
+                        .combined(with: .opacity)
                 )
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         viewStore.send(.appDidLaunch, animation: .default)
                     }
                 }
-
         }
     }
 }

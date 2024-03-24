@@ -5,14 +5,14 @@
 //  Created by Yegor Myropoltsev on 05.11.2023.
 //
 
-import Foundation
-import ComposableArchitecture
 import Alamofire
+import ComposableArchitecture
+import Foundation
 
 @Reducer
 struct AuthFeature: Reducer {
     @Dependency(\.keychainClient) var keychainClient
-    @Dependency(\.authClient)     var authClient
+    @Dependency(\.authClient) var authClient
 
     struct State: Equatable {
         var username: String = ""
@@ -34,10 +34,11 @@ struct AuthFeature: Reducer {
         var isAbleToSignIn: Bool {
             !email.isEmpty && !password.isEmpty
         }
+
         var isAbleToSignUp: Bool {
             !username.isEmpty && !email.isEmpty &&
-            !password.isEmpty && !confirmPassword.isEmpty &&
-            password == confirmPassword
+                !password.isEmpty && !confirmPassword.isEmpty &&
+                password == confirmPassword
         }
 
         var isLoginAllowed: Bool {
@@ -72,19 +73,19 @@ struct AuthFeature: Reducer {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .usernameChanged(let current):
+            case let .usernameChanged(current):
                 state.username = current
                 state.usernameError = nil
                 return .none
-            case .emailChanged(let current):
+            case let .emailChanged(current):
                 state.email = current
                 state.emailError = nil
                 return .none
-            case .passwordChanged(let current):
+            case let .passwordChanged(current):
                 state.password = current
                 state.passwordError = nil
                 return .none
-            case .confirmPasswordChanged(let current):
+            case let .confirmPasswordChanged(current):
                 state.confirmPassword = current
                 return .none
             case .toggleButtonTapped:
@@ -158,16 +159,15 @@ struct AuthFeature: Reducer {
                     return .send(.signIn)
                 case .signUp:
                     return .send(.signUp)
-
                 }
-            case .authResponse(.success(let response)):
+            case let .authResponse(.success(response)):
                 state.response = response
                 state.failResponse = nil
                 state.isLoading = false
                 keychainClient.saveToken(response)
                 return .none
 
-            case .authResponse(.failure(let error)):
+            case let .authResponse(.failure(error)):
                 state.failResponse = error
                 state.isLoading = false
 

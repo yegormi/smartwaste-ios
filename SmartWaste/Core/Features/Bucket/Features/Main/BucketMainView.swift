@@ -1,19 +1,19 @@
 //
-//  MapMain.swift
+//  BucketMainView.swift
 //  SmartWaste
 //
 //  Created by Yegor Myropoltsev on 04.12.2023.
 //
 
-import SwiftUI
-import ComposableArchitecture
 import AlertToast
+import ComposableArchitecture
+import SwiftUI
 
 struct BucketMainView: View {
     let store: StoreOf<BucketMain>
 
     var body: some View {
-        WithViewStore(self.store, observe: { $0 }) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             VStack(alignment: .leading) {
                 Text("Bucket")
                     .font(.system(size: 36))

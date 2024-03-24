@@ -5,8 +5,8 @@
 //  Created by Yegor Myropoltsev on 27.11.2023.
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 import TCACoordinators
 
 enum Tab: String, CaseIterable, Equatable {
@@ -39,6 +39,7 @@ struct TabsFeature: Reducer {
                 selectedTab: tab
             )
         }
+
         static func initState(from tab: Tab, with categories: [String]) -> Self {
             Self(
                 map: .initState(with: categories),
@@ -114,10 +115,10 @@ struct TabsFeature: Reducer {
                         print(error)
                     }
                 }
-            case .onGetSelfSuccess(let user):
+            case let .onGetSelfSuccess(user):
                 state.user = user
                 return .none
-            case .onGetSelfError(let error):
+            case let .onGetSelfError(error):
                 state.error = error
 
                 switch error.code {
@@ -129,7 +130,7 @@ struct TabsFeature: Reducer {
                     return .none
                 }
 
-            case .tabSelected(let tab):
+            case let .tabSelected(tab):
                 if state.selectedTab == tab {
                     return .send(.goBackToPrevious)
                 }

@@ -5,14 +5,13 @@
 //  Created by Yegor Myropoltsev on 28.12.2023.
 //
 
-import XCTest
 import ComposableArchitecture
+import XCTest
 
 @testable import SmartWaste
 
 @MainActor
 class CounterTests: XCTestCase {
-
     func testDecrement_ShouldDecrement() async {
         let store = TestStore(
             initialState: .init(min: 0, max: 10, value: 5)

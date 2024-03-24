@@ -14,11 +14,11 @@ struct SmartWasteApp: App {
     let coreDataManager: CoreDataManager
 
     init() {
-        self.store = Store(initialState: .initialState) {
+        store = Store(initialState: .initialState) {
             RootCoordinator()
                 ._printChanges()
         }
-        self.coreDataManager = CoreDataManager.shared
+        coreDataManager = CoreDataManager.shared
     }
 
     var body: some Scene {

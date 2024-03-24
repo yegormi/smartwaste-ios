@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import UIKit
 import SwiftUI
+import UIKit
 
 struct CameraRepresentable: UIViewControllerRepresentable {
     var onSelected: (UIImage) -> Void
@@ -29,9 +29,7 @@ struct CameraRepresentable: UIViewControllerRepresentable {
         return viewController
     }
 
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-
-    }
+    func updateUIViewController(_: UIViewControllerType, context _: Context) {}
 
     func makeCoordinator() -> CameraRepresentable.Coordinator {
         return Coordinator(self)
@@ -51,7 +49,6 @@ extension CameraRepresentable {
         }
 
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-
             guard let image = info[.originalImage] as? UIImage else {
                 return
             }

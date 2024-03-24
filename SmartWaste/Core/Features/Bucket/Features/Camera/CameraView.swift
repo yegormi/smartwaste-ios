@@ -6,14 +6,14 @@
 //
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct CameraView: View {
     let store: StoreOf<CameraFeature>
 
     var body: some View {
-        WithViewStore(self.store, observe: { $0 }) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             CameraRepresentable { image in
                 viewStore.send(.usePhotoTapped(with: image))
             }

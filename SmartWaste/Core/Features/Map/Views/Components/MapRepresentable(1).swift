@@ -1,12 +1,12 @@
 //
-//  MapRepresentable.swift
+//  MapRepresentable(1).swift
 //  SmartWaste
 //
 //  Created by Yegor Myropoltsev on 15.11.2023.
 //
 
-import SwiftUI
 import MapKit
+import SwiftUI
 
 struct MapRepresentable: UIViewRepresentable {
     let mapPoints: [MapPoint]
@@ -24,14 +24,14 @@ struct MapRepresentable: UIViewRepresentable {
             self.parent = parent
         }
 
-        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        func mapView(_: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             guard let cluster = annotation as? MKClusterAnnotation else {
                 return createAnnotationView(for: annotation)
             }
             return createClusterAnnotationView(for: cluster)
         }
 
-        func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        func mapView(_: MKMapView, didSelect view: MKAnnotationView) {
             if let annotation = view.annotation as? AnnotationMark {
                 print("Marker tapped! Name: \(annotation.name), Address: \(annotation.address)")
                 DispatchQueue.main.async {
@@ -41,7 +41,7 @@ struct MapRepresentable: UIViewRepresentable {
         }
 
         func mapView(
-            _ mapView: MKMapView,
+            _: MKMapView,
             clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]
         ) -> MKClusterAnnotation {
             let cluster = MKClusterAnnotation(memberAnnotations: memberAnnotations)
@@ -84,7 +84,7 @@ struct MapRepresentable: UIViewRepresentable {
         return mapView
     }
 
-    func updateUIView(_ uiView: MKMapView, context: Context) {
+    func updateUIView(_ uiView: MKMapView, context _: Context) {
         uiView.removeAnnotations(uiView.annotations)
         let annotations = mapPoints.map { createAnnotation(from: $0) }
         uiView.addAnnotations(annotations)
@@ -126,7 +126,8 @@ class ClusterAnnotationView: MKMarkerAnnotationView {
         markerTintColor = .systemGreen
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
