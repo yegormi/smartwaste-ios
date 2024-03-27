@@ -10,13 +10,61 @@ import SwiftUI
 
 struct MapRepresentable: UIViewRepresentable {
     let mapPoints: [MapPoint]
-    let onSelect: (AnnotationMark) -> Void
-
-    init(mapPoints: [MapPoint], onSelect: @escaping (AnnotationMark) -> Void) {
+    let completion: (AnnotationMark) -> Void
+    
+    init(mapPoints: [MapPoint], completion: @escaping (AnnotationMark) -> Void) {
         self.mapPoints = mapPoints
-        self.onSelect = onSelect
+        self.completion = completion
     }
 
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    func makeUIView(context: Context) -> MKMapView {
+        let mapView = MKMapView()
+        mapView.delegate = context.coordinator
+        mapView.mapType = .standard
+        mapView.showsUserLocation = true
+        mapView.showsScale = true
+        return mapView
+    }
+
+    func updateUIView(_ uiView: MKMapView, context _: Context) {
+        let annotations = mapPoints.map { createAnnotation(from: $0) }
+        updateAnnotations(on: uiView, with: annotations)
+    }
+    
+    func updateAnnotations(on mapView: MKMapView, with newAnnotations: [AnnotationMark]) {
+        // Get the set of current annotation identifiers
+        let currentAnnotationTitles = mapView.annotations.compactMap { ($0 as? AnnotationMark)?.name ?? "" }
+        
+        // Get the set of new annotation identifiers
+        let newAnnotationTitles = newAnnotations.map { $0.name }
+        
+        // Calculate annotations to remove
+        let annotationsToRemove = mapView.annotations.filter { annotation in
+            guard let annotationMark = annotation as? AnnotationMark else { return false }
+            return !newAnnotationTitles.contains(annotationMark.name)
+        }
+        mapView.removeAnnotations(annotationsToRemove)
+        
+        // Calculate annotations to add
+        let annotationsToAdd = newAnnotations.filter { annotation in
+            return !currentAnnotationTitles.contains(annotation.name)
+        }
+        mapView.addAnnotations(annotationsToAdd)
+    }
+
+    private func createAnnotation(from point: MapPoint) -> AnnotationMark {
+        return AnnotationMark(
+            coordinate: point.coordinate,
+            name: point.name,
+            address: point.address,
+            emojiList: point.categories.map { $0.emoji }
+        )
+    }
+    
     class Coordinator: NSObject, MKMapViewDelegate {
         var parent: MapRepresentable
 
@@ -32,12 +80,9 @@ struct MapRepresentable: UIViewRepresentable {
         }
 
         func mapView(_: MKMapView, didSelect view: MKAnnotationView) {
-            if let annotation = view.annotation as? AnnotationMark {
-                print("Marker tapped! Name: \(annotation.name), Address: \(annotation.address)")
-                DispatchQueue.main.async {
-                    self.parent.onSelect(annotation)
-                }
-            }
+            guard let annotation = view.annotation as? AnnotationMark else { return }
+            self.parent.completion(annotation)
+            print("Tapped: \(annotation.name)")
         }
 
         func mapView(
@@ -68,35 +113,6 @@ struct MapRepresentable: UIViewRepresentable {
                 reuseIdentifier: ClusterAnnotationView.ReuseID
             )
         }
-    }
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    func makeUIView(context: Context) -> MKMapView {
-        let mapView = MKMapView()
-        mapView.delegate = context.coordinator
-//        mapView.setRegion(locationManager.region, animated: false)
-        mapView.mapType = .standard
-        mapView.showsUserLocation = true
-        mapView.showsScale = true
-        return mapView
-    }
-
-    func updateUIView(_ uiView: MKMapView, context _: Context) {
-        uiView.removeAnnotations(uiView.annotations)
-        let annotations = mapPoints.map { createAnnotation(from: $0) }
-        uiView.addAnnotations(annotations)
-    }
-
-    private func createAnnotation(from point: MapPoint) -> AnnotationMark {
-        return AnnotationMark(
-            coordinate: point.coordinate,
-            name: point.name,
-            address: point.address,
-            emojiList: point.categories.map { $0.emoji }
-        )
     }
 }
 
