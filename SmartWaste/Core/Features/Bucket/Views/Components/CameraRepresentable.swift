@@ -48,7 +48,10 @@ extension CameraRepresentable {
             picker.dismiss(animated: true)
         }
 
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        func imagePickerController(
+            _ picker: UIImagePickerController,
+            didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
+        ) {
             guard let image = info[.originalImage] as? UIImage else {
                 return
             }
