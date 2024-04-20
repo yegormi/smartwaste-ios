@@ -13,6 +13,7 @@ struct BucketMain: Reducer {
     @Dependency(\.keychainClient) var keychainClient
     @Dependency(\.bucketDB) var bucketDB
     @Dependency(\.bucketClient) var bucketClient
+    @Dependency(\.mainQueue) var mainQueue
 
     struct State: Equatable {
         @PresentationState var addItem: AddFeature.State?
@@ -48,6 +49,8 @@ struct BucketMain: Reducer {
         case showRecyclePointsTapped
         case wentToMap(with: [String])
     }
+    
+    private enum CancelID { case modifyDB }
 
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -116,6 +119,7 @@ struct BucketMain: Reducer {
                         await bucketDB.deleteBucketItem(item)
                     }
                 }
+                .debounce(id: CancelID.modifyDB, for: 0.3, scheduler: mainQueue)
 
             case let .bucketItems(.element(id: id, action: .counter(.increment))):
                 guard let bucketState = state.bucketItems[id: id] else {
@@ -125,6 +129,7 @@ struct BucketMain: Reducer {
                 return .run { [item = bucketState.toItem()] _ in
                     await bucketDB.updateBucketItem(item)
                 }
+                .debounce(id: CancelID.modifyDB, for: 0.3, scheduler: mainQueue)
 
             case .addButtonTapped:
                 state.addItem = .init(
